@@ -1,0 +1,2 @@
+class CurrencyDrop < BaseDrop
+end

@@ -1,0 +1,2 @@
+class ImageDrop < BaseDrop
+end

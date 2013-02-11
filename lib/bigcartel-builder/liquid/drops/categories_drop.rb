@@ -5,5 +5,5 @@ class CategoriesDrop < BaseDrop
   
   def active
     all
-  end  
+  end
 end

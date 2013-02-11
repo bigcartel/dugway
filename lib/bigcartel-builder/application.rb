@@ -6,19 +6,23 @@ module BigCartel
       SOURCE_DIR = File.join(Dir.pwd, 'source')
       IMAGE_REGEX = /\.(jpg|jpeg|png|gif|ico)$/
       HTML_REGEX = /\.html$/
-
+      
+      def initialize(options={})
+        @store = Store.new(options[:store] || 'builder')
+        @custom_settings = (options[:settings] || {}).stringify_keys
+      end
+      
       def call(env)
-        request = Rack::Request.new(env)
-        path = request.path
+        path = Rack::Request.new(env).path
         file = path.split('/')[1] || 'home'
         file = file.include?('.') ? file : "#{ file }.html"
         
         if file =~ HTML_REGEX && page_html = content_for(file)
           type = 'html'
-          body = Template.new(page_html, layout_html).render
+          body = render(page_html)
         elsif file == 'styles.css'
           type = 'css'
-          body = Template.new(sprockets[file].to_s).render
+          body = render(sprockets[file].to_s, false)
         elsif file == 'scripts.js'
           type = 'javascript'
           body = sprockets[file].to_s
@@ -35,6 +39,10 @@ module BigCartel
       
       private
       
+      def render(content, use_layout=true)
+        Template.new(@store, settings, content, use_layout ? layout_html : nil).render
+      end
+      
       def content_for(file_name)
         file_path = File.join(SOURCE_DIR, file_name)
         
@@ -48,7 +56,27 @@ module BigCartel
       def layout_html
         content_for('layout.html')
       end
-    
+      
+      def settings
+        if @settings.blank?
+          @settings = {}
+          
+          json = JSON.parse(content_for('settings.json'))
+          
+          %w( fonts colors options ).each { |type|
+            if json.has_key?(type)
+              json[type].each { |setting|
+                @settings[setting['variable']] = setting['default']
+              }
+            end
+          }
+          
+          @settings.update(@custom_settings)
+        end
+        
+        @settings
+      end
+      
       def sprockets
         if @sprockets.blank?
           @sprockets = Sprockets::Environment.new

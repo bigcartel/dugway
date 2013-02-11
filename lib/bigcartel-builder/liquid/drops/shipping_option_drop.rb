@@ -1,5 +1,2 @@
-class ShippingOptionDrop < BaseDrop  
-  def country
-    @country ||= CountryDrop.new(@source.country)
-  end  
+class ShippingOptionDrop < BaseDrop
 end

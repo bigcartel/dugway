@@ -1,2 +1,2 @@
-class CountryDrop < BaseDrop  
+class CountryDrop < BaseDrop
 end

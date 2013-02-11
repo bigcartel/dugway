@@ -1,4 +1,4 @@
-class BaseDrop < Liquid::Drop    
+class BaseDrop < Liquid::Drop
   attr_reader :source
   # TODO: why is this throwing an error? undef :id # so we can use 'id' in drops
   
@@ -20,8 +20,8 @@ class BaseDrop < Liquid::Drop
   end
   
   def before_method(method)
-    if @source.respond_to?(method.to_sym)
-      return @source.send(method.to_sym)
+    if @source.has_key?(method)
+      return @source[method]
     elsif permalink_lookup
       for item in permalink_lookup
         return item if item[:permalink] == method.to_s

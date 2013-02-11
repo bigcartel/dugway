@@ -1,5 +1,2 @@
-class CategoryDrop < BaseDrop    
-  def products
-    @products ||= liquify(*@source.products)
-  end  
+class CategoryDrop < BaseDrop
 end

@@ -1,5 +1,2 @@
-class ArtistDrop < BaseDrop    
-	def products
-  	@products ||= liquify(*@source.products)
-  end  
+class ArtistDrop < BaseDrop
 end

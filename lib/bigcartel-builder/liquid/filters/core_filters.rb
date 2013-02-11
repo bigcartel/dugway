@@ -30,10 +30,10 @@ module CoreFilters
   # Money Filters
   
   def money(amount)
-		parts  = number_with_precision(amount, 2).split('.')
+    parts  = number_with_precision(amount, 2).split('.')
     number_with_delimiter(parts[0]) + '.' + parts[1].to_s
   rescue
-  	amount
+    amount
   end
   
   def money_with_sign(amount)
@@ -84,7 +84,7 @@ module CoreFilters
     %{<ul id="#{id}">#{list}</ul>}
   end
 
-	def product_quantity_input(product, quantity = 1, id = nil, class_name = nil)
+  def product_quantity_input(product, quantity = 1, id = nil, class_name = nil)
     text_field_tag("cart[add][quantity]", quantity, { :id => id || "quantity_#{product['id']}", :class => class_name, :autocomplete => 'off' })
   end
   

@@ -51,24 +51,24 @@ class ProductDrop < BaseDrop
     @image_count ||= images.size
   end
 
-	def previous_product
-		@previous_product ||= @source.higher_item || ''
-	end
-	
-	def next_product
-		@next_product ||= @source.lower_item || ''
-	end
-
-	def edit_url
-		"/admin/products/#{ @source.id }/edit"
-	end
-
-	def categories
-  	@categories ||= CategoriesDrop.new(@source.categories.map { |c| CategoryDrop.new(c) })
+  def previous_product
+    @previous_product ||= @source.higher_item || ''
+  end
+  
+  def next_product
+    @next_product ||= @source.lower_item || ''
   end
 
-	def artists
-  	@artists ||= ArtistsDrop.new(@source.artists.map { |a| ArtistDrop.new(a) })
+  def edit_url
+    "/admin/products/#{ @source.id }/edit"
+  end
+
+  def categories
+    @categories ||= CategoriesDrop.new(@source.categories.map { |c| CategoryDrop.new(c) })
+  end
+
+  def artists
+    @artists ||= ArtistsDrop.new(@source.artists.map { |a| ArtistDrop.new(a) })
   end
 
 private

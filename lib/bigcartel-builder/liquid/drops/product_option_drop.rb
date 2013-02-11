@@ -1,4 +1,4 @@
-class ProductOptionDrop < BaseDrop    
+class ProductOptionDrop < BaseDrop
   def default
     false # TODO: make this work
   end  

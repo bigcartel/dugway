@@ -21,4 +21,5 @@ Gem::Specification.new do |s|
   s.add_dependency('liquid', '~> 2.4.1')
   s.add_dependency('sprockets', '~> 2.0')
   s.add_dependency('httparty', '~> 0.10.0')
+  s.add_dependency('better_errors')
 end

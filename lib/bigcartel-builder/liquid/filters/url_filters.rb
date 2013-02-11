@@ -2,20 +2,20 @@ module UrlFilters
   def link_to(item, *args)
     options = link_args_to_options(args)
     text = options.delete(:text) || h(item['name'])
-    options = { :title => "View #{ text }", :href => item[:url] }.merge(options)
+    options = { :title => "View #{ text }", :href => item['url'] }.merge(options)
     content_tag :a, text, options
   end
 
-  def product_image_url(image = nil, size = nil)
+  def product_image_url(image=nil, size=nil)
     unless image.blank?
       url = image['url']
 
-      unless size.nil?
+      unless size.blank?
         size = size.to_s.downcase
 
         if thumb_size_in_pixels = thumb_size_in_pixels_for(size)
           dir = url[0..url.rindex('/')]
-          ext = url.scan(/\.\w+$/)
+          ext = File.extname(url)
           url = "#{ dir }#{ thumb_size_in_pixels }#{ ext }"
         end
       end

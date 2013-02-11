@@ -19,6 +19,17 @@ module BigCartel
         @theme = theme
         @store = store
         @request = request
+        
+        if @request.html?
+          @page = @store.page(request.permalink)
+          @page['url'] = request.path
+          @page['full_url'] = request.url
+        
+          # TODO: implement these
+          @product = nil
+          @category = nil
+          @artist = nil
+        end
       end
       
       def render(content, overridden_assigns={})
@@ -33,8 +44,8 @@ module BigCartel
           'store' => AccountDrop.new(@store.account),
           'cart' => CartDrop.new,
           'theme' => ThemeDrop.new(@theme.user_settings),
-          'page' => PageDrop.new(@request.page),
-          'product' => ProductDrop.new(@request.product),
+          'page' => PageDrop.new(@page),
+          'product' => ProductDrop.new(@product),
           'pages' => PagesDrop.new(@store.pages.map { |p| PageDrop.new(p) }),
           'categories' => CategoriesDrop.new(@store.categories.map { |c| CategoryDrop.new(c) }),
           'artists' => ArtistsDrop.new(@store.artists.map { |a| ArtistDrop.new(a) }),
@@ -51,8 +62,8 @@ module BigCartel
           :path => @request.path,
           :currency => @store.currency,
           :settings => @theme.user_settings,
-          :category => @request.category,
-          :artist => @request.artist
+          :category => @category,
+          :artist => @artist
         }
       end
     end

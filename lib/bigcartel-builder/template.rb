@@ -15,11 +15,12 @@ module BigCartel
       def render(store, request)
         if liquify?
           liquifier = Liquifier.new(@theme, store, request)
+          rendered_content = liquifier.render @content
           
           if standalone?
-            liquifier.render @content
+            rendered_content
           else
-            liquifier.render @theme.layout, 'page_content' => @content
+            liquifier.render @theme.layout, 'page_content' => rendered_content
           end
         else
           @content

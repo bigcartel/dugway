@@ -22,28 +22,20 @@ module BigCartel
         end
       end
       
-      def page
-        {}
-      end
-      
-      def product
-        {}
-      end
-      
-      def category
-        {}
-      end
-      
-      def artist
-        {}
+      def extension
+        File.extname(path)
       end
       
       def html?
-        !path.include?('.')
+        extension.blank? || extension == '.html'
       end
       
       def image?
         path =~ /^\/images\/.+\.(jpg|jpeg|gif|png)$/
+      end
+      
+      def custom_page?
+        !Theme::REQUIRED_FILES.include?(file_name)
       end
     end
   end

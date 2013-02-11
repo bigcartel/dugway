@@ -20,11 +20,11 @@ class BaseDrop < Liquid::Drop
   end
   
   def before_method(method)
-    if @source.has_key?(method)
+    if @source.respond_to?('has_key?') && @source.has_key?(method)
       return @source[method]
     elsif permalink_lookup
       for item in permalink_lookup
-        return item if item[:permalink] == method.to_s
+        return item if item['permalink'] == method.to_s
       end
     end
     

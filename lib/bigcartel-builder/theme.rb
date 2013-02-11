@@ -2,7 +2,9 @@ require 'sprockets'
 
 module BigCartel
   module Builder
-    class Theme      
+    class Theme
+      REQUIRED_FILES = %w( layout.html home.html products.html product.html cart.html checkout.html success.html contact.html maintenance.html scripts.js styles.css settings.json screenshot.jpg )
+      
       def initialize(source_dir, overridden_user_settings)
         @source_dir = source_dir
         @overridden_user_settings = overridden_user_settings
@@ -10,7 +12,7 @@ module BigCartel
       
       def find_template_by_request(request)
         name = request.file_name
-        
+                
         if request.html? && content = read_source_file(name)
           Template.new(self, name, content)
         elsif name == 'styles.css'

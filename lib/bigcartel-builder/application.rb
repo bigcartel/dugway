@@ -12,6 +12,8 @@ module BigCartel
       def call(env)
         request = Request.new(env)
         
+        # return [200, { 'Content-Type' => 'text/plain' }, [@store.custom_pages.to_s]]
+        
         if request.image?
           Rack::File.new(@source_dir).call(env)
         elsif template = @theme.find_template_by_request(request)

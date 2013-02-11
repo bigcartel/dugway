@@ -3,8 +3,6 @@ require 'rack/builder'
 module BigCartel
   module Builder
     class Application < Rack::Builder
-      IMAGE_PATH = /^\/images\/.+\.(jpg|jpeg|gif|png)$/
-      
       def initialize(options={})
         @source_dir = File.join(Dir.pwd, options[:source_dir] || 'source')
         @theme = Theme.new(@source_dir, options[:user_settings] || {})
@@ -12,11 +10,11 @@ module BigCartel
       end
       
       def call(env)
-        request = Rack::Request.new(env)
+        request = Request.new(env)
         
-        if request.path =~ IMAGE_PATH
+        if request.image?
           Rack::File.new(@source_dir).call(env)
-        elsif template = @theme.find_template_by_path(request.path)
+        elsif template = @theme.find_template_by_request(request)
           [200, { 'Content-Type' => template.content_type }, [template.render(@store, request)]]
         else
           [404, { 'Content-Type' => 'text/plain' }, ['Page not found']]

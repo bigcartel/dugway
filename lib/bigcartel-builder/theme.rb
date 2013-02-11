@@ -8,11 +8,10 @@ module BigCartel
         @overridden_user_settings = overridden_user_settings
       end
       
-      def find_template_by_path(path)
-        name = path.split('/')[1] || 'home'
-        name = name.include?('.') ? name : "#{ name }.html"
+      def find_template_by_request(request)
+        name = request.file_name
         
-        if name =~ /\.html$/ && content = read_source_file(name)
+        if request.html? && content = read_source_file(name)
           Template.new(self, name, content)
         elsif name == 'styles.css'
           Template.new(self, name, sprockets[name].to_s)

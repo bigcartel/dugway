@@ -9,16 +9,18 @@ module BigCartel
   
       def initialize(subdomain)
         self.class.base_uri "http://api.bigcartel.com/#{ subdomain }"
-        @account = self.class.get('/store.js')
-        @products = self.class.get('/products.js')
       end
   
       def account
-        @account
+        @account ||= get('/store.js')
       end
   
       def pages
         account.has_key?('pages') ? account['pages'] : []
+      end
+      
+      def page(permalink)
+        get("/pages/#{ permalink }.js")
       end
   
       def categories
@@ -30,7 +32,21 @@ module BigCartel
       end
   
       def products
-        @products
+        @products ||= get('/products.js')
+      end
+      
+      def currency
+        @account['currency']
+      end
+      
+      def country
+        @account['country']
+      end
+      
+      private
+      
+      def get(path)
+        self.class.get(path)
       end
     end
   end

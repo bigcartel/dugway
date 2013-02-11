@@ -2,6 +2,7 @@ require 'active_support/all'
 
 require 'bigcartel-builder/application'
 require 'bigcartel-builder/liquifier'
+require 'bigcartel-builder/request'
 require 'bigcartel-builder/store'
 require 'bigcartel-builder/template'
 require 'bigcartel-builder/theme'

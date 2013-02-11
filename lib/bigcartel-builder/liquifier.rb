@@ -33,8 +33,8 @@ module BigCartel
           'store' => AccountDrop.new(@store.account),
           'cart' => CartDrop.new,
           'theme' => ThemeDrop.new(@theme.user_settings),
-          # 'page' => PageDrop.new(@page),
-          # 'product' => ProductDrop.new(@product),
+          'page' => PageDrop.new(@request.page),
+          'product' => ProductDrop.new(@request.product),
           'pages' => PagesDrop.new(@store.pages.map { |p| PageDrop.new(p) }),
           'categories' => CategoriesDrop.new(@store.categories.map { |c| CategoryDrop.new(c) }),
           'artists' => ArtistsDrop.new(@store.artists.map { |a| ArtistDrop.new(a) }),
@@ -46,13 +46,13 @@ module BigCartel
 
       def registers
         {
-          # :params => @params,
-          # :full_url => @page.full_url,
-          # :path => @page.url,
-          # :currency => assigns['store'].currency,
-          # :settings => @settings,
-          # :category => @category,
-          # :artist => @artist
+          :params => @request.params,
+          :full_url => @request.url,
+          :path => @request.path,
+          :currency => @store.currency,
+          :settings => @theme.user_settings,
+          :category => @request.category,
+          :artist => @request.artist
         }
       end
     end

@@ -37,15 +37,15 @@ module CoreFilters
   end
   
   def money_with_sign(amount)
-    %{<span class="currency_sign">#{ currency[:sign] }</span>#{ money(amount) }}
+    %{<span class="currency_sign">#{ currency['sign'] }</span>#{ money(amount) }}
   end
   
   def money_with_code(amount)
-    %{#{ money(amount) } <span class="currency_code">#{ currency[:abbreviation] }</span>}
+    %{#{ money(amount) } <span class="currency_code">#{ currency['code'] }</span>}
   end
   
   def money_with_sign_and_code(amount)
-    %{#{ money_with_sign(amount) } <span class="currency_code\">#{ currency[:abbreviation] }</span>}
+    %{#{ money_with_sign(amount) } <span class="currency_code\">#{ currency['code'] }</span>}
   end
   
   # Shipping Filters
@@ -67,7 +67,7 @@ module CoreFilters
   end
   
   def options_select(options, id = 'option', class_name = nil)
-    option_tags = options.inject('') { |t,o| t += option_tag((o['name'] + (o['has_custom_price'] ? " - #{currency.sign}#{money(o['price'])}" : '')), o['id']) }
+    option_tags = options.inject('') { |t,o| t += option_tag((o['name'] + (o['has_custom_price'] ? " - #{ currency['sign'] }#{ money(o['price']) }" : '')), o['id']) }
     select_tag('cart[add][id]', option_tags, { :id => id, :class => class_name })
   end
   
@@ -75,9 +75,9 @@ module CoreFilters
     list    = ''
     for o in options
       list += '<li>'
-      list += radio_button_tag('cart[add][id]', o['id'], o['default'], { :id => "option_#{o['id']}", :class => class_name })
-      list += %{ <label for="option_#{o['id']}">#{o['name']}}
-      list += %{ - #{currency.sign}#{money(o['price'])}} if o['has_custom_price']
+      list += radio_button_tag('cart[add][id]', o['id'], o['default'], { :id => "option_#{ o['id'] }", :class => class_name })
+      list += %{ <label for="option_#{ o['id'] }">#{ o['name'] }}
+      list += %{ - #{ currency['sign'] }#{ money(o['price']) }} if o['has_custom_price']
       list += %{</label>}
       list += '</li>'
     end

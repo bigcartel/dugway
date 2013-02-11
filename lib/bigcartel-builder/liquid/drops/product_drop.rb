@@ -7,6 +7,14 @@ class ProductDrop < BaseDrop
     c
   end
   
+  def status
+    @source['status']
+  end
+  
+  def on_sale
+    @source['on_sale']
+  end
+  
   def min_price
     price_min_max.first
   end

@@ -7,7 +7,7 @@ module BigCartel
       
       def initialize(source_dir, overridden_user_settings)
         @source_dir = source_dir
-        @overridden_user_settings = overridden_user_settings
+        @overridden_user_settings = overridden_user_settings.stringify_keys
       end
       
       def find_template_by_request(request)

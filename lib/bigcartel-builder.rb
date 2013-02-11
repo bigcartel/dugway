@@ -7,8 +7,8 @@ require 'bigcartel-builder/template'
 
 module BigCartel
   module Builder
-    def self.application
-      Application.new
+    def self.application(options={})
+      Application.new(options)
     end
   end
 end

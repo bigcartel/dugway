@@ -42,7 +42,7 @@ module BigCartel
       def page(permalink)
         pages.find { |page| page['permalink'] == permalink }
       end
-  
+      
       def categories
         account.has_key?('categories') ? account['categories'] : []
       end

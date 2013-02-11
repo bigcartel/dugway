@@ -5,7 +5,6 @@ Dir.glob("#{ File.dirname(__FILE__) }/liquid/**/*.rb").each { |file| require fil
 Liquid::Template.register_filter(UtilFilters)
 Liquid::Template.register_filter(CoreFilters)
 Liquid::Template.register_filter(DefaultPagination)
-Liquid::Template.register_filter(PaginationFilters)
 Liquid::Template.register_filter(UrlFilters)
 
 Liquid::Template.register_tag(:checkoutform, CheckoutForm)

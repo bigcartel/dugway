@@ -12,14 +12,24 @@ module BigCartel
       def call(env)
         request = Request.new(env)
         
-        # return [200, { 'Content-Type' => 'text/plain' }, [@store.custom_pages.to_s]]
-        
         if request.image?
           Rack::File.new(@source_dir).call(env)
-        elsif template = @theme.find_template_by_request(request)
+        elsif template = find_template(request)
           [200, { 'Content-Type' => template.content_type }, [template.render(@store, request)]]
         else
           [404, { 'Content-Type' => 'text/plain' }, ['Page not found']]
+        end
+      end
+      
+      private
+      
+      def find_template(request)
+        if template = @theme.find_template_by_request(request)
+          template
+        elsif page = @store.page(request.permalink)
+          Template.new(@theme, request.file_name, page['content'])
+        else
+          nil
         end
       end
     end

@@ -153,16 +153,16 @@ private
     products = PaginatedProducts.new array
     products.context = @context
     
-    log " "
-    log "!!!!! PAGINATE !!!!!"
-    log "products.total_entries: #{ products.total_entries }"
-    log "products.per_page: #{ products.per_page }"
-    log "products.current_page: #{ products.current_page }"
-    log "products.previous_page: #{ products.previous_page }"
-    log "products.next_page: #{ products.next_page }"
-    log "products.total_pages: #{ products.total_pages }"
-    log "products.offset: #{ products.offset }"
-    log " "
+    # log " "
+    # log "!!!!! PAGINATE !!!!!"
+    # log "products.total_entries: #{ products.total_entries }"
+    # log "products.per_page: #{ products.per_page }"
+    # log "products.current_page: #{ products.current_page }"
+    # log "products.previous_page: #{ products.previous_page }"
+    # log "products.next_page: #{ products.next_page }"
+    # log "products.total_pages: #{ products.total_pages }"
+    # log "products.offset: #{ products.offset }"
+    # log " "
     
     products[products.offset, products.per_page]
   end

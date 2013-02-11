@@ -1,8 +1,7 @@
 class BaseDrop < Liquid::Drop
   attr_reader :source
-  # TODO: why is this throwing an error? undef :id # so we can use 'id' in drops
   
-  def initialize(source = nil)
+  def initialize(source=nil)
     @source = source
   end
   
@@ -28,8 +27,6 @@ class BaseDrop < Liquid::Drop
       end
     end
     
-    log "---- MISSING DROP METHOD: #{ self.class }.#{ method }  ----"
-    log @source
     nil
   end
   

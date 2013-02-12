@@ -1,3 +1,6 @@
+require 'coffee-script'
+require 'sass'
+require 'less'
 require 'sprockets'
 
 module BigCartel

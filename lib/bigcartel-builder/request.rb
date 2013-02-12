@@ -37,6 +37,24 @@ module BigCartel
       def custom_page?
         !Theme::REQUIRED_FILES.include?(file_name)
       end
+      
+      def product_permalink
+        find_permalink('product')
+      end
+      
+      def category_permalink
+        find_permalink('category')
+      end
+      
+      def artist_permalink
+        find_permalink('artist')
+      end
+      
+      private
+      
+      def find_permalink(type)
+        path.scan(/\/#{ type }\/([a-z-]+)$/).try(:first).try(:first)
+      end
     end
   end
 end

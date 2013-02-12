@@ -40,19 +40,31 @@ module BigCartel
       end
       
       def page(permalink)
-        pages.find { |page| page['permalink'] == permalink }
+        lookup(permalink, pages)
       end
       
       def categories
         account.has_key?('categories') ? account['categories'] : []
       end
-  
+      
+      def category(permalink)
+        lookup(permalink, categories)
+      end
+      
       def artists
         account.has_key?('artists') ? account['artists'] : []
       end
-  
+      
+      def artist(permalink)
+        lookup(permalink, artists)
+      end
+      
       def products
         @products ||= get('/products.js')
+      end
+      
+      def product(permalink)
+        lookup(permalink, products)
       end
       
       def currency
@@ -67,6 +79,10 @@ module BigCartel
       
       def get(path)
         self.class.get(path).parsed_response
+      end
+    
+      def lookup(permalink, array)
+        array.find { |item| item['permalink'] == permalink }
       end
     end
   end

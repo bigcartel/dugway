@@ -19,15 +19,18 @@ module BigCartel
         @store = store
         @request = request
         
-        if @request.html?
+        if request.html?
           @page = @store.page(request.permalink)
           @page['url'] = request.path
           @page['full_url'] = request.url
-        
-          # TODO: implement these
-          @product = nil
-          @category = nil
-          @artist = nil
+          
+          if request.product_permalink && @product = @store.product(request.product_permalink)
+            @page['name'] = @product['name']
+          elsif request.category_permalink && @category = @store.category(request.category_permalink)
+            @page['name'] = @category['name']
+          elsif request.artist_permalink && @artist = @store.artist(request.artist_permalink)
+            @page['name'] = @artist['name']
+          end
         end
       end
       

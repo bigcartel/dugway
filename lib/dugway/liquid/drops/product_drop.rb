@@ -68,7 +68,7 @@ class ProductDrop < BaseDrop
   end
 
   def edit_url
-    "/admin/products/#{ @source['id'] }/edit"
+    "http://bigcartel.com"
   end
 
   def categories

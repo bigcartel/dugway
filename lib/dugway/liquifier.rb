@@ -61,6 +61,7 @@ module Dugway
       {
         :params => @request.params,
         :full_url => @request.url,
+        :full_path => @request.fullpath,
         :path => @request.path,
         :currency => @store.currency,
         :settings => @theme.user_settings,

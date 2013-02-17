@@ -14,15 +14,11 @@ class BaseDrop < Liquid::Drop
     super
   end
   
-  def permalink_lookup
-    nil
-  end
-  
   def before_method(method)
     if @source.respond_to?('has_key?') && @source.has_key?(method)
       return @source[method]
-    elsif permalink_lookup
-      for item in permalink_lookup
+    elsif @source.is_a?(Array) && @source.first.has_key?('permalink')
+      for item in @source
         return item if item['permalink'] == method.to_s
       end
     end

@@ -31,10 +31,10 @@ class Paginate < ::Liquid::Block
       context['internal'] = {
         'per_page' => @per_page,
         'order' => @order,
-        'page' => @context.registers[:params][:page],
+        'page' => @context.registers[:params][:page] && @context.registers[:params][:page].to_i,
         'limit' => @limit
       }
-      
+
       collection = context[@collection_name]
       context[@variable_name] = collection
       current_page = collection.current_page
@@ -55,8 +55,11 @@ class Paginate < ::Liquid::Block
 
       pagination['items'] = collection_size
       pagination['pages'] = page_count
+
       pagination['previous'] = collection.previous_page.blank? ? no_link('&laquo; Previous') : link('&laquo; Previous', collection.previous_page)
+
       pagination['next'] = collection.next_page.blank? ? no_link('Next &raquo;') : link('Next &raquo;', collection.next_page)
+
       pagination['parts'] = []
 
       if page_count > 1
@@ -119,9 +122,5 @@ private
 
   def current_url
     @context.registers[:path]
-  end
-  
-  def log(msg)
-    Titanium.API.debug(msg)
   end
 end

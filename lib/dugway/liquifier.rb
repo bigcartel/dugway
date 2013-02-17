@@ -52,7 +52,8 @@ module Dugway
         'artists' => ArtistsDrop.new(@store.artists.map { |a| ArtistDrop.new(a) }),
         'products' => ProductsDrop.new(@store.products.map { |p| ProductDrop.new(p) }),
         'contact' => ContactDrop.new,
-        'head_content' => '<meta name="generator" content="Big Cartel" />'
+        'head_content' => '<meta name="generator" content="Big Cartel" />',
+        'bigcartel_credit' => '<a href="http://bigcartel.com/" title="Start your own store at Big Cartel now">Online Store by Big Cartel</a>'
       }
     end
 

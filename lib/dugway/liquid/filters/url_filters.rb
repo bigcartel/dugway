@@ -20,8 +20,7 @@ module UrlFilters
         end
       end
     else
-      size ||= 'large'
-      url = "/images/common/noimage-#{ size.to_s }.gif"
+      url = "http://bigcartel.com/images/common/noimage-#{ (size || 'large').to_s }.gif"
     end
 
     url

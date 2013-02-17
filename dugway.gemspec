@@ -1,14 +1,14 @@
 # encoding: utf-8
 $:.push File.expand_path('../lib', __FILE__)
-require 'bigcartel-builder/version'
+require 'dugway/version'
 
 Gem::Specification.new do |s|
-  s.name         = 'bigcartel-builder'
-  s.version      = BigCartel::Builder::VERSION
+  s.name         = 'dugway'
+  s.version      = Dugway::VERSION
   s.authors      = ['Big Cartel']
   s.email        = 'dev@bigcartel.com'
-  s.homepage     = 'https://github.com/bigcartel/bigcartel-builder'
-  s.summary      = 'Easily build Big Cartel themes.'
+  s.homepage     = 'https://github.com/bigcartel/dugway'
+  s.summary      = 'Easily build and test Big Cartel themes locally.'
   s.description  = 'Easily build and test Big Cartel themes locally.'
 
   s.files        = `git ls-files`.split($\)

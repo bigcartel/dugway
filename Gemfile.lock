@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    bigcartel-builder (0.0.1)
+    dugway (0.0.1)
       activesupport (~> 3.2.6)
       better_errors
       bundler (~> 1.1)
@@ -20,7 +20,7 @@ GEM
     activesupport (3.2.12)
       i18n (~> 0.6)
       multi_json (~> 1.0)
-    better_errors (0.5.0)
+    better_errors (0.6.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
     coderay (1.0.8)
@@ -41,7 +41,7 @@ GEM
       commonjs (~> 0.2.6)
     libv8 (3.11.8.13)
     liquid (2.4.1)
-    multi_json (1.5.1)
+    multi_json (1.6.1)
     multi_xml (0.5.3)
     rack (1.4.5)
     ref (1.0.2)
@@ -60,4 +60,4 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bigcartel-builder!
+  dugway!

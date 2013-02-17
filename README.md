@@ -1,3 +1,3 @@
-# Big Cartel Builder
+# Dugway
 
-Easily build Big Cartel themes.
+Easily build and test Big Cartel themes.

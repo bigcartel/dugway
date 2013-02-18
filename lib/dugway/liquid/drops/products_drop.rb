@@ -1,65 +1,4 @@
-class PaginatedProducts < Array
-  attr_accessor :context
-  
-  def total_entries
-    @total_entries ||= context['internal']['total_entries'] = size
-  end
-  
-  def current_page
-    @current_page ||= context.registers[:params][:page].to_i rescue 1
-  end
-  
-  def per_page
-    @per_page ||= context['internal']['per_page']
-  end
-  
-  def offset
-    @offset ||= (current_page - 1) * per_page
-  end
-  
-  def total_pages
-    @total_pages ||= (total_entries.to_f / per_page.to_f).ceil.to_i
-  end
-  
-  def previous_page
-    @previous_page ||= current_page <= 1 ? nil : current_page - 1
-  end
-  
-  def next_page
-    @next_page ||= current_page >= total_pages ? nil : current_page + 1
-  end
-  
-  # TODO: support this
-  def inner_window
-    @inner_window ||= 3
-  end
-  
-  # TODO: support this
-  def outer_window
-    @outer_window ||= 1
-  end
-  
-  private
-  
-  def order
-    @order ||= begin
-      case context['internal']['order']
-      when 'newest'
-        'created_at DESC'
-      when 'sales'
-        'sales'
-      when 'views'
-        'products.views DESC'
-      else
-        'products.position'
-      end
-    end
-  end
-  
-  def limit
-    @limit ||= @context['internal']['limit'] || 100
-  end
-end
+require 'will_paginate/array'
 
 class ProductsDrop < BaseDrop
   def all
@@ -95,9 +34,10 @@ class ProductsDrop < BaseDrop
   private
 
   def paginate(array)
-    products = PaginatedProducts.new array
-    products.context = @context
-    products[products.offset, products.per_page]
+    array.paginate({
+      :page => (@context.registers[:params][:page] || 1).to_i,
+      :per_page => @context['internal']['per_page']
+    })
   end
   
   def artist

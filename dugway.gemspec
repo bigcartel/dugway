@@ -26,4 +26,5 @@ Gem::Specification.new do |s|
   s.add_dependency('sprockets', '~> 2.0')
   s.add_dependency('httparty', '~> 0.10.0')
   s.add_dependency('better_errors')
+  s.add_dependency('will_paginate')
 end

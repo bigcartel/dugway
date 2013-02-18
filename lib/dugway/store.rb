@@ -5,7 +5,7 @@ module Dugway
     include HTTParty
 
     format :json
-    default_timeout 2
+    default_timeout 5
 
     def initialize(subdomain)
       self.class.base_uri "http://api.bigcartel.com/#{ subdomain }"

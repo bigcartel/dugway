@@ -29,6 +29,8 @@ module Dugway
           @page['name'] = @category['name']
         elsif request.artist_permalink && @artist = @store.artist(request.artist_permalink)
           @page['name'] = @artist['name']
+        else
+          @page['name'] = @page['real_name']
         end
       end
     end

@@ -2,43 +2,15 @@ class PaginatedProducts < Array
   attr_accessor :context
   
   def total_entries
-    if context['internal']['total_entries'].blank?
-      context['internal']['total_entries'] = size
-    end
-    
-    context['internal']['total_entries']
+    @total_entries ||= context['internal']['total_entries'] = size
   end
   
   def current_page
-    if @current_page.blank?
-      @current_page = if context['internal'].present? && context['internal'].has_key?('page') # has_key? here because 'page' will be nil for get blocks
-        context['internal']['page'].to_i
-      else
-        context.registers[:params][:page].to_i
-      end
-    
-      @current_page = 1 if @current_page.zero?
-    end
-    
-    @current_page
+    @current_page ||= context.registers[:params][:page].to_i rescue 1
   end
   
   def per_page
-    if @per_page.blank?
-      @per_page = if context['internal'].present?
-        if context['internal']['per_page'].present?
-          context['internal']['per_page']
-        else
-          context.registers[:settings][:products_per_page]
-        end
-      else
-        100
-      end
-    
-      @per_page = [100, @per_page.to_i].min
-    end  
-    
-    @per_page
+    @per_page ||= context['internal']['per_page']
   end
   
   def offset
@@ -57,18 +29,20 @@ class PaginatedProducts < Array
     @next_page ||= current_page >= total_pages ? nil : current_page + 1
   end
   
+  # TODO: support this
   def inner_window
     @inner_window ||= 3
   end
   
+  # TODO: support this
   def outer_window
     @outer_window ||= 1
   end
   
-private
-
+  private
+  
   def order
-    if context['internal'].present?
+    @order ||= begin
       case context['internal']['order']
       when 'newest'
         'created_at DESC'
@@ -79,23 +53,11 @@ private
       else
         'products.position'
       end
-    else
-      'products.position'
     end
   end
   
   def limit
-    limit = if @context['internal'].present? && @context['internal']['limit'].present?
-      @context['internal']['limit']
-    else
-      nil
-    end
-    
-    limit.present? ? [100, limit.to_i].min : limit
-  end
-  
-  def log(msg)
-    Titanium.API.debug(msg)
+    @limit ||= @context['internal']['limit'] || 100
   end
 end
 
@@ -105,29 +67,22 @@ class ProductsDrop < BaseDrop
   end
   
   def current
-    @context.stack do
-      products =  if artist.present?
-                    @source.select { |p| p.artists.all.any? { |a| a[:permalink] == artist }}
-                  elsif category.present?
-                    @source.select { |p| p.categories.all.any? { |c| c[:permalink] == category }}
-                  elsif search_terms.present?
-                    @source.select { |p| p[:name].downcase.include? search_terms.downcase }
-                  else
-                    @source
-                  end
-    
-      paginate products
+    @current ||= paginate begin
+      if artist.present?
+        @source.select { |p| p.artists.all.any? { |a| a['permalink'] == artist }}
+      elsif category.present?
+        @source.select { |p| p.categories.all.any? { |c| c['permalink'] == category }}
+      elsif search_terms.present?
+        @source.select { |p| p['name'].downcase.include? search_terms.downcase }
+      else
+        @source
+      end
     end
   end
   
   def on_sale
-    paginate @source.select { |p| p[:on_sale] }
+    @on_sale ||= paginate @source.select { |p| p[:on_sale] }
   end
-  
-  
-  #
-  # Aliases
-  #
   
   def newest
     all
@@ -136,34 +91,12 @@ class ProductsDrop < BaseDrop
   def top_selling
     all
   end
-  
-  
-  #
-  # DEPRECATED
-  #
-  
-  def featured
-    all
-  end
-  
 
-private
+  private
 
   def paginate(array)
     products = PaginatedProducts.new array
     products.context = @context
-    
-    # log " "
-    # log "!!!!! PAGINATE !!!!!"
-    # log "products.total_entries: #{ products.total_entries }"
-    # log "products.per_page: #{ products.per_page }"
-    # log "products.current_page: #{ products.current_page }"
-    # log "products.previous_page: #{ products.previous_page }"
-    # log "products.next_page: #{ products.next_page }"
-    # log "products.total_pages: #{ products.total_pages }"
-    # log "products.offset: #{ products.offset }"
-    # log " "
-    
     products[products.offset, products.per_page]
   end
   
@@ -176,6 +109,6 @@ private
   end
 
   def search_terms
-    @context.registers[:params][:search]
+    @search_terms ||= @context.registers[:params][:search]
   end  
 end

@@ -36,7 +36,7 @@ module Dugway
     end
 
     def pages
-      @pages ||= (theme_pages + custom_pages).each { |p| p['real_name'] = p['name'] }
+      @pages ||= theme_pages + custom_pages
     end
     
     def page(permalink)
@@ -82,7 +82,7 @@ module Dugway
     end
   
     def lookup(permalink, array)
-      array.find { |item| item['permalink'] == permalink }
+      array.find { |item| item['permalink'] == permalink }.dup
     end
   end
 end

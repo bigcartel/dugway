@@ -3,34 +3,32 @@ require 'rack/request'
 module Dugway
   class Request < Rack::Request
     def file_name
-      html? ? "#{ permalink }.html" : permalink
+      "#{ permalink }#{ extension }"
     end
     
     def permalink
-      @permalink ||= begin
-        case path
-        when /^\/$/
-          'home'
-        when /^\/(products|category|artist)\//
-          'products'
-        when /^\/product\//
-          'product'
-        else
-          path[1..-1]
-        end
+      case path
+      when /^\/$/
+        'home'
+      when /^\/(products|category|artist)\//
+        'products'
+      when /^\/product\//
+        'product'
+      else
+        File.basename(path[1..-1], '.*')
       end
     end
     
     def extension
-      File.extname(path)
+      File.extname(path).present? ? File.extname(path) : '.html'
     end
     
     def html?
-      extension.blank? || extension == '.html'
+      extension == '.html'
     end
     
     def image?
-      path =~ /^\/images\/.+\.(jpg|jpeg|gif|png)$/
+      path =~ /^\/images\/.+\.(jpg|jpeg|gif|png)$/ ? true : false
     end
     
     def custom_page?

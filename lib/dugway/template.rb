@@ -8,7 +8,11 @@ module Dugway
     end
     
     def content_type
-      Rack::Mime.mime_type(File.extname(@name))
+      Rack::Mime.mime_type(extension)
+    end
+    
+    def extension
+      File.extname(@name)
     end
     
     def render(store, request)
@@ -31,7 +35,7 @@ module Dugway
     end
     
     def standalone?
-      !@name.include?('.html') || @content =~ /\{\{\s*head_content\s*\}\}/
+      extension != '.html' || @content =~ /\{\{\s*head_content\s*\}\}/
     end
   end
 end

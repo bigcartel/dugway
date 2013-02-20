@@ -82,7 +82,7 @@ module Dugway
     end
   
     def lookup(permalink, array)
-      array.find { |item| item['permalink'] == permalink }.dup
+      array.find { |item| item['permalink'] == permalink }.try(:dup)
     end
   end
 end

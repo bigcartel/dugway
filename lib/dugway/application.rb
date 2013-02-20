@@ -1,7 +1,5 @@
-require 'rack/builder'
-
 module Dugway
-  class Application < Rack::Builder
+  class Application
     def initialize(options={})
       @source_dir = File.join(Dir.pwd, options[:source_dir] || 'source')
       @theme = Theme.new(@source_dir, options[:user_settings] || {})

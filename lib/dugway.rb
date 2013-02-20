@@ -1,5 +1,11 @@
 require 'active_support/all'
 
+require 'rack/builder'
+require 'rack/commonlogger'
+require 'rack/showexceptions'
+
+require 'better_errors'
+
 require 'dugway/application'
 require 'dugway/liquifier'
 require 'dugway/request'
@@ -9,17 +15,21 @@ require 'dugway/theme'
 
 module Dugway
   def self.application(options={})
-    Application.new(options) do
-      use Rack::CommonLogger, logger
+    Rack::Builder.app do
+      use Rack::CommonLogger, Dugway.logger
       use Rack::ShowExceptions
       use BetterErrors::Middleware
       
-      BetterErrors.logger = logger
+      BetterErrors.logger = Dugway.logger
       BetterErrors.application_root = Dir.pwd
+      
+      run Application.new(options)
     end
   end
   
   def self.logger
-    @logger ||= Logger.new(File.join(Dir.pwd, 'log', 'dugway.log'))
+    dir = File.join(Dir.pwd, 'log')
+    Dir.mkdir(dir) unless File.exists?(dir)
+    @logger ||= Logger.new(File.join(dir, 'dugway.log'))
   end
 end

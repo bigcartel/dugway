@@ -25,6 +25,9 @@ Gem::Specification.new do |s|
   s.add_dependency('less', '~> 2.2.2')
   s.add_dependency('sprockets', '~> 2.0')
   s.add_dependency('httparty', '~> 0.10.0')
-  s.add_dependency('better_errors')
-  s.add_dependency('will_paginate')
+  s.add_dependency('better_errors', '~> 0.6.0')
+  s.add_dependency('will_paginate', '~> 3.0.4')
+  
+  s.add_development_dependency('rake', '~> 10.0.3')
+  s.add_development_dependency('rspec', '~> 2.12.0')
 end

@@ -1,8 +1,7 @@
 module Dugway
   class Application
     def initialize(options={})
-      @source_dir = File.join(Dir.pwd, options[:source_dir] || 'source')
-      @theme = Theme.new(@source_dir, options[:user_settings] || {})
+      @theme = Theme.new(options[:user_settings] || {})
       @store = Store.new(options[:store] || 'dugway')
     end
     
@@ -10,7 +9,7 @@ module Dugway
       request = Request.new(env)
       
       if request.image?
-        Rack::File.new(@source_dir).call(env)
+        @theme.find_image_by_env(env)
       elsif template = find_template(request)
         [200, { 'Content-Type' => template.content_type }, [template.render(@store, request)]]
       else

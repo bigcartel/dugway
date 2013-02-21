@@ -5,16 +5,16 @@ require 'sprockets'
 
 module Dugway
   class Theme
+    SOURCE_DIR = File.join(Dir.pwd, 'source')
     REQUIRED_FILES = %w( layout.html home.html products.html product.html cart.html checkout.html success.html contact.html maintenance.html scripts.js styles.css settings.json screenshot.jpg )
     
-    def initialize(source_dir, overridden_user_settings)
-      @source_dir = source_dir
+    def initialize(overridden_user_settings={})
       @overridden_user_settings = overridden_user_settings.stringify_keys
     end
     
     def find_template_by_request(request)
       name = request.file_name
-              
+      
       if request.html? && content = read_source_file(name)
         Template.new(self, name, content)
       elsif name == 'styles.css'
@@ -24,6 +24,10 @@ module Dugway
       else
         nil
       end
+    end
+    
+    def find_image_by_env(env)
+      Rack::File.new(SOURCE_DIR).call(env)
     end
     
     def layout
@@ -55,19 +59,19 @@ module Dugway
     def sprockets
       @sprockets ||= begin
         sprockets = Sprockets::Environment.new
-        sprockets.append_path @source_dir
+        sprockets.append_path SOURCE_DIR
         sprockets
       end
     end
     
     def read_source_file(file_name)
-      file_path = File.join(@source_dir, file_name)
+      file_path = File.join(SOURCE_DIR, file_name)
       
       if File.exist?(file_path)
         File.open(file_path, "rb").read
       else
         nil
       end
-    end     
+    end
   end
 end

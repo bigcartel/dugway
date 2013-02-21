@@ -2,11 +2,10 @@ require 'spec_helper'
 
 describe Dugway::Request do
   let(:path) { '/path/to/something' }
-  let(:query_string) { nil }
   
   let(:env) {{
-    'PATH_INFO' => path,
-    'QUERY_STRING' => query_string
+    'PATH_INFO' => path.split('?').first,
+    'QUERY_STRING' => path.split('?').last
   }}
   
   let(:request) { Dugway::Request.new(env) }
@@ -55,8 +54,7 @@ describe Dugway::Request do
     end
     
     describe "on the products page with params" do
-      let(:path) { '/products' }
-      let(:query_string) { 'search=test'}
+      let(:path) { '/products?search=test' }
       
       it "returns the correct permalink" do
         request.permalink.should == 'products'

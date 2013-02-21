@@ -1,0 +1,40 @@
+<div id="home_page">
+  {% paginate products from products.all by 20 %}
+  {% if products != blank %}
+  <ul id="product_list" class="infinite">
+    {% for product in products %}
+    <li id="product_{{ product.id }}" class="product">
+      <a href="{{ product.url }}">
+        <img alt="Image of {{ product.name | escape }}" src="{{ product.image | product_image_url size: theme.product_list_size }}" />
+        <div class="product_info">
+          <div>
+            <p>
+            <span class="product_name">{{ product.name }}</span>
+            <span class="{% if product.on_sale %}sale{% else %}price{% endif %} {{ product.status }}">{{ product.default_price | money_with_sign }}{% case product.status %}{% when 'sold-out' %} / Sold Out{% when 'coming-soon' %} / Coming Soon{% when 'active' %}{% if product.on_sale %} / On Sale{% endif %}{% endcase %}</span>
+            </p>
+          </div>
+        </div>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+
+  <div class="pagination" id="pagination">
+  {% if paginate.previous %}
+    {% if paginate.previous.is_link %}
+    <a href="{{ paginate.previous.url }}" id="previous" class="circle">&larr;<em>Previous</em></a>
+    {% endif %}
+  {% endif %}
+
+  {% if paginate.next %}
+    {% if paginate.next.is_link %}
+    <a href="{{ paginate.next.url }}" id="next" class="circle">&rarr;<em>Next</em></a>
+    {% endif %}
+  {% endif %}
+  </div>  
+
+  {% else %}
+  <p class="alert-noproducts"><span>No products found.</span></p>
+  {% endif %}
+  {% endpaginate %}
+</div>

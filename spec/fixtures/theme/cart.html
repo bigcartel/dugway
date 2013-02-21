@@ -1,0 +1,113 @@
+<div id="cart_page">
+  {% if cart.items != blank %}
+  <form id="cart_form" method="post" action="/cart">
+    <h1>Cart</h1>
+    
+    <ul id="cart_items">
+      {% for item in cart.items %}
+      <li class="cart_item" data-item-id="{{ item.id }}">
+        <div class="cart_left">
+          <div class="cart_item_image">
+            <a href="{{ item.product.url }}" style="background-image: url({{ item.product.image | product_image_url size:"thumb" }}); background-size: {% if item.product.image.width < item.product.image.height %}auto 50px;{% else %}50px auto;{% endif %}">{{ item.name }}</a>
+          </div>
+        
+          <div class="cart_item_details">    
+            <p>
+              <span class="cart_item_title {% if item.product.has_default_option %}optionless{% endif %}"><a href="{{ item.product.url }}">{{ item.product.name }}</a></span>
+              {% unless item.product.has_default_option %}
+              <span class="cart_item_description">{{ item.option.name }}</span>
+              {% endunless %}
+            </p>
+          </div>
+        
+          <div class="cart_item_qty">{{ item | item_quantity_input }}</div>
+        </div>
+        
+        <div class="cart_right">      
+          <div class="cart_item_price"><p>{{ item.price | money_with_sign }}</p></div>
+          <div class="cart_item_remove"><a href="#" title="Remove item" class="circle remove">&times;<em>Remove</em></a></div>
+        </div>
+      </li>
+      {% endfor %}
+      
+      {% if cart.discount.enabled %}
+      <li id="cart_discount" class="cart_item">
+        {% if cart.discount.pending %}
+        <div class="cart_left">               
+          <div id="cart_discount_input">{{ cart.discount | discount_code_input }}</div>
+          <label id="cart_discount_label" for="cart_discount_code"><p>Have a discount code?</p></label>
+        </div>
+        
+        <div class="cart_right">      
+          <div id="cart_discount_value" class="cart_item_price"><p>(optional)</p></div>
+        </div>
+        {% elsif cart.discount.free_shipping %}
+        <div class="cart_left">       
+          <label id="cart_discount_label" for="cart_discount_code"><p>{{ cart.discount.name }}</p></label>        
+        </div>
+        
+        <div class="cart_right">      
+          <div id="cart_discount_value" class="cart_item_price"><p></p></div>
+        </div>
+        {% else %}
+        <div class="cart_left">       
+          <label id="cart_discount_label" for="cart_discount_code"><p>{{ cart.discount.name }}</p></label>        
+        </div>
+        
+        <div class="cart_right">      
+          <div id="cart_discount_value" class="cart_item_price"><p>{{ cart.discount.amount | money_with_sign }}</p></div>
+        </div>
+        {% endif %}
+      </li>
+      {% endif %}
+     
+      {% if cart.shipping.enabled %}
+      {% if cart.shipping.strict %}
+      <li id="cart_shipping" class="cart_item">
+        <div class="cart_left">        
+          <div id="cart_shipping_select">{{ store.country | country_select }}</div> 
+          <label for="country"><p>Shipping to:</p></label>     
+        </div>
+        <div class="cart_right">      
+          <div id="cart_shipping_value" class="cart_item_price"><p{% if cart.shipping.pending %} style="display:none"{% endif %}>{% unless cart.shipping.pending %}{{ cart.shipping.amount | money_with_sign }}{% endunless %}</p></div>
+        </div>
+      </li>
+      {% else %}
+      <li id="cart_shipping" class="cart_item">
+        <div class="cart_left">
+        <label><p>Shipping:</p></label>
+        </div>
+        <div class="cart_right">      
+          <div id="cart_shipping_value" class="cart_item_price"><p{% if cart.shipping.pending %} style="display:none"{% endif %}>{% unless cart.shipping.pending %}{{ cart.shipping.amount | money_with_sign }}{% endunless %}</p></div>
+        </div>
+      </li>
+      {% endif %}
+      {% endif %}
+     
+     <li class="cart_item">
+      <div class="cart_left"><label class="cart_total_label"><p>Total:</p></label></div>
+      <div class="cart_right">
+        <div id="cart_total_value" class="cart_item_price">
+          <p class="cart_total">
+            <span id="total_price">{{ cart.total | money_with_sign }}</span>
+          </p>
+          {% unless cart.shipping.enabled %}
+          <span id="total_plus_shipping">+ applicable shipping</span>
+          {% endunless %}
+        </div>
+      </div>
+     </li>
+
+     <li class="cart_item_single">
+      <div class="cart_left">&nbsp;<!--preso only--></div>
+      <div class="cart_right"><button type="submit" id="cart_button_checkout" name="checkout" title="Checkout" class="button">Checkout Now</button></div>
+     </li>
+    </ul>
+  </form>
+  {% endif %}
+
+  <div id="cart_empty"{% if cart.items != blank %} style="display:none"{% endif %}>
+    <h1>Your cart is empty</h1>
+    <p>Sounds like a good time to <a href="/">start shopping</a>.</p>
+  </div>
+</div>

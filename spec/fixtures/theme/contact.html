@@ -1,10 +1,10 @@
-<div id="contact_page">
+<div>
   {% if contact.sent %}
   <h1>Thank You!</h1>
   <p>Your message has been sent and we will try to respond within 24 business hours.</p>      
   {% else %}
   <h1>{{ page.name }}</h1>
-  <form id="contact_form" method="post" action="/contact">
+  <form method="post" action="/contact">
     <ul>
       <li>
         <label>Your Name:</label>
@@ -29,7 +29,7 @@
         <div id="captcha_phrase">{{ contact.captcha }}</div>       
       </li>
       <li>
-        <button id="contact_button" type="submit" name="submit" class="button">Send Message</button>
+        <button type="submit" name="submit" class="button">Send Message</button>
       </li>
     </ul>
   </form>

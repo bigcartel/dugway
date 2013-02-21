@@ -5,22 +5,22 @@
     <meta name="description" content="{{ page.meta_description }}">
     <meta name="keywords" content="{{ page.meta_keywords }}">
     <link href="{{ theme | theme_css_url }}" media="screen" rel="stylesheet" type="text/css">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js" type="text/javascript"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" type="text/javascript"></script>
     <script src="{{ 'api' | theme_js_url }}" type="text/javascript"></script>
     <script src="{{ theme | theme_js_url }}" type="text/javascript"></script>
     {{ head_content }}
   </head>
-
+  
   <body id="{{ page.permalink }}" class="{{ page.category }}">
     <header>
       <a href="/" title="{{ store.name | escape }}">{{ store.name }}</a>
     </header>
-  
+    
     <aside>
       <section>
         <a href="/cart">Cart ({{ cart.total | money_with_sign }})</a>
       </section>
-    
+      
       {% if theme.show_search %}
       <section>
         <form action="/products" method="get">
@@ -28,7 +28,7 @@
         </form>
       </section>
       {% endif %}
-    
+      
       <nav>
         <h3>Products</h3>            
         <ul>
@@ -37,7 +37,7 @@
           <li>{{ category | link_to }}</li>
           {% endfor %}
         </ul>
-      
+        
         {% if artists.active != blank %}
         <h3>Artists</h3>
         <ul>
@@ -47,21 +47,21 @@
           {% endfor %}
         </ul>
         {% endif %}
-      
+        
         <h3>Info</h3>
         <ul>
           {% for page in pages.all %}
           <li>{{ page | link_to }}</li>
           {% endfor %}
-          <li><a href="/contact">Contact Us</a></li>    
+          <li><a href="/contact">Contact Us</a></li>
           {% if store.website != blank %}
           <li><a href="{{ store.website }}">Back to Site</a></li>
           {% endif %}
         </ul>
       </nav>
     </aside>
-  
-    <section>    
+    
+    <section>
     {% if page.category == 'custom' %}
       <h1>{{ page.name }}</h1>
       {{ page_content | paragraphs }}
@@ -69,9 +69,9 @@
       {{ page_content }}
     {% endif %}
     </section>
-  
+    
     <footer>
-      <cite><a href="http://bigcartel.com" title="Store by Big Cartel">Store by Big Cartel</a></cite>
+      <cite>{{ bigcartel_credit }}</cite>
     </footer>
   </body>
 </html>

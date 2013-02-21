@@ -1,8 +1,5 @@
 {
-  "name": "Sample",
-  "javascripts": [
-    "store"
-  ],
+  "name": "Test Theme",
   "images": [
     {
       "variable": "logo",
@@ -24,7 +21,7 @@
     {
       "variable": "font",
       "label": "Font",
-      "default": "Helvetica"
+      "default": "Georgia"
     }
   ],
   "colors": [
@@ -34,80 +31,18 @@
       "default": "#222222"
     },
     {
-      "variable": "header_color",
-      "label": "Header Text",
-      "default": "#FFFFFF"
-    },
-    {
-      "variable": "font_color",
-      "label": "Body Text",
-      "default": "#808080"
-    },
-    {
       "variable": "link_color",
-      "label": "Buttons & Links",
-      "default": "#76BFAF"
-    },
-    {
-      "variable": "link_rollover",
-      "label": "Button & Link Rollovers",
-      "default": "#A6F0E0"
-    },
-    {
-      "variable": "border_color",
-      "label": "Lines",
-      "default": "#2B2B2B"
-    },
-    {
-      "variable": "highlight_color",
-      "label": "Sale, Sold & Soon Text",
-      "default": "#FFFFFF"
-    },
-    {
-      "variable": "sidebar_color",
-      "label": "Sidebar Background",
-      "default": "transparent"
-    },
-    {
-      "variable": "sidebar_link_color",
-      "label": "Sidebar Links",
-      "default": "#808080"
-    },
-    {
-      "variable": "sidebar_link_rollover",
-      "label": "Sidebar Link Rollovers",
-      "default": "#A6F0E0"
-    },
-    {
-      "variable": "sidebar_border_color",
-      "label": "Sidebar Lines",
-      "default": "#2B2B2B"
+      "label": "Link Color",
+      "default": "red"
     }
   ],
   "options": [
     {
-      "variable": "product_list_layout",
-      "label": "Product List Layout",
-      "type": "select",
-      "options": [["Masonry", "masonry"], ["Rows", "fitRows"]],
-      "default": "masonry",
-      "description": "The arrangement of your products on the Home and Products pages"
-    },
-    {
-      "variable": "product_list_size",
-      "label": "Product List Image Size",
-      "type": "select",
-      "options": [["Small", "medium"], ["Medium", "large"], ["Large", ""]],
-      "default": "large",
-      "description": "The size of your product images on the Home and Products pages"
-    },
-    {
-      "variable": "show_overlay",
-      "label": "Product List Info",
-      "type": "select",
-      "options": ["On rollover", "Under image"],
-      "default": "On rollover",
-      "description": "Shows a product's name & price on rollover or under the image"
+      "variable": "show_search",
+      "label": "Show search",
+      "type": "boolean",
+      "default": false,
+      "description": "Shows a search field"
     },
     {
       "variable": "fixed_sidebar",
@@ -115,21 +50,6 @@
       "type": "boolean",
       "default": true,
       "description": "Keeps the sidebar stationary while the page scrolls"
-    },
-    {
-      "variable": "show_inventory_bars",
-      "label": "Show inventory bars",
-      "type": "boolean",
-      "default": false,
-      "description": "Shows a product's inventory amounts (when using inventory tracking)",
-      "requires": "inventory"
-    },
-    {
-      "variable": "show_search",
-      "label": "Show search",
-      "type": "boolean",
-      "default": false,
-      "description": "Shows a search link in the sidebar"
     }
   ]
 }

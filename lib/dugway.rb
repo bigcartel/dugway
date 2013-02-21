@@ -16,20 +16,21 @@ require 'dugway/theme'
 module Dugway
   def self.application(options={})
     Rack::Builder.app do
-      use Rack::CommonLogger, Dugway.logger
+      use Rack::CommonLogger, Dugway.logger(options[:log])
       use Rack::ShowExceptions
       use BetterErrors::Middleware
       
-      BetterErrors.logger = Dugway.logger
+      BetterErrors.logger = Dugway.logger(options[:log])
       BetterErrors.application_root = Dir.pwd
       
       run Application.new(options)
     end
   end
   
-  def self.logger
+  def self.logger(local=false)
+    return nil unless local
     dir = File.join(Dir.pwd, 'log')
     Dir.mkdir(dir) unless File.exists?(dir)
-    @logger ||= Logger.new(File.join(dir, 'dugway.log'))
+    Logger.new(File.join(dir, 'dugway.log'))
   end
 end

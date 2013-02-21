@@ -1,7 +1,6 @@
 module Dugway
   class Template
-    def initialize(theme, name, content, liquify=true)
-      @theme = theme
+    def initialize(name, content, liquify=true)
       @name = name
       @content = content
       @liquify = liquify
@@ -15,15 +14,15 @@ module Dugway
       File.extname(@name)
     end
     
-    def render(store, request)
+    def render(theme, store, request)
       if liquify?
-        liquifier = Liquifier.new(@theme, store, request)
+        liquifier = Liquifier.new(theme, store, request)
         rendered_content = liquifier.render @content
         
         if standalone?
           rendered_content
         else
-          liquifier.render @theme.layout, 'page_content' => rendered_content
+          liquifier.render theme.layout, 'page_content' => rendered_content
         end
       else
         @content

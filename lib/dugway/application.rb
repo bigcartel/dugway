@@ -11,7 +11,7 @@ module Dugway
       if request.image?
         @theme.find_image_by_env(env)
       elsif template = find_template(request)
-        [200, { 'Content-Type' => template.content_type }, [template.render(@store, request)]]
+        [200, { 'Content-Type' => template.content_type }, [template.render(@theme, @store, request)]]
       else
         [404, { 'Content-Type' => 'text/plain' }, ['Page not found']]
       end
@@ -23,7 +23,7 @@ module Dugway
       if template = @theme.find_template_by_request(request)
         template
       elsif page = @store.page(request.permalink)
-        Template.new(@theme, request.file_name, page['content'])
+        Template.new(request.file_name, page['content'])
       else
         nil
       end

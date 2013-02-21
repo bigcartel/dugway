@@ -16,11 +16,11 @@ module Dugway
       name = request.file_name
       
       if request.html? && content = read_source_file(name)
-        Template.new(self, name, content)
+        Template.new(name, content)
       elsif name == 'styles.css'
-        Template.new(self, name, sprockets[name].to_s)
+        Template.new(name, sprockets[name].to_s)
       elsif name == 'scripts.js'
-        Template.new(self, name, sprockets[name].to_s, false)
+        Template.new(name, sprockets[name].to_s, false)
       else
         nil
       end

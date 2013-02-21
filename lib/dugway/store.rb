@@ -24,7 +24,7 @@ module Dugway
         { 'name' => 'Checkout', 'permalink' => 'checkout', 'url' => '/checkout' },
         { 'name' => 'Success', 'permalink' => 'success', 'url' => '/success' },
         { 'name' => 'Contact', 'permalink' => 'contact', 'url' => '/contact' },
-        { 'name' => 'Maintenance', 'permalink' => 'maintenance', 'url' => '/maintenance' }    
+        { 'name' => 'Maintenance', 'permalink' => 'maintenance', 'url' => '/maintenance' }
       ]
     end
     
@@ -68,11 +68,11 @@ module Dugway
     end
     
     def currency
-      @account['currency']
+      account['currency']
     end
     
     def country
-      @account['country']
+      account['country']
     end
     
     private

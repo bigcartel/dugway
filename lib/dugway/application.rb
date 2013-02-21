@@ -3,7 +3,7 @@ module Dugway
     def initialize(options={})
       @source_dir = File.join(Dir.pwd, options[:source_dir] || 'source')
       @theme = Theme.new(@source_dir, options[:user_settings] || {})
-      @store = Store.new(options[:store] || 'builder')
+      @store = Store.new(options[:store] || 'dugway')
     end
     
     def call(env)

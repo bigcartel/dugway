@@ -14,6 +14,14 @@ module Dugway
       File.extname(@name)
     end
     
+    def liquify?
+      @liquify
+    end
+    
+    def standalone?
+      extension != '.html' || !!(@content =~ /\{\{\s*head_content\s*\}\}/)
+    end
+    
     def render(theme, store, request)
       if liquify?
         liquifier = Liquifier.new(theme, store, request)
@@ -27,14 +35,6 @@ module Dugway
       else
         @content
       end
-    end
-    
-    def liquify?
-      @liquify
-    end
-    
-    def standalone?
-      extension != '.html' || @content =~ /\{\{\s*head_content\s*\}\}/
     end
   end
 end

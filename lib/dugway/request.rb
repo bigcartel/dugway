@@ -28,7 +28,7 @@ module Dugway
     end
     
     def image?
-      path =~ /^\/images\/.+\.(jpg|jpeg|gif|png)$/ ? true : false
+      !!(path =~ /^\/images\/.+\.(jpg|jpeg|gif|png)$/)
     end
     
     def custom_page?

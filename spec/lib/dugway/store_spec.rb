@@ -3,12 +3,6 @@ require 'spec_helper'
 describe Dugway::Store do
   let(:store) { Dugway::Store.new('dugway') }
   
-  before(:each) do
-    stub_request(:get, /.*api\.bigcartel\.com.*/).to_return(lambda { |request|
-      { :body => File.new(File.join(RSpec.configuration.fixture_path, 'store', request.uri.path.split('/', 3).last)), :status => 200, :headers => {} }
-    })
-  end
-  
   describe "#account" do
     it "should return account params" do
       store.account.should be_present

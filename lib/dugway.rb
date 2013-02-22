@@ -28,9 +28,11 @@ module Dugway
   end
   
   def self.logger(local=false)
-    return nil unless local
-    dir = File.join(Dir.pwd, 'log')
-    Dir.mkdir(dir) unless File.exists?(dir)
-    Logger.new(File.join(dir, 'dugway.log'))
+    @logger ||= begin
+      return nil unless local
+      dir = File.join(Dir.pwd, 'log')
+      Dir.mkdir(dir) unless File.exists?(dir)
+      Logger.new(File.join(dir, 'dugway.log'))
+    end
   end
 end

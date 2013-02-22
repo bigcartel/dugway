@@ -68,6 +68,18 @@ describe Dugway::Store do
     end
   end
   
+  describe "#category_products" do
+    it "should return an array of products for that category" do
+      products = store.category_products('tees')
+      products.size.should == 1
+      products.first['name'].should == 'My Product'
+    end
+    
+    it "should return an empty array with a bad permalink" do
+      store.category_products('blah').should == []
+    end
+  end
+  
   describe "#artists" do
     it "should return an array of the store's artists" do
       store.artists.should be_present
@@ -86,6 +98,18 @@ describe Dugway::Store do
     end
   end
   
+  describe "#artist_products" do
+    it "should return an array of products for that artist" do
+      products = store.artist_products('artist-one')
+      products.size.should == 1
+      products.first['name'].should == 'My Product'
+    end
+    
+    it "should return an empty array with a bad permalink" do
+      store.artist_products('blah').should == []
+    end
+  end
+  
   describe "#products" do
     it "should return an array of the store's products" do
       store.products.should be_present
@@ -101,6 +125,18 @@ describe Dugway::Store do
     
     it "should return nil with a bad permalink" do
       store.product('blah').should be_nil
+    end
+  end
+  
+  describe "#search_products" do
+    it "should return an array of products for that search term" do
+      products = store.search_products('my')
+      products.size.should == 1
+      products.first['name'].should == 'My Product'
+    end
+    
+    it "should return an empty array with a bad permalink" do
+      store.search_products('blah').should == []
     end
   end
   

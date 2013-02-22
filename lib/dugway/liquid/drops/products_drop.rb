@@ -8,11 +8,11 @@ class ProductsDrop < BaseDrop
   def current
     sort_and_paginate begin
       if artist.present?
-        @source.select { |p| p['artists'].all.any? { |a| a['permalink'] == artist }}
+        dropify @store.artist_products(artist)
       elsif category.present?
-        @source.select { |p| p['categories'].all.any? { |c| c['permalink'] == category }}
+        dropify @store.category_products(category)
       elsif search_terms.present?
-        @source.select { |p| p['name'].downcase.include? search_terms.downcase }
+        dropify @store.search_products(search_terms)
       else
         @source
       end
@@ -60,8 +60,12 @@ class ProductsDrop < BaseDrop
   def category
     @context.registers[:category]['permalink'] rescue nil
   end
-
+  
   def search_terms
     @context.registers[:params][:search]
   end  
+  
+  def dropify(products)
+    products.map { |p| ProductDrop.new(p) }
+  end
 end

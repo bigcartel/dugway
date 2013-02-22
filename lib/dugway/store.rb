@@ -51,6 +51,10 @@ module Dugway
       lookup(permalink, categories)
     end
     
+    def category_products(permalink)
+      lookup_products(permalink, 'categories')
+    end
+    
     def artists
       account.has_key?('artists') ? account['artists'] : []
     end
@@ -59,12 +63,20 @@ module Dugway
       lookup(permalink, artists)
     end
     
+    def artist_products(permalink)
+      lookup_products(permalink, 'artists')
+    end
+    
     def products
       @products ||= get('/products.js')
     end
     
     def product(permalink)
       lookup(permalink, products)
+    end
+    
+    def search_products(search_terms)
+      products.select { |p| p['name'].downcase.include?(search_terms.downcase) || p['description'].downcase.include?(search_terms.downcase) }
     end
     
     def currency
@@ -83,6 +95,10 @@ module Dugway
   
     def lookup(permalink, array)
       array.find { |item| item['permalink'] == permalink }.try(:dup)
+    end
+    
+    def lookup_products(permalink, type)
+      products.select { |p| p[type].any? { |c| c['permalink'] == permalink }}
     end
   end
 end

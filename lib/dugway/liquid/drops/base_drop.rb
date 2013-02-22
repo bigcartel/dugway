@@ -6,6 +6,7 @@ class BaseDrop < Liquid::Drop
   end
   
   def context=(current_context)
+    @store = current_context.registers[:store]
     @params = current_context.registers[:params]
     @full_url = current_context.registers[:full_url]
     @path = current_context.registers[:path]

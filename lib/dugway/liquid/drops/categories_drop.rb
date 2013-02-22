@@ -4,6 +4,6 @@ class CategoriesDrop < BaseDrop
   end
   
   def active
-    all
+    @active ||= @source.reject { |c| @store.category_products(c['permalink']).empty? }
   end
 end

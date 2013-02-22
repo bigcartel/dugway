@@ -61,6 +61,7 @@ module Dugway
 
     def registers
       {
+        :store => @store,
         :params => @request.params.with_indifferent_access,
         :full_url => @request.url,
         :full_path => @request.fullpath,

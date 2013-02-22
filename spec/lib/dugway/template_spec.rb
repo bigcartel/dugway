@@ -57,7 +57,7 @@ describe Dugway::Template do
   describe "#liquify?" do
     describe "when @liquify is true" do
       it "returns true" do
-        template.liquify?.should be(true)
+        template.liquify?.should be_true
       end
     end
     
@@ -65,7 +65,7 @@ describe Dugway::Template do
       let(:liquify) { false }
       
       it "returns false" do
-        template.liquify?.should be(false)
+        template.liquify?.should be_false
       end
     end
   end
@@ -75,7 +75,7 @@ describe Dugway::Template do
       let(:name) { 'styles.css' }
       
       it "returns true" do
-        template.standalone?.should be(true)
+        template.standalone?.should be_true
       end
     end
     
@@ -83,7 +83,7 @@ describe Dugway::Template do
       let(:name) { 'scripts.js' }
       
       it "returns true" do
-        template.standalone?.should be(true)
+        template.standalone?.should be_true
       end
     end
     
@@ -91,13 +91,13 @@ describe Dugway::Template do
       let(:content) { 'Hi {{ head_content }} there.' }
       
       it "returns true" do
-        template.standalone?.should be(true)
+        template.standalone?.should be_true
       end
     end
     
     describe "for HTML pages without head_content" do
       it "returns false" do
-        template.standalone?.should be(false)
+        template.standalone?.should be_false
       end
     end
   end

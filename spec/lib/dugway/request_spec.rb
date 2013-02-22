@@ -141,7 +141,7 @@ describe Dugway::Request do
       let(:path) { '/cart' }
       
       it "returns true" do
-        request.html?.should be(true)
+        request.html?.should be_true
       end
     end
     
@@ -149,7 +149,7 @@ describe Dugway::Request do
       let(:path) { '/cart.html' }
       
       it "returns true" do
-        request.html?.should be(true)
+        request.html?.should be_true
       end
     end
     
@@ -157,7 +157,7 @@ describe Dugway::Request do
       let(:path) { '/styles.css' }
       
       it "returns false" do
-        request.html?.should be(false)
+        request.html?.should be_false
       end
     end
     
@@ -165,7 +165,7 @@ describe Dugway::Request do
       let(:path) { '/scripts.js' }
       
       it "returns false" do
-        request.html?.should be(false)
+        request.html?.should be_false
       end
     end
   end
@@ -175,7 +175,7 @@ describe Dugway::Request do
       let(:path) { '/images/image.jpg' }
       
       it "returns true" do
-        request.image?.should be(true)
+        request.image?.should be_true
       end
     end
     
@@ -183,7 +183,7 @@ describe Dugway::Request do
       let(:path) { '/images/image.jpeg' }
       
       it "returns true" do
-        request.image?.should be(true)
+        request.image?.should be_true
       end
     end
     
@@ -191,7 +191,7 @@ describe Dugway::Request do
       let(:path) { '/images/image.gif' }
       
       it "returns true" do
-        request.image?.should be(true)
+        request.image?.should be_true
       end
     end
     
@@ -199,7 +199,7 @@ describe Dugway::Request do
       let(:path) { '/images/image.png' }
       
       it "returns true" do
-        request.image?.should be(true)
+        request.image?.should be_true
       end
     end
     
@@ -207,7 +207,7 @@ describe Dugway::Request do
       let(:path) { '/other/image.png' }
       
       it "returns false" do
-        request.image?.should be(false)
+        request.image?.should be_false
       end
     end
     
@@ -215,7 +215,7 @@ describe Dugway::Request do
       let(:path) { '/cart' }
       
       it "returns false" do
-        request.image?.should be(false)
+        request.image?.should be_false
       end
     end
   end
@@ -225,7 +225,7 @@ describe Dugway::Request do
       let(:path) { '/about-us' }
       
       it "returns true" do
-        request.custom_page?.should be(true)
+        request.custom_page?.should be_true
       end
     end
     
@@ -233,7 +233,7 @@ describe Dugway::Request do
       let(:path) { '/cart' }
       
       it "returns false" do
-        request.custom_page?.should be(false)
+        request.custom_page?.should be_false
       end
     end
     
@@ -241,7 +241,7 @@ describe Dugway::Request do
       let(:path) { '/styles.css' }
       
       it "returns false" do
-        request.custom_page?.should be(false)
+        request.custom_page?.should be_false
       end
     end
   end

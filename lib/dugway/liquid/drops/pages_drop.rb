@@ -1,5 +1,5 @@
 class PagesDrop < BaseDrop
   def all
-    @all ||= @source.find_all { |page| page['category'] == 'custom' }
+    @all ||= source.select { |page| page['category'] == 'custom' }
   end  
 end

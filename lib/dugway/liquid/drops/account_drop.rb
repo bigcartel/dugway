@@ -4,10 +4,10 @@ class AccountDrop < BaseDrop
   end
 
   def currency
-    @currency ||= CurrencyDrop.new(@source['currency'])
+    @currency ||= CurrencyDrop.new(source['currency'])
   end
   
   def country
-    @country ||= CountryDrop.new(@source['country'])
+    @country ||= CountryDrop.new(source['country'])
   end  
 end

@@ -1,5 +1,6 @@
 class BaseDrop < Liquid::Drop
   attr_reader :source
+  attr_reader :store
   
   def initialize(source=nil)
     @source = source
@@ -15,19 +16,15 @@ class BaseDrop < Liquid::Drop
     super
   end
   
-  def before_method(method)
-    if @source.respond_to?('has_key?') && @source.has_key?(method)
-      return @source[method]
-    elsif @source.is_a?(Array) && @source.first.has_key?('permalink')
-      for item in @source
-        return item if item['permalink'] == method.to_s
+  def before_method(method_or_key)
+    if source.respond_to?('has_key?') && source.has_key?(method_or_key)
+      return source[method_or_key]
+    elsif source.is_a?(Array) && source.first.has_key?('permalink')
+      for item in source
+        return item if item['permalink'] == method_or_key.to_s
       end
     end
     
     nil
-  end
-  
-  def log(msg)
-    # TODO: log somewhere
   end
 end

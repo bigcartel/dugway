@@ -16,6 +16,6 @@ class PageDrop < BaseDrop
   end
   
   def content
-    @liquid['content']
+    'TODO'
   end
 end

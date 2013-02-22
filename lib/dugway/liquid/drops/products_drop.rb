@@ -2,25 +2,25 @@ require 'will_paginate/array'
 
 class ProductsDrop < BaseDrop
   def all
-    sort_and_paginate @source
+    sort_and_paginate source
   end
   
   def current
     sort_and_paginate begin
       if artist.present?
-        dropify @store.artist_products(artist)
+        dropify store.artist_products(artist)
       elsif category.present?
-        dropify @store.category_products(category)
+        dropify store.category_products(category)
       elsif search_terms.present?
-        dropify @store.search_products(search_terms)
+        dropify store.search_products(search_terms)
       else
-        @source
+        source
       end
     end
   end
   
   def on_sale
-    sort_and_paginate @source.select { |p| p['on_sale'] }
+    sort_and_paginate source.select { |p| p['on_sale'] }
   end
 
   private

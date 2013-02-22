@@ -8,11 +8,11 @@ class ProductDrop < BaseDrop
   end
   
   def status
-    @source['status']
+    source['status']
   end
   
   def on_sale
-    @source['on_sale']
+    source['on_sale']
   end
   
   def min_price
@@ -36,15 +36,15 @@ class ProductDrop < BaseDrop
   end
   
   def options
-    @options ||= @source['options'].map { |o| ProductOptionDrop.new(o) }
+    @options ||= source['options'].map { |o| ProductOptionDrop.new(o) }
   end
   
   def options_in_stock
-    @options_in_stock ||= @source['options'].map { |o| ProductOptionDrop.new(o) }
+    @options_in_stock ||= source['options'].map { |o| ProductOptionDrop.new(o) }
   end
   
   def shipping
-    @shipping ||= @source['shipping'].map { |o| ShippingOptionDrop.new(o) }
+    @shipping ||= source['shipping'].map { |o| ShippingOptionDrop.new(o) }
   end
   
   def image
@@ -52,7 +52,7 @@ class ProductDrop < BaseDrop
   end
   
   def images
-    @images ||= @source['images'].map { |i| ImageDrop.new(i) }
+    @images ||= source['images'].map { |i| ImageDrop.new(i) }
   end
   
   def image_count
@@ -60,11 +60,11 @@ class ProductDrop < BaseDrop
   end
 
   def previous_product
-    @previous_product ||= @source['higher_item'] || ''
+    @previous_product ||= source['higher_item'] || ''
   end
   
   def next_product
-    @next_product ||= @source['lower_item'] || ''
+    @next_product ||= source['lower_item'] || ''
   end
 
   def edit_url
@@ -72,11 +72,11 @@ class ProductDrop < BaseDrop
   end
 
   def categories
-    @categories ||= CategoriesDrop.new(@source['categories'].map { |c| CategoryDrop.new(c) })
+    @categories ||= CategoriesDrop.new(source['categories'].map { |c| CategoryDrop.new(c) })
   end
 
   def artists
-    @artists ||= ArtistsDrop.new(@source['artists'].map { |a| ArtistDrop.new(a) })
+    @artists ||= ArtistsDrop.new(source['artists'].map { |a| ArtistDrop.new(a) })
   end
 
 private

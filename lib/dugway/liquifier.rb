@@ -33,8 +33,10 @@ module Dugway
       end
     end
     
-    def render(content, overridden_assigns={})
-      Liquid::Template.parse(content).render(assigns.update(overridden_assigns), :registers => registers)
+    def render(content, overridden_assigns={}, restrict_to_theme=false)
+      ass = restrict_to_theme ? assigns.slice('theme') : assigns.update(overridden_assigns)
+      reg = restrict_to_theme ? {} : registers
+      Liquid::Template.parse(content).render(ass, :registers => reg)
     end
     
     private

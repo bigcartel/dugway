@@ -102,6 +102,22 @@ describe Dugway::Template do
     end
   end
   
+  describe "#styles?" do
+    describe "when it's the styles.css template" do
+      let(:name) { 'styles.css' }
+      
+      it "returns true" do
+        template.styles?.should be_true
+      end
+    end
+    
+    describe "when it's not the styles.css template" do
+      it "returns false" do
+        template.styles?.should be_false
+      end
+    end
+  end
+  
   describe "#render" do
     let(:theme) { Dugway::Theme.new }
     let(:store) { Dugway::Store.new('dugway') }
@@ -114,17 +130,27 @@ describe Dugway::Template do
     
     describe "when rendering an embedded template" do
       it "calls renders properly with Liquifier" do
-        Dugway::Liquifier.any_instance.should_receive(:render).with(content) { content }
+        Dugway::Liquifier.any_instance.should_receive(:render).with(content, {}, false) { content }
         Dugway::Liquifier.any_instance.should_receive(:render).with(layout, 'page_content' => content)
         template.render(theme, store, request)
       end
     end
     
     describe "when rendering a standalone template" do
+      let(:name) { 'maintenance.html' }
+      let(:content) { 'Hi {{ head_content }} there.' }
+      
+      it "calls renders properly with Liquifier" do
+        Dugway::Liquifier.any_instance.should_receive(:render).with(content, {}, false)
+        template.render(theme, store, request)
+      end
+    end
+    
+    describe "when rendering the styles.css template" do
       let(:name) { 'styles.css' }
       
       it "calls renders properly with Liquifier" do
-        Dugway::Liquifier.any_instance.should_receive(:render).with(content)
+        Dugway::Liquifier.any_instance.should_receive(:render).with(content, {}, true)
         template.render(theme, store, request)
       end
     end

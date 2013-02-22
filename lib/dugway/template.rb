@@ -22,10 +22,14 @@ module Dugway
       extension != '.html' || !!(@content =~ /\{\{\s*head_content\s*\}\}/)
     end
     
+    def styles?
+      @name == 'styles.css'
+    end
+    
     def render(theme, store, request)
       if liquify?
         liquifier = Liquifier.new(theme, store, request)
-        rendered_content = liquifier.render @content
+        rendered_content = liquifier.render @content, {}, styles?
         
         if standalone?
           rendered_content

@@ -2,14 +2,15 @@ require 'liquid'
 require "#{ File.dirname(__FILE__) }/liquid/drops/base_drop"
 Dir.glob("#{ File.dirname(__FILE__) }/liquid/**/*.rb").each { |file| require file }
 
-Liquid::Template.register_filter(UtilFilters)
-Liquid::Template.register_filter(CoreFilters)
-Liquid::Template.register_filter(DefaultPagination)
-Liquid::Template.register_filter(UrlFilters)
+Liquid::Template.register_filter(Dugway::Filters::UtilFilters)
+Liquid::Template.register_filter(Dugway::Filters::CoreFilters)
+Liquid::Template.register_filter(Dugway::Filters::DefaultPagination)
+Liquid::Template.register_filter(Dugway::Filters::UrlFilters)
+Liquid::Template.register_filter(Dugway::Filters::FontFilters)
 
-Liquid::Template.register_tag(:checkoutform, CheckoutForm)
-Liquid::Template.register_tag(:get, Get)
-Liquid::Template.register_tag(:paginate, Paginate)
+Liquid::Template.register_tag(:checkoutform, Dugway::Tags::CheckoutForm)
+Liquid::Template.register_tag(:get, Dugway::Tags::Get)
+Liquid::Template.register_tag(:paginate, Dugway::Tags::Paginate)
 
 module Dugway
   class Liquifier
@@ -44,17 +45,17 @@ module Dugway
     def assigns
       {
         'errors' => [],
-        'store' => AccountDrop.new(@store.account),
-        'cart' => CartDrop.new,
-        'theme' => ThemeDrop.new(@theme.user_settings),
-        'page' => PageDrop.new(@page),
-        'product' => ProductDrop.new(@product),
-        'pages' => PagesDrop.new(@store.pages.map { |p| PageDrop.new(p) }),
-        'categories' => CategoriesDrop.new(@store.categories.map { |c| CategoryDrop.new(c) }),
-        'artists' => ArtistsDrop.new(@store.artists.map { |a| ArtistDrop.new(a) }),
-        'products' => ProductsDrop.new(@store.products.map { |p| ProductDrop.new(p) }),
-        'contact' => ContactDrop.new,
-        'head_content' => '<meta name="generator" content="Big Cartel" />',
+        'store' => Drops::AccountDrop.new(@store.account),
+        'cart' => Drops::CartDrop.new,
+        'theme' => Drops::ThemeDrop.new(@theme.user_settings),
+        'page' => Drops::PageDrop.new(@page),
+        'product' => Drops::ProductDrop.new(@product),
+        'pages' => Drops::PagesDrop.new(@store.pages.map { |p| Drops::PageDrop.new(p) }),
+        'categories' => Drops::CategoriesDrop.new(@store.categories.map { |c| Drops::CategoryDrop.new(c) }),
+        'artists' => Drops::ArtistsDrop.new(@store.artists.map { |a| Drops::ArtistDrop.new(a) }),
+        'products' => Drops::ProductsDrop.new(@store.products.map { |p| Drops::ProductDrop.new(p) }),
+        'contact' => Drops::ContactDrop.new,
+        'head_content' => '<meta name="generator" content="Big Cartel">',
         'bigcartel_credit' => '<a href="http://bigcartel.com/" title="Start your own store at Big Cartel now">Online Store by Big Cartel</a>'
       }
     end

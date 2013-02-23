@@ -2,7 +2,7 @@ module Dugway
   module Drops
     class CartDrop < BaseDrop
       def total
-        0
+        0.00
       end
 
       def item_count
@@ -10,7 +10,7 @@ module Dugway
       end
 
       def items
-        nil
+        []
       end
 
       def country
@@ -18,16 +18,27 @@ module Dugway
       end
 
       def shipping
-        nil
+        { 
+          'enabled' => false,
+          'amout' => 0.00,
+          'strict' => false,
+          'pending' => false
+        }
       end
 
       def tax
-        nil
+        { 
+          'enabled' => false,
+          'amout' => 0.00
+        }
       end
 
       def discount
-        nil
-      end  
+        { 
+          'enabled' => false,
+          'pending' => false
+        }
+      end
     end
   end
 end

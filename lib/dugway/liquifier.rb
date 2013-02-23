@@ -66,6 +66,7 @@ module Dugway
       {
         :store => @store,
         :request => @request,
+        :path => @request.path,
         :params => @request.params.with_indifferent_access,
         :currency => @store.currency,
         :category => @category,

@@ -2,7 +2,7 @@ module Dugway
   module Filters
     module FontFilters
       def font_family(font_name)
-        font_name # TODO make this work
+        ThemeFont.find_family_by_name(font_name)
       end
     end
   end

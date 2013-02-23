@@ -11,3 +11,7 @@ RSpec.configure do |config|
     })
   end
 end
+
+def fake_theme
+  Dugway::Theme.new(File.join(RSpec.configuration.fixture_path, 'theme'))
+end

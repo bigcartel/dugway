@@ -135,7 +135,7 @@ describe Dugway::Template do
   end
   
   describe "#render" do
-    let(:theme) { Dugway::Theme.new }
+    let(:theme) { fake_theme }
     let(:store) { Dugway::Store.new('dugway') }
     let(:request) { Dugway::Request.new({ 'rack.url_scheme' => 'http', 'HTTP_HOST' => 'sexy.dev', 'PATH_INFO' => '/' }) }
     let(:layout) { '<html><head>{{ head_content }}</head><body>{{ page_content }}</body></html>' }

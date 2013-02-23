@@ -1,7 +1,7 @@
 module Dugway
   class Application
     def initialize(options={})
-      @theme = Theme.new(options[:user_settings] || {})
+      @theme = Theme.new(File.join(Dir.pwd, 'source'), options[:user_settings] || {})
       @store = Store.new(options[:store] || 'dugway')
     end
     

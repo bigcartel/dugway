@@ -5,10 +5,10 @@ require 'sprockets'
 
 module Dugway
   class Theme
-    SOURCE_DIR = File.join(Dir.pwd, 'source')
     REQUIRED_FILES = %w( layout.html home.html products.html product.html cart.html checkout.html success.html contact.html maintenance.html scripts.js styles.css settings.json screenshot.jpg )
     
-    def initialize(overridden_user_settings={})
+    def initialize(source_dir, overridden_user_settings={})
+      @source_dir = source_dir
       @overridden_user_settings = overridden_user_settings.stringify_keys
     end
     
@@ -27,7 +27,7 @@ module Dugway
     end
     
     def find_image_by_env(env)
-      Rack::File.new(SOURCE_DIR).call(env)
+      Rack::File.new(@source_dir).call(env)
     end
     
     def layout
@@ -38,15 +38,15 @@ module Dugway
       @settings ||= JSON.parse(read_source_file('settings.json'))
     end
     
+    def fonts
+      @fonts ||= user_settings_for_type('fonts')
+    end
+    
     def user_settings
       @user_settings ||= begin
         Hash.new.tap { |user_settings|
           %w( fonts colors options ).each { |type|
-            if settings.has_key?(type)
-              settings[type].each { |setting|
-                user_settings[setting['variable']] = setting['default']
-              }
-            end
+            user_settings.update(user_settings_for_type(type))
           }
         
           user_settings.update(@overridden_user_settings)
@@ -59,19 +59,29 @@ module Dugway
     def sprockets
       @sprockets ||= begin
         sprockets = Sprockets::Environment.new
-        sprockets.append_path SOURCE_DIR
+        sprockets.append_path @source_dir
         sprockets
       end
     end
     
     def read_source_file(file_name)
-      file_path = File.join(SOURCE_DIR, file_name)
+      file_path = File.join(@source_dir, file_name)
       
       if File.exist?(file_path)
         File.open(file_path, "rb").read
       else
         nil
       end
+    end
+    
+    def user_settings_for_type(type)
+      Hash.new.tap { |hash|
+        if settings.has_key?(type)
+          settings[type].each { |setting|
+            hash[setting['variable']] = setting['default']
+          }
+        end
+      }
     end
   end
 end

@@ -12,6 +12,7 @@ require 'dugway/request'
 require 'dugway/store'
 require 'dugway/template'
 require 'dugway/theme'
+require 'dugway/theme_font'
 
 module Dugway
   def self.application(options={})

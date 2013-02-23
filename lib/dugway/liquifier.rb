@@ -57,8 +57,8 @@ module Dugway
         'artists' => Drops::ArtistsDrop.new(@store.artists.map { |a| Drops::ArtistDrop.new(a) }),
         'products' => Drops::ProductsDrop.new(@store.products.map { |p| Drops::ProductDrop.new(p) }),
         'contact' => Drops::ContactDrop.new,
-        'head_content' => '<meta name="generator" content="Big Cartel">',
-        'bigcartel_credit' => '<a href="http://bigcartel.com/" title="Start your own store at Big Cartel now">Online Store by Big Cartel</a>'
+        'head_content' => head_content,
+        'bigcartel_credit' => bigcartel_credit
       }
     end
     
@@ -72,6 +72,20 @@ module Dugway
         :artist => @artist,
         :settings => @theme.settings
       }
+    end
+    
+    def head_content
+      content = %{<meta name="generator" content="Big Cartel">}
+      
+      if google_font_url = ThemeFont.google_font_url_for_theme_instance(@theme)
+        content << %{\n<link rel="stylesheet" type="text/css" href="#{ google_font_url }">}
+      end
+      
+      content
+    end
+    
+    def bigcartel_credit
+      '<a href="http://bigcartel.com/" title="Start your own store at Big Cartel now">Online Store by Big Cartel</a>'
     end
   end
 end

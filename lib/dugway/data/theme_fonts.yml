@@ -1,0 +1,151 @@
+# Default browser fonts
+
+default:
+  arial:
+    name: Arial
+    family: 'Arial, Helvetica, sans-serif'
+  
+  arial_black:
+    name: Arial Black
+    family: 'Arial Black, Gadget, sans-serif'
+  
+  courier_new:
+    name: Courier New
+    family: '"Courier New", Courier, monospace'
+  
+  georgia:
+    name: Georgia
+    family: 'Georgia, "Times New Roman", Times, serif'
+  
+  helvetica:
+    name: Helvetica
+    family: '"Helvetica Neue", Helvetica, Arial, sans-serif'
+  
+  impact:
+    name: Impact
+    family: 'Impact, Charcoal, sans-serif'
+  
+  lucida_grande:
+    name: Lucida Grande
+    family: '"Lucida Grande", Lucida, Verdana, sans-serif'
+  
+  palatino_linotype:
+    name: Palatino Linotype
+    family: '"Palatino Linotype", "Book Antiqua", Palatino, serif'
+  
+  tahoma:
+    name: Tahoma
+    family: 'Tahoma, Geneva, sans-serif'
+  
+  times_new_roman:
+    name: Times New Roman
+    family: '"Times New Roman", Times, serif'
+  
+  trebuchet_ms:
+    name: Trebuchet MS
+    family: '"Trebuchet MS", Arial, sans-serif'
+  
+  verdana:
+    name: Verdana
+    family: 'Verdana, Arial, Helvetica, sans-serif'
+  
+
+# Google web fonts
+
+google:
+  amaranth:
+    name: Amaranth
+    family: '"Amaranth", serif'
+  
+  arvo:
+    name: Arvo
+    family: '"Arvo", serif'
+  
+  asap:
+    name: Asap
+    family: '"Asap", sans-serif'
+  
+  copse:
+    name: Copse
+    family: '"Copse", serif'
+  
+  cutive_mono:
+    name: Cutive Mono
+    family: '"Cutive Mono", serif'
+  
+  delius:
+    name: Delius
+    family: '"Delius", cursive'
+  
+  dosis:
+    name: Dosis
+    family: '"Dosis", sans-serif'
+  
+  enriqueta:
+    name: Enriqueta
+    family: '"Enriqueta", serif'
+  
+  gentium_book_basic:
+    name: Gentium Book Basic
+    family: '"Gentium Book Basic", serif'
+  
+  glegoo:
+    name: Glegoo
+    family: '"Glegoo", serif'
+  
+  inconsolata:
+    name: Inconsolata
+    family: '"Inconsolata", sans-serif'
+  
+  lekton:
+    name: Lekton
+    family: '"Lekton", sans-serif'
+  
+  lobster_two:
+    name: Lobster Two
+    family: '"Lobster Two", cursive'
+  
+  merriweather:
+    name: Merriweather
+    family: '"Merriweather", serif'
+  
+  open_sans:
+    name: Open Sans
+    family: '"Open Sans", sans-serif'
+  
+  overlock:
+    name: Overlock
+    family: '"Overlock", cursive'
+  
+  noticia_text:
+    name: Noticia Text
+    family: '"Noticia Text", serif'
+  
+  playfair_display:
+    name: Playfair Display
+    family: '"Playfair Display", serif'
+  
+  raleway:
+    name: Raleway
+    family: '"Raleway", sans-serif'
+  
+  rokkitt:
+    name: Rokkitt
+    family: '"Rokkitt", serif'
+  
+  signika:
+    name: Signika
+    family: '"Signika", sans-serif'
+  
+  source_sans_pro:
+    name: Source Sans Pro
+    family: '"Source Sans Pro", sans-serif'
+  
+  titillium_web:
+    name: Titillium Web
+    family: '"Titillium Web", sans-serif'
+  
+  varela_round:
+    name: Varela Round
+    family: '"Varela Round", sans-serif'
+  

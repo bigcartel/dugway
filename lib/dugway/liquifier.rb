@@ -23,6 +23,7 @@ module Dugway
         @page = @store.page(request.permalink)
         @page['url'] = request.path
         @page['full_url'] = request.url
+        @page['full_path'] = request.fullpath
         
         if request.product_permalink && @product = @store.product(request.product_permalink)
           @page['name'] = @product['name']
@@ -59,16 +60,13 @@ module Dugway
         'bigcartel_credit' => '<a href="http://bigcartel.com/" title="Start your own store at Big Cartel now">Online Store by Big Cartel</a>'
       }
     end
-
+    
     def registers
       {
         :store => @store,
+        :request => @request,
         :params => @request.params.with_indifferent_access,
-        :full_url => @request.url,
-        :full_path => @request.fullpath,
-        :path => @request.path,
         :currency => @store.currency,
-        :settings => @theme.user_settings,
         :category => @category,
         :artist => @artist
       }

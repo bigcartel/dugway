@@ -5,20 +5,8 @@ module Dugway
 
       # Registered Vars
 
-      def theme
-        @context.registers[:theme]
-      end
-
-      def cart
-        @context.registers[:cart]
-      end
-
       def currency
         @context.registers[:currency]
-      end
-
-      def params
-        @context.registers[:params]
       end
 
       # Mimics

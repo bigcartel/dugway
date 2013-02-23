@@ -3,6 +3,8 @@ module Dugway
     class BaseDrop < Liquid::Drop
       attr_reader :source
       attr_reader :store
+      attr_reader :request
+      attr_reader :params
 
       def initialize(source=nil)
         @source = source
@@ -10,11 +12,8 @@ module Dugway
 
       def context=(current_context)
         @store = current_context.registers[:store]
+        @request = current_context.registers[:request]
         @params = current_context.registers[:params]
-        @full_url = current_context.registers[:full_url]
-        @path = current_context.registers[:path]
-        @currency = current_context.registers[:currency]
-        @settings = current_context.registers[:settings]
         super
       end
 
@@ -28,6 +27,10 @@ module Dugway
         end
 
         nil
+      end
+      
+      def error(msg)
+        Dugway.logger.error msg
       end
     end
   end

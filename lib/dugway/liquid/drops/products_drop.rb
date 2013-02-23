@@ -64,7 +64,7 @@ module Dugway
       end
 
       def search_terms
-        @context.registers[:params][:search]
+        params[:search]
       end  
 
       def dropify(products)

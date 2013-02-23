@@ -18,13 +18,9 @@ require 'dugway/theme_font'
 module Dugway
   def self.application(options={})
     Rack::Builder.app do
-      use Rack::CommonLogger, Dugway.logger(options[:log])
-      use Rack::ShowExceptions
       use BetterErrors::Middleware
-      
       BetterErrors.logger = Dugway.logger(options[:log])
-      BetterErrors.application_root = Dir.pwd
-      
+      use Rack::CommonLogger, Dugway.logger(options[:log])
       run Application.new(options)
     end
   end

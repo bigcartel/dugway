@@ -50,7 +50,7 @@ module Dugway
     private
     
     def find_permalink(type)
-      path.scan(/\/#{ type }\/([a-z-]+)$/).try(:first).try(:first)
+      path.scan(/\/#{ type }\/([a-z0-9\-_]+)$/).try(:first).try(:first)
     end
   end
 end

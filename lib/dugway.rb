@@ -1,9 +1,9 @@
+require 'extensions/time'
 require 'active_support/all'
 
 require 'rack/builder'
 require 'rack/commonlogger'
 require 'rack/showexceptions'
-
 require 'better_errors'
 
 require 'dugway/application'

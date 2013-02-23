@@ -20,7 +20,7 @@ module Dugway
       def shipping
         { 
           'enabled' => false,
-          'amout' => 0.00,
+          'amount' => 0.00,
           'strict' => false,
           'pending' => false
         }
@@ -29,7 +29,7 @@ module Dugway
       def tax
         { 
           'enabled' => false,
-          'amout' => 0.00
+          'amount' => 0.00
         }
       end
 

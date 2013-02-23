@@ -74,11 +74,11 @@ module Dugway
       end
 
       def categories
-        @categories ||= CategoriesDrop.new(source['categories'].map { |c| CategoryDrop.new(c) })
+        @categories ||= CategoriesDrop.new(source['categories'].map { |c| CategoryDrop.new(c) }) rescue []
       end
 
       def artists
-        @artists ||= ArtistsDrop.new(source['artists'].map { |a| ArtistDrop.new(a) })
+        @artists ||= ArtistsDrop.new(source['artists'].map { |a| ArtistDrop.new(a) }) rescue []
       end
 
       private

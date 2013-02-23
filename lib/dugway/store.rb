@@ -17,14 +17,14 @@ module Dugway
     
     def theme_pages
       [
-        { 'name' => 'Home', 'permalink' => 'home', 'url' => '/' },
-        { 'name' => 'Products', 'permalink' => 'products', 'url' => '/products' },
-        { 'name' => 'Product', 'permalink' => 'product', 'url' => '/product' },
-        { 'name' => 'Cart', 'permalink' => 'cart', 'url' => '/cart' },
-        { 'name' => 'Checkout', 'permalink' => 'checkout', 'url' => '/checkout' },
-        { 'name' => 'Success', 'permalink' => 'success', 'url' => '/success' },
-        { 'name' => 'Contact', 'permalink' => 'contact', 'url' => '/contact' },
-        { 'name' => 'Maintenance', 'permalink' => 'maintenance', 'url' => '/maintenance' }
+        { 'name' => 'Home', 'permalink' => 'home', 'url' => '/', 'category' => 'theme' },
+        { 'name' => 'Products', 'permalink' => 'products', 'url' => '/products', 'category' => 'theme' },
+        { 'name' => 'Product', 'permalink' => 'product', 'url' => '/product', 'category' => 'theme' },
+        { 'name' => 'Cart', 'permalink' => 'cart', 'url' => '/cart', 'category' => 'theme' },
+        { 'name' => 'Checkout', 'permalink' => 'checkout', 'url' => '/checkout', 'category' => 'theme' },
+        { 'name' => 'Success', 'permalink' => 'success', 'url' => '/success', 'category' => 'theme' },
+        { 'name' => 'Contact', 'permalink' => 'contact', 'url' => '/contact', 'category' => 'theme' },
+        { 'name' => 'Maintenance', 'permalink' => 'maintenance', 'url' => '/maintenance', 'category' => 'theme' }
       ]
     end
     

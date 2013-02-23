@@ -36,9 +36,10 @@ module Dugway
     end
     
     def render(content, overridden_assigns={}, restrict_to_theme=false)
-      ass = restrict_to_theme ? assigns.slice('theme') : assigns.update(overridden_assigns)
-      reg = restrict_to_theme ? {} : registers
-      Liquid::Template.parse(content).render(ass, :registers => reg)
+      Liquid::Template.parse(content).render!(
+        restrict_to_theme ? assigns.slice('theme') : assigns.update(overridden_assigns),
+        :registers => registers
+      )
     end
     
     private
@@ -68,7 +69,8 @@ module Dugway
         :params => @request.params.with_indifferent_access,
         :currency => @store.currency,
         :category => @category,
-        :artist => @artist
+        :artist => @artist,
+        :settings => @theme.settings
       }
     end
   end

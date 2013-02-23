@@ -118,6 +118,22 @@ describe Dugway::Template do
     end
   end
   
+  describe "#success_page?" do
+    describe "when it's the success.html template" do
+      let(:name) { 'success.html' }
+      
+      it "returns true" do
+        template.success_page?.should be_true
+      end
+    end
+    
+    describe "when it's not the success.html template" do
+      it "returns false" do
+        template.success_page?.should be_false
+      end
+    end
+  end
+  
   describe "#render" do
     let(:theme) { Dugway::Theme.new }
     let(:store) { Dugway::Store.new('dugway') }
@@ -162,6 +178,21 @@ describe Dugway::Template do
       it "doesn't liquify it" do
         Dugway::Liquifier.any_instance.should_not_receive(:render)
         template.render(theme, store, request).should == content
+      end
+    end
+    
+    describe "when posting to the success page" do
+      let(:name) { 'success.html' }
+      
+      before(:each) do
+        request.stub(:post?) { true }
+        Dugway::Liquifier.any_instance.stub(:render).with(content, {}, false) { content }
+        Dugway::Liquifier.any_instance.stub(:render).with(layout, 'page_content' => content)
+      end
+      
+      it "sleeps for 3 seconds to give the 'One moment...' time" do
+        template.should_receive(:sleep).with(3)
+        template.render(theme, store, request)
       end
     end
   end

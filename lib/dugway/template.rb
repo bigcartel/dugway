@@ -26,7 +26,14 @@ module Dugway
       @name == 'styles.css'
     end
     
+    def success_page?
+      @name == 'success.html'
+    end
+    
     def render(theme, store, request)
+      # Simulate the "One moment..." page
+      sleep(3) if request.post? && success_page?
+      
       if liquify?
         liquifier = Liquifier.new(theme, store, request)
         rendered_content = liquifier.render @content, {}, styles?

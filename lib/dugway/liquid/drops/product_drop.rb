@@ -2,31 +2,25 @@ module Dugway
   module Drops
     class ProductDrop < BaseDrop
       def css_class
-        c = 'product'
-        c += ' sold' if status == 'sold-out'
-        c += ' soon' if status == 'coming-soon'
-        c += ' sale' if on_sale
-        c
-      end
-
-      def status
-        source['status']
-      end
-
-      def on_sale
-        source['on_sale']
+        @css_class ||= begin
+          c = 'product'
+          c += ' sold' if status == 'sold-out'
+          c += ' soon' if status == 'coming-soon'
+          c += ' sale' if on_sale
+          c
+        end
       end
 
       def min_price
-        price_min_max.first
+        @min_price ||= price_min_max.first
       end
 
       def max_price
-        price_min_max.last
+        @max_price ||= price_min_max.last
       end
 
       def variable_pricing
-        min_price != max_price
+        @variable_pricing ||= min_price != max_price
       end
 
       def has_default_option

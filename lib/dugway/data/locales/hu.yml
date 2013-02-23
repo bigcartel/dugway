@@ -1,0 +1,26 @@
+hu:
+  number:
+     format:
+       precision: 2
+       separator: ","
+       delimiter: ""
+       
+     currency:
+       format:
+         unit: 'Ft'
+         precision: 0
+         format: '%n%u'
+         separator: ","
+         delimiter: ""
+         
+     percentage:
+       format:
+         delimiter: ""
+         
+     precision:
+       format:
+         delimiter: ""
+         
+     paypal:
+       format:
+         precision: 0

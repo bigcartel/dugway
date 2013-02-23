@@ -1,5 +1,6 @@
 require 'extensions/time'
 require 'active_support/all'
+require 'i18n'
 
 require 'rack/builder'
 require 'rack/commonlogger'

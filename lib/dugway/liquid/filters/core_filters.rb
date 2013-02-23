@@ -1,3 +1,5 @@
+require 'htmlentities'
+
 module Dugway
   module Filters
     module CoreFilters
@@ -32,22 +34,20 @@ module Dugway
       # Money Filters
 
       def money(amount)
-        parts  = number_with_precision(amount, 2).split('.')
-        number_with_delimiter(parts[0]) + '.' + parts[1].to_s
-      rescue
-        amount
+        number_to_currency(amount, :locale => nil, :precision => I18n.translate('number.currency.format.precision'), :unit => '', :separator => I18n.translate('number.currency.format.separator'), :delimiter => I18n.translate('number.currency.format.delimiter'), :format => I18n.translate('number.currency.format.format')).strip
       end
 
       def money_with_sign(amount)
-        %{<span class="currency_sign">#{ currency['sign'] }</span>#{ money(amount) }}
+        unit = I18n.translate('number.currency.format.unit')
+        number_to_currency(amount).try(:gsub, unit, "<span class=\"currency_sign\">#{ HTMLEntities.new.encode(unit, :named) }</span>")
       end
 
       def money_with_code(amount)
-        %{#{ money(amount) } <span class="currency_code">#{ currency['code'] }</span>}
+        %{#{ money(amount) } <span class="currency_code">#{ currency.code }</span>}
       end
 
       def money_with_sign_and_code(amount)
-        %{#{ money_with_sign(amount) } <span class="currency_code\">#{ currency['code'] }</span>}
+        %{#{ money_with_sign(amount) } <span class="currency_code\">#{ currency.code }</span>}
       end
 
       # Shipping Filters

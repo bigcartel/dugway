@@ -3,6 +3,10 @@ module Dugway
     def initialize(options={})
       @theme = Theme.new(File.join(Dir.pwd, 'source'), options[:user_settings] || {})
       @store = Store.new(options[:store] || 'dugway')
+      
+      I18n.load_path += Dir[File.join(File.dirname(__FILE__), 'data', 'locales', '*.yml').to_s]
+      I18n.default_locale = 'en-US'
+      I18n.locale = @store.locale
     end
     
     def call(env)

@@ -10,6 +10,31 @@ module Dugway
       end
 
       # Mimics
+      
+      DEFAULT_CURRENCY_VALUES = { :format => "%u%n", :negative_format => "-%u%n", :unit => "$", :separator => ".", :delimiter => ",", :precision => 2, :significant => false, :strip_insignificant_zeros => false }
+      
+      def number_to_currency(number, options={})
+        options.symbolize_keys!
+
+        defaults  = I18n.translate(:'number.format', :locale => options[:locale], :default => {})
+        currency  = I18n.translate(:'number.currency.format', :locale => options[:locale], :default => {})
+        currency[:negative_format] ||= "-" + currency[:format] if currency[:format]
+
+        defaults  = DEFAULT_CURRENCY_VALUES.merge(defaults).merge!(currency)
+        defaults[:negative_format] = "-" + options[:format] if options[:format]
+        options   = defaults.merge!(options)
+
+        unit      = options.delete(:unit)
+        format    = options.delete(:format)
+
+        if number.to_f < 0
+          format = options.delete(:negative_format)
+          number = number.respond_to?("abs") ? number.abs : number.sub(/^-/, '')
+        end
+        
+        value = number_with_precision(number, options[:precision])
+        format.gsub(/%n/, value).gsub(/%u/, unit)
+      end
 
       def number_with_delimiter(number, delimiter=",", separator=".")
         begin

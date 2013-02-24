@@ -1,8 +1,13 @@
-$textColor: {{ theme.text_color }}
+// This shows how you can use Sass in your theme. However, there are a few limitations to be aware of:
+// * Theme variables like {{ theme.font_color }} won't work with the Sass's color methods,
+//   since they're not real colors yet
+// * Sass will strip out blocks like {% if something %} or {% case something %}
+
+$secondaryColor: #999999
 
 h1, h2, h3, h4, h5
-  color: darken($textColor, 25%)
+  color: darken($secondaryColor, 25%)
   font-family: {{ theme.header_font | font_family }}
 
 em
-  color: lighten($textColor, 25%)
+  color: lighten($secondaryColor, 25%)

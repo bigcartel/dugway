@@ -14,6 +14,13 @@ Liquid::Template.register_tag(:paginate, Dugway::Tags::Paginate)
 
 module Dugway
   class Liquifier
+    STYLE_ESCAPE_CHARS = {
+      '{{' => '"<<',
+      '}}' => '>>"',
+      '{%' => '"<',
+      '%}' => '">'
+    }
+    
     def initialize(theme, store, request)
       @theme = theme
       @store = store
@@ -45,6 +52,16 @@ module Dugway
         { 'theme' => Drops::ThemeDrop.new(theme.customization) }, 
         :registers => { :settings => theme.settings }
       )
+    end
+    
+    def self.escape_styles(css)
+      STYLE_ESCAPE_CHARS.each_pair { |k,v| css.gsub!(k,v) }
+      css
+    end
+    
+    def self.unescape_styles(css)
+      STYLE_ESCAPE_CHARS.each_pair { |k,v| css.gsub!(v,k) }
+      css
     end
     
     private

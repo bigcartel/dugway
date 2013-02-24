@@ -2,6 +2,7 @@ require 'coffee-script'
 require 'sass'
 require 'less'
 require 'sprockets'
+require 'yui/compressor'
 
 module Dugway
   class Theme
@@ -52,6 +53,27 @@ module Dugway
       end
     end
     
+    def name
+      @name ||= settings['name']
+    end
+    
+    def version
+      @version ||= settings['version']
+    end
+    
+    def build_file(name)
+      @building = true
+      
+      case name
+      when 'scripts.js'
+        YUI::JavaScriptCompressor.new.compress(sprockets[name].to_s)
+      when 'styles.css'
+        sprockets[name].to_s
+      else
+        read_source_file(name)
+      end
+    end
+    
     private
     
     def sprockets
@@ -59,9 +81,21 @@ module Dugway
         sprockets = Sprockets::Environment.new
         sprockets.append_path @source_dir
         
-        # We need to liquify the CSS before it hits engines like Sass, LESS, etc.
+        # CSS engines like Sass and LESS choke on Liquid variables, so here we render the Liquid 
+        # if we're viewing the file, or escape and unescape it if we're building the file.
+        
         sprockets.register_preprocessor 'text/css', :liquifier do |context, data|
-          Liquifier.render_styles(data, self)
+          if @building
+            Liquifier.escape_styles(data)
+          else
+            Liquifier.render_styles(data, self)
+          end
+        end
+        
+        sprockets.register_postprocessor 'text/css', :liquifier do |context, data|
+          if @building
+            Liquifier.unescape_styles(data)
+          end
         end
         
         sprockets
@@ -72,7 +106,7 @@ module Dugway
       file_path = File.join(@source_dir, file_name)
       
       if File.exist?(file_path)
-        File.open(file_path, "rb").read
+        File.read(file_path)
       else
         nil
       end

@@ -47,7 +47,7 @@ module Dugway
       
       def bundle
         unless options['skip-bundle']
-          #run('bundle install --without development test')
+          run('bundle install --without development test')
         end
       end
       

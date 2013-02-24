@@ -1,4 +1,3 @@
-require 'extensions/time'
 require 'active_support/all'
 require 'i18n'
 
@@ -14,6 +13,7 @@ require 'dugway/store'
 require 'dugway/template'
 require 'dugway/theme'
 require 'dugway/theme_font'
+require 'dugway/extensions/time'
 
 module Dugway
   def self.application(options={})

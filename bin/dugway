@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 require 'rubygems'
-require 'active_support/all'
 require 'dugway/cli'
 
 Dugway::Cli::Base.start

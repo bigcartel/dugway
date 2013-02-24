@@ -1,4 +1,5 @@
 require 'thor'
+require 'active_support/all'
 
 require 'dugway/cli/create'
 require 'dugway/version'

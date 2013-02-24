@@ -5,7 +5,7 @@ module Dugway
       
       argument :name
       
-      class_option 'skip-theme',
+      class_option 'skip-source',
         :type    => :boolean,
         :default => false,
         :desc    => "Don't create a starter theme"
@@ -27,17 +27,14 @@ module Dugway
       def core
         template('Gemfile.tt', "#{ theme_dir }/Gemfile")
         template('config.tt', "#{ theme_dir }/config.ru")
+        template('source/settings.json', "#{ source_dir }/settings.json")
       end
       
-      def settings
-        template('theme/settings.json', "#{ source_dir }/settings.json")
-      end
-      
-      def theme
-        unless options['skip-theme']
-          Dir.glob("#{ self.class.source_root }/theme/**/*.{html,jpg,png,js,coffee,css,sass,scss}") do |file|
-            file_name = file.gsub("#{ self.class.source_root }/theme/", '')
-            copy_file "theme/#{ file_name }", "#{ source_dir }/#{ file_name }"
+      def source
+        unless options['skip-source']
+          Dir.glob("#{ self.class.source_root }/source/**/*.{html,jpg,png,js,coffee,css,sass}") do |file|
+            file_name = file.gsub("#{ self.class.source_root }/source/", '')
+            copy_file "source/#{ file_name }", "#{ source_dir }/#{ file_name }"
           end
         end
       end

@@ -49,7 +49,7 @@ module Dugway
         'errors' => [],
         'store' => Drops::AccountDrop.new(@store.account),
         'cart' => Drops::CartDrop.new,
-        'theme' => Drops::ThemeDrop.new(@theme.user_settings),
+        'theme' => Drops::ThemeDrop.new(@theme.customization),
         'page' => Drops::PageDrop.new(@page),
         'product' => Drops::ProductDrop.new(@product),
         'pages' => Drops::PagesDrop.new(@store.pages.map { |p| Drops::PageDrop.new(p) }),

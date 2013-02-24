@@ -1,7 +1,7 @@
 module Dugway
   class Application
     def initialize(options={})
-      @theme = Theme.new(File.join(Dir.pwd, 'source'), options[:user_settings] || {})
+      @theme = Theme.new(File.join(Dir.pwd, 'source'), options[:customization] || {})
       @store = Store.new(options[:store] || 'dugway')
       
       I18n.load_path += Dir[File.join(File.dirname(__FILE__), 'data', 'locales', '*.yml').to_s]

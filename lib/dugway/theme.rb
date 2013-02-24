@@ -7,9 +7,9 @@ module Dugway
   class Theme
     REQUIRED_FILES = %w( layout.html home.html products.html product.html cart.html checkout.html success.html contact.html maintenance.html scripts.js styles.css settings.json screenshot.jpg )
     
-    def initialize(source_dir, overridden_user_settings={})
+    def initialize(source_dir, overridden_customization={})
       @source_dir = source_dir
-      @overridden_user_settings = overridden_user_settings.stringify_keys
+      @overridden_customization = overridden_customization.stringify_keys
     end
     
     def find_template_by_request(request)
@@ -39,17 +39,17 @@ module Dugway
     end
     
     def fonts
-      @fonts ||= user_settings_for_type('fonts')
+      @fonts ||= customization_for_type('fonts')
     end
     
-    def user_settings
-      @user_settings ||= begin
-        Hash.new.tap { |user_settings|
+    def customization
+      @customization ||= begin
+        Hash.new.tap { |customization|
           %w( fonts colors options ).each { |type|
-            user_settings.update(user_settings_for_type(type))
+            customization.update(customization_for_type(type))
           }
         
-          user_settings.update(@overridden_user_settings)
+          customization.update(@overridden_customization)
         }
       end
     end
@@ -74,7 +74,7 @@ module Dugway
       end
     end
     
-    def user_settings_for_type(type)
+    def customization_for_type(type)
       Hash.new.tap { |hash|
         if settings.has_key?(type)
           settings[type].each { |setting|

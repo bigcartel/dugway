@@ -108,17 +108,17 @@ describe Dugway::ThemeFont do
     end
 
     it "should return a URL if a theme has multiple" do
-      theme.stub(:user_settings) {{ :header_font => 'One Font', :body_font => 'Two', :paragraph_font => 'Three' }}
+      theme.stub(:customization) {{ :header_font => 'One Font', :body_font => 'Two', :paragraph_font => 'Three' }}
       Dugway::ThemeFont.google_font_url_for_theme_instance(theme).should == "//fonts.googleapis.com/css?family=One+Font|Three"
     end
     
     it "should return single font name if a theme has one" do
-      theme.stub(:user_settings) {{ :header_font => 'One Font', :body_font => 'Two' }}
+      theme.stub(:customization) {{ :header_font => 'One Font', :body_font => 'Two' }}
       Dugway::ThemeFont.google_font_url_for_theme_instance(theme).should == "//fonts.googleapis.com/css?family=One+Font"
     end
     
     it "should return nil if a theme has none" do
-      theme.stub(:user_settings) {{ :body_font => 'Two' }}
+      theme.stub(:customization) {{ :body_font => 'Two' }}
       Dugway::ThemeFont.google_font_url_for_theme_instance(theme).should be_nil
     end
   end

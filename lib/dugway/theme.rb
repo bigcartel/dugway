@@ -17,10 +17,8 @@ module Dugway
       
       if request.html? && content = read_source_file(name)
         Template.new(name, content)
-      elsif name == 'styles.css'
+      elsif %w( styles.css scripts.js ).include?(name)
         Template.new(name, sprockets[name].to_s)
-      elsif name == 'scripts.js'
-        Template.new(name, sprockets[name].to_s, false)
       else
         nil
       end
@@ -60,6 +58,12 @@ module Dugway
       @sprockets ||= begin
         sprockets = Sprockets::Environment.new
         sprockets.append_path @source_dir
+        
+        # We need to liquify the CSS before it hits engines like Sass, LESS, etc.
+        sprockets.register_preprocessor 'text/css', :liquifier do |context, data|
+          Liquifier.render_styles(data, self)
+        end
+        
         sprockets
       end
     end

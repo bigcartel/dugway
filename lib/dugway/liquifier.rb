@@ -19,26 +19,31 @@ module Dugway
       @store = store
       @request = request
       
-      if request.html?
-        @page = @store.page(request.permalink)
-        @page['url'] = request.path
-        @page['full_url'] = request.url
-        @page['full_path'] = request.fullpath
-        
-        if request.product_permalink && @product = @store.product(request.product_permalink)
-          @page['name'] = @product['name']
-        elsif request.category_permalink && @category = @store.category(request.category_permalink)
-          @page['name'] = @category['name']
-        elsif request.artist_permalink && @artist = @store.artist(request.artist_permalink)
-          @page['name'] = @artist['name']
-        end
+      @page = @store.page(request.permalink)
+      @page['url'] = request.path
+      @page['full_url'] = request.url
+      @page['full_path'] = request.fullpath
+      
+      if request.product_permalink && @product = @store.product(request.product_permalink)
+        @page['name'] = @product['name']
+      elsif request.category_permalink && @category = @store.category(request.category_permalink)
+        @page['name'] = @category['name']
+      elsif request.artist_permalink && @artist = @store.artist(request.artist_permalink)
+        @page['name'] = @artist['name']
       end
     end
     
-    def render(content, overridden_assigns={}, restrict_to_theme=false)
+    def render(content, overridden_assigns={})
       Liquid::Template.parse(content).render!(
-        restrict_to_theme ? assigns.slice('theme') : assigns.update(overridden_assigns),
+        assigns.update(overridden_assigns),
         :registers => registers
+      )
+    end
+    
+    def self.render_styles(css, theme)
+      Liquid::Template.parse(css).render!(
+        { 'theme' => Drops::ThemeDrop.new(theme.customization) }, 
+        :registers => { :settings => theme.settings }
       )
     end
     

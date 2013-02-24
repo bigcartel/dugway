@@ -1,9 +1,8 @@
 module Dugway
   class Template
-    def initialize(name, content, liquify=true)
+    def initialize(name, content)
       @name = name
       @content = content
-      @liquify = liquify
     end
     
     def content_type
@@ -14,16 +13,12 @@ module Dugway
       File.extname(@name)
     end
     
-    def liquify?
-      @liquify
+    def html?
+      extension == '.html'
     end
     
-    def standalone?
-      extension != '.html' || !!(@content =~ /\{\{\s*head_content\s*\}\}/)
-    end
-    
-    def styles?
-      @name == 'styles.css'
+    def standalone_html?
+      html? && !!(@content =~ /\{\{\s*head_content\s*\}\}/)
     end
     
     def success_page?
@@ -34,14 +29,14 @@ module Dugway
       # Simulate the "One moment..." page
       sleep(3) if request.post? && success_page?
       
-      if liquify?
+      if html?
         liquifier = Liquifier.new(theme, store, request)
-        rendered_content = liquifier.render @content, {}, styles?
+        rendered_content = liquifier.render(@content)
         
-        if standalone?
+        if standalone_html?
           rendered_content
         else
-          liquifier.render theme.layout, 'page_content' => rendered_content
+          liquifier.render(theme.layout, 'page_content' => rendered_content)
         end
       else
         @content

@@ -26,8 +26,8 @@ module Dugway
     def find_template(request)
       if template = @theme.find_template_by_request(request)
         template
-      elsif page = @store.page(request.permalink)
-        Template.new(request.file_name, page['content'])
+      elsif custom_page = @store.page(request.permalink)
+        Template.new(request.file_name, custom_page['content'])
       else
         nil
       end

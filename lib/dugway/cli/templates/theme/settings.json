@@ -1,0 +1,71 @@
+{
+  "name": "<%= name.capitalize %>",
+  "version": "0.0.1",
+  "images": [
+    {
+      "variable": "logo",
+      "label": "Logo",
+      "description": "Adds your logo to the header"
+    },
+    {
+      "variable": "background_image",
+      "label": "Background Image",
+      "description": "Adds a repeating background image"
+    }
+  ],
+  "fonts": [
+    {
+      "variable": "header_font",
+      "label": "Header Font",
+      "default": "Helvetica"
+    },  
+    {
+      "variable": "text_font",
+      "label": "Text Font",
+      "default": "Georgia"
+    }
+  ],
+  "colors": [
+    {
+      "variable": "background_color",
+      "label": "Background",
+      "default": "#222222"
+    },
+    {
+      "variable": "text_color",
+      "label": "Text Color",
+      "default": "#FFFFFF"
+    }
+  ],
+  "options": [
+    {
+      "variable": "show_search",
+      "label": "Show search",
+      "type": "boolean",
+      "default": false,
+      "description": "Shows a search field"
+    },
+    {
+      "variable": "product_image_size",
+      "label": "Product image size",
+      "type": "select",
+      "options": [["Small", "thumb"], ["Medium", "medium"], ["Large", "large"], ["Huge", ""]],
+      "default": "large",
+      "description": "The size of your product images"
+    },
+    {
+      "variable": "products_per_page",
+      "label": "Products per page",
+      "type": "select",
+      "options": "1..100",
+      "default": 9,
+      "description": "The number of products shown per page"
+    },
+    {
+      "variable": "twitter_username",
+      "label": "Twitter username",
+      "type": "text",
+      "description": "Ex: @bigcartel"
+    }
+  ]
+}

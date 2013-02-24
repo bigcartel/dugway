@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+  <head>
+    <title>{{ store.name }} &mdash; {{ page.name }}</title>
+    
+    <meta charset="utf-8">
+    <meta name="description" content="{{ page.meta_description }}">
+    <meta name="keywords" content="{{ page.meta_keywords }}">
+    
+    <link href="{{ theme | theme_css_url }}" media="screen" rel="stylesheet" type="text/css">
+    
+    <script type="text/javascript" charset="utf-8">
+      function checkout() {
+        if(top != self) {
+          top.location.replace(self.location.href);
+          } else {
+          document.checkout_form.submit();
+        }
+      }
+    </script>  
+    
+    {{ head_content }}
+  </head>
+  
+  <body id="{{ page.permalink }}" class="{{ page.category }}" onload="checkout();">
+    <h1>One moment&hellip;</h1>
+    
+    {% checkoutform %}
+      <noscript>
+        <button type="submit" name="checkout" title="Checkout">Checkout</button>
+      </noscript>
+    {% endcheckoutform %}
+  </body>
+</html>

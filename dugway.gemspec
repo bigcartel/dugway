@@ -12,8 +12,10 @@ Gem::Specification.new do |s|
   s.description  = 'Easily build and test Big Cartel themes locally.'
 
   s.files        = `git ls-files`.split($\)
+  s.test_files   = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.platform     = Gem::Platform::RUBY
   s.require_path = 'lib'
+  s.executable   = 'dugway'
   
   s.add_dependency('bundler', '~> 1.1')
   s.add_dependency('rack', '~> 1.4.1')
@@ -30,6 +32,7 @@ Gem::Specification.new do |s|
   s.add_dependency('will_paginate', '~> 3.0.4')
   s.add_dependency('i18n', '~> 0.6.1')
   s.add_dependency('htmlentities', '~> 4.3.1')
+  s.add_dependency('thor', '~> 0.17.0')
   
   s.add_development_dependency('rake', '~> 10.0.3')
   s.add_development_dependency('rspec', '~> 2.12.0')

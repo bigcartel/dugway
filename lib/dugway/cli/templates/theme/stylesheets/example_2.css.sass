@@ -1,0 +1,8 @@
+$textColor: {{ theme.text_color }}
+
+h1, h2, h3, h4, h5
+  color: darken($textColor, 25%)
+  font-family: {{ theme.header_font | font_family }}
+
+em
+  color: lighten($textColor, 25%)

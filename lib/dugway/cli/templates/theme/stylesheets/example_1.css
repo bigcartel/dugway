@@ -1,0 +1,22 @@
+body {
+  margin: 100px;
+  color: {{ theme.text_color }};
+  font-family: {{ theme.text_font | font_family }};
+  background-color: {{ theme.background_color }};
+  {% if theme.background_image != blank %}
+  background-image: url({{ theme.background_image.url }});
+  background-repeat: repeat;
+  {% endif %}
+}
+
+footer cite a {
+  display: block;
+  margin: 0 auto;
+  width: 79px;
+  height: 23px;
+  border: none;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  background: url({{ 'badge.png' | theme_image_url }}) no-repeat;
+}

@@ -1,0 +1,33 @@
+{% if cart.items != blank %}
+
+<form method="post" action="/cart">
+  <ul>
+    {% for item in cart.items %}
+    <li>
+      <a href="{{ item.product.url }}">
+        <img src="{{ item.product.image | product_image_url size:"thumb" }}">
+        <strong>{ item.product.name }}</strong>
+        {% unless item.product.has_default_option %}
+        <em>{{ item.option.name }}</em>
+        {% endunless %}
+      </a>
+    </li>
+    {% endfor %}
+    <li>
+      <strong>Subtotal</strong>
+      <span>{{ cart.subtotal | money_with_sign }}</span>
+    </li>
+    <li>
+      <button type="submit" name="checkout" title="Checkout">Checkout</button>
+    </li>
+  </ul>
+</form>
+
+{% else %}
+
+<div>
+  <h3>Your cart is empty</h3>
+  <p>Sounds like a good time to <a href="/">start shopping &rarr;</a></p>
+</div>
+
+{% endif %}

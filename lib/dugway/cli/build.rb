@@ -10,22 +10,14 @@ module Dugway
       end
       
       def self.destination_root
-        File.join(Dir.pwd, 'builds')
+        File.join(Dir.pwd, 'build')
       end
       
       def validate
-        error = false
-        
-        Theme::REQUIRED_FILES.each { |file|
-          begin
-            find_in_source_paths(file)
-          rescue
-            say("You're missing #{ file }", :red)
-            error = true
-          end
-        }
-        
-        raise 'Missing required files' if error
+        unless theme.valid?
+          theme.errors.each { |error| say(error, :red) }
+          raise "Theme is invalid"
+        end
       end
       
       def create_destination
@@ -34,7 +26,7 @@ module Dugway
       
       def build
         Zip::ZipFile.open(build_file, Zip::ZipFile::CREATE) { |zipfile|
-          Theme::REQUIRED_FILES.each { |file|
+          theme.files.each { |file|
             zipfile.get_output_stream(file) { |f|
               f << theme.build_file(file)
             }
@@ -43,7 +35,7 @@ module Dugway
       end
       
       def success
-        say_status(:create, "builds/#{ build_name }")
+        say_status(:create, "build/#{ build_name }")
       end
       
       private

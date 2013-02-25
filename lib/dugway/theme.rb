@@ -8,6 +8,8 @@ module Dugway
   class Theme
     REQUIRED_FILES = %w( layout.html home.html products.html product.html cart.html checkout.html success.html contact.html maintenance.html scripts.js styles.css settings.json screenshot.jpg )
     
+    attr_reader :errors
+
     def initialize(source_dir, overridden_customization={})
       @source_dir = source_dir
       @overridden_customization = overridden_customization.stringify_keys
@@ -72,6 +74,30 @@ module Dugway
       else
         read_source_file(name)
       end
+    end
+
+    def files
+      REQUIRED_FILES + image_files
+    end
+
+    def image_files
+      Dir.glob(File.join(@source_dir, 'images', '**', '*.{png,jpg,jpeg,gif}')).map { |i| 
+        i.gsub(@source_dir, '')[1..-1]
+      }
+    end
+
+    def valid?
+      @errors = []
+
+      REQUIRED_FILES.each { |file|
+        @errors << "Missing source/#{ file }" if read_source_file(file).nil?
+      }
+
+      @errors << 'Missing theme name in source/settings.json' if name.blank?
+      @errors << 'Invalid theme version in source/settings.json (ex: 1.0.3)' unless !!(version =~ /\d+\.\d+\.\d+/)
+      @errors << 'Missing images in source/images' if image_files.empty?
+
+      @errors.empty?
     end
     
     private

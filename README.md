@@ -10,7 +10,7 @@ Dugway allows you to run your Big Cartel theme on your computer, test it in any 
 
 ## Install
 
-Dugway is Ruby gem so you'll need to have Ruby installed. Ruby is usually pre-installed on Mac OS X and Linux, and Windows users can install it using [RubyInstaller]. From there, simply install the **dugway** gem from the terminal:
+Dugway is Ruby gem so you'll need to have Ruby installed. Ruby is usually pre-installed on Mac OS X and Linux, and Windows users can install it using [RubyInstaller](http://rubyinstaller.org). From there, simply install the **dugway** gem from the terminal:
 
     gem install dugway
 
@@ -30,43 +30,39 @@ All of the assets and source code for your theme belongs in the **source** direc
 
 Develop the HTML for your theme using our [Theme API](http://help.bigcartel.com/customer/portal/articles/772788-creating-a-custom-theme). Barebones versions of all of the required HTML pages for your theme are provided by default, so feel free to expand on those or replace them entirely.
 
-### CSS
+### CSS & JavaScript
 
-All CSS for your theme is handled by the **styles.css** file. If you don't have much CSS, or you're just a glutton for punishment, you could simply put all of your CSS in **styles.css**. However, we recommend you use [Sprockets](http://getsprockets.org).
+All CSS for your theme is handled by the **styles.css** file, and all JavaScript by **scripts.js**. If you don't have much CSS or JavaScript, or you're just a glutton for punishment, you could simply put all of your code in these two files. However, we recommend you use [Sprockets](http://getsprockets.org) to break your code into multiple files in separate directories.
 
 #### Using Sprockets
 
-We recommend you break your CSS into multiple files and put them in a separate directory. We've created a **stylesheets** directory by default that you can use, but you could delete that and put them anywhere you'd like. After that, use [Sprockets directives](https://github.com/sstephenson/sprockets#the-directive-processor) to package them into **styles.css**. Ex:
+[Sprockets](http://getsprockets.org) allows you to bring in CSS and JavaScript from different directories into a single file. We've created **stylesheets** and **javascripts** directories by default that you can put your code in, but you could delete those and put files anywhere you'd like. After that, use [Sprockets directives](https://github.com/sstephenson/sprockets#the-directive-processor) to package them into **styles.css** and **scripts.js** respectively.
+
+##### styles.css
 
     /*
      *= require stylesheets/example_1
      *= require stylesheets/example_2
      */
 
-This also allows you to use [Sass](http://sass-lang.com) in your separate files by appending the **.sass** or **.scss** extension after **.css**, or you can also use [LESS](http://lesscss.org) appending the **.less** extension.
-
-#### Embedding CSS
-
-You can embed your CSS into your theme by passing the theme variable to the [theme_css_url](http://help.bigcartel.com/customer/portal/articles/772749-filters#url) filter:
-
-    <link href="{{ theme | theme_css_url }}" media="screen" rel="stylesheet" type="text/css">
-
-#### JavaScript
-
-All JavaScript for your theme is handled by the **scripts.js** file. If you don't have much JavaScript, or you're just a glutton for punishment, you could simply put all of your JavaScript in **scripts.js**. However, we recommend you use [Sprockets](http://getsprockets.org).
-
-#### Using Sprockets
-
-We recommend you break your JavaScript into multiple files and put them in a separate directory. We've created a **javascripts** directory by default that you can use, but you could delete that and put them anywhere you'd like. After that, use [Sprockets directives](https://github.com/sstephenson/sprockets#the-directive-processor) to package them into **scripts.js**. Ex:
+##### scripts.js
 
     //= require javascripts/example_1
     //= require javascripts/example_2
 
-This also allows you to use [CoffeeScript](http://coffeescript.org) in your separate files by appending the **.coffee** extension after **.js**.
+#### Using Sass, LESS, and CoffeeScript
 
-#### Embedding JavaScript
+Sprockets also allows you to use [Sass](http://sass-lang.com) in your separate files by appending the **.sass** or **.scss** extension after **.css**. Prefer [LESS](http://lesscss.org)? No problem, just append the **.less** extension instead. For you JavaScript folks, you can use [CoffeeScript](http://coffeescript.org) in your separate files by appending the **.coffee** extension after **.js**.
 
-You can embed your JavaScript into your theme by passing the theme variable to the [theme_js_url](http://help.bigcartel.com/customer/portal/articles/772749-filters#url) filter:
+#### Embedding CSS & JavaScript
+
+You can embed the CSS and JavaScript into your theme by passing the theme variable to the [theme_css_url](http://help.bigcartel.com/customer/portal/articles/772749-filters#url) and [theme_js_url](http://help.bigcartel.com/customer/portal/articles/772749-filters#url) filters.
+
+##### CSS (styles.css)
+
+    <link href="{{ theme | theme_css_url }}" media="screen" rel="stylesheet" type="text/css">
+
+##### JavaScript (scripts.js)
 
     <script src="{{ theme | theme_js_url }}" type="text/javascript"></script>
 

@@ -34,6 +34,7 @@ module Dugway
       end
       
       def error(msg)
+        @context['errors'] << msg
         Dugway.logger.error msg
       end
     end

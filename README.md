@@ -94,4 +94,4 @@ When you're finished with a new version of your theme, it's time to build it:
 
     dugway build
 
-This will create a zip file for the current version in your **builds** directory containing all HTML, images, and packaged JS and CSS.
+This will create a zip file for the current version in your **build** directory containing all HTML, images, and packaged JS and CSS.

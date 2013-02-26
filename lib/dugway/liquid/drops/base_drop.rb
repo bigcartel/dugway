@@ -11,6 +11,7 @@ module Dugway
       end
 
       def context=(current_context)
+        @context = current_context
         @store = current_context.registers[:store]
         @request = current_context.registers[:request]
         @params = current_context.registers[:params]
@@ -34,6 +35,7 @@ module Dugway
       end
       
       def error(msg)
+        @context['errors'] << msg
         Dugway.logger.error msg
       end
     end

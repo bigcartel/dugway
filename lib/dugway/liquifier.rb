@@ -44,10 +44,6 @@ module Dugway
       my_context = Liquid::Context.new([ assigns.update(overridden_assigns), shared_context ], {}, registers)
       Liquid::Template.parse(content).render!(my_context)
     end
-
-    def shared_context
-      @shared_context ||= { 'errors' => [] }
-    end
     
     def self.render_styles(css, theme)
       Liquid::Template.parse(css).render!(
@@ -67,6 +63,10 @@ module Dugway
     end
     
     private
+
+    def shared_context
+      @shared_context ||= { 'errors' => [] }
+    end
     
     def assigns
       {

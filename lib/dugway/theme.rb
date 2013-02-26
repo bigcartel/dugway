@@ -32,11 +32,11 @@ module Dugway
     end
     
     def layout
-      @layout ||= read_source_file('layout.html')
+      read_source_file('layout.html')
     end
     
     def settings
-      @settings ||= JSON.parse(read_source_file('settings.json'))
+      JSON.parse(read_source_file('settings.json'))
     end
     
     def fonts
@@ -56,11 +56,11 @@ module Dugway
     end
     
     def name
-      @name ||= settings['name']
+      settings['name']
     end
     
     def version
-      @version ||= settings['version']
+      settings['version']
     end
     
     def build_file(name)

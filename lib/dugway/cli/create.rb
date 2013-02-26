@@ -52,6 +52,10 @@ module Dugway
           end
         end
       end
+
+      def done
+        say("#{ name } is ready!", :blue)
+      end
       
       private
       

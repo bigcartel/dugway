@@ -121,6 +121,8 @@ module Dugway
         sprockets.register_postprocessor 'text/css', :liquifier do |context, data|
           if @building
             Liquifier.unescape_styles(data)
+          else
+            data
           end
         end
         

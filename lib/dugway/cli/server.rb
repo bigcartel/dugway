@@ -20,6 +20,7 @@ module Dugway
       def start
         Rack::Server.start({
           :config => File.join(Dir.pwd, 'config.ru'),
+          :environment => 'none',
           :Host => options[:host],
           :Port => options[:port]
         })

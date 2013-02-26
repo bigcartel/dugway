@@ -6,3 +6,4 @@ log
 
 *.tmproj
 *.esproj
+*.sublime*

@@ -41,8 +41,8 @@ module Dugway
     end
     
     def render(content, overridden_assigns={})
-      my_context = Liquid::Context.new([ assigns.update(overridden_assigns), shared_context ], {}, registers)
-      Liquid::Template.parse(content).render!(my_context)
+      context = Liquid::Context.new([ assigns.update(overridden_assigns), shared_context ], {}, registers)
+      Liquid::Template.parse(content).render!(context)
     end
     
     def self.render_styles(css, theme)

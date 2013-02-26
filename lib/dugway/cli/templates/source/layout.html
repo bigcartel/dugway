@@ -72,6 +72,14 @@
     
     <section>
       <h1>{{ page.name }}</h1>
+
+      {% if errors != blank %}
+      <ul>
+        {% for error in errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
       
       {% if page.category == 'custom' %}
         {{ page_content | paragraphs }}

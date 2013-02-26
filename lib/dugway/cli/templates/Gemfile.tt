@@ -1,1 +1,2 @@
-gem 'dugway', '~> <%= Dugway::VERSION %>'
+source :rubygems
+gem 'dugway'

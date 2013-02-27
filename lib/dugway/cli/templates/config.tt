@@ -17,7 +17,8 @@ options = {}
 #     :height => 50
 #   },
 #   :background_color => '#CCCCCC',
-#   :show_search => true
+#   :show_search => true,
+#   :twitter_username => 'mytwitter'
 # }
 
 run Dugway.application(options)

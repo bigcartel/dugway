@@ -84,9 +84,34 @@ Run your theme in any browser by starting the Dugway server:
 
 By default this will serve your theme at http://0.0.0.0:9292. You can then stop the server by hitting CTRL+C.
 
-#### Pow
+### Pow
 
 Tired of all the manual starting and stopping? Good news, Dugway is built on top of Rack, which means you can use [Pow](http://pow.cx) on Mac. This also allows you to access your theme at a pretty URL like _mytheme.dev_.
+
+## Testing your theme
+
+Part of building a great theme is making sure it works well in a variety of contexts and with a variety of content. Dugway makes it easy to test your theme's versatility by customizing the **options** in the **config.ru** file.
+
+### Store content
+
+The best way to see your theme under a different light is by previewing it with a different store's products, categories, pages, currency, and other content. To do this, simply set the **:store** option to any Big Cartel store's subdomain, and Dugway will bring in their content using the standard [Big Cartel API](http://help.bigcartel.com/customer/portal/articles/772771-api). By default we use **dugway** for [dugway.bigcartel.com](http://dugway.bigcartel.com).
+
+    options[:store] = 'beeteeth'
+
+### Store customization
+
+Another important thing to consider is how store owners will customize your theme. You establish what can be customized in your [settings.json](#settings) file, and Dugway allows you to simulate potential values people could choose by setting them in the **:customization** option. By default we use the **default** values from your **[settings.json](#settings)** file.
+
+    options[:customization] = {
+      :logo => {
+        :url => 'http://placehold.it/200x50/000000/ffffff&text=My+Logo',
+        :width => 200,
+        :height => 50
+      },
+      :background_color => '#CCCCCC',
+      :show_search => true,
+      :twitter_username => 'mytwitter'
+    }
 
 ## Building your theme
 

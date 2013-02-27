@@ -9,8 +9,12 @@ module Dugway
         items.map { |item| item.quantity }.inject(:+) || 0
       end
 
-      def total
+      def subtotal
         items.map { |item| item.price }.inject(:+) || 0
+      end
+
+      def total
+        subtotal
       end
 
       def country

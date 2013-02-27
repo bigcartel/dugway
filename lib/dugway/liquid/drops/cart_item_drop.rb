@@ -12,6 +12,10 @@ module Dugway
       def option
         ProductOptionDrop.new(source['option'])
       end
+
+      def shipping
+        0.0
+      end
     end
   end
 end

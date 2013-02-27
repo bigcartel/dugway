@@ -6,21 +6,21 @@ Dugway allows you to run your Big Cartel theme on your computer, test it in any 
 
 ## Disclaimer
 
-**Dugway is a very new project and likely has several bugs and rough edges.** If you run into something weird, see if it's a [known issue](https://github.com/bigcartel/dugway/issues), and otherwise [report it](https://github.com/bigcartel/dugway/issues/new) and we'll do our best to fix it up. Thanks.
+**Dugway is a very new project and likely has several bugs, rough edges, and missing features.** If you run into something weird or have a cool idea, see if it's a [known issue](https://github.com/bigcartel/dugway/issues), and otherwise [report it](https://github.com/bigcartel/dugway/issues/new) and we'll do our best to hook you up. Thanks.
 
 ## Install
 
-Dugway is Ruby gem so you'll need to have Ruby installed. Ruby is usually pre-installed on Mac OS X and Linux, and Windows users can install it using [RubyInstaller](http://rubyinstaller.org). From there, simply install the **dugway** gem from the terminal:
+Dugway is Ruby gem so you'll need to have Ruby installed. Ruby is usually pre-installed on Mac OS X and Linux, and Windows users can install it using [RubyInstaller](http://rubyinstaller.org). From there, simply install the **dugway** gem from the terminal.
 
     gem install dugway
 
 ## Creating a new theme
 
-With Dugway installed, you can now create a new theme, simply give it a name:
+With Dugway installed, you can now create a new theme, simply give it a name.
 
     dugway create mytheme
 
-This will create a new directory named *mytheme* that contains a few configuration files and a starter theme to get you going. Here's what it looks like:
+This will create a new directory named *mytheme* that contains a few configuration files and a starter theme to get you going.
 
     mytheme
     ├── source
@@ -49,7 +49,7 @@ This will create a new directory named *mytheme* that contains a few configurati
 
 ## Developing your theme
 
-All of the assets and source code for your theme belongs in the **source** directory. Here's how it breaks down:
+All of the assets and source code for your theme goes in the **source** directory.
 
 ### HTML
 
@@ -61,7 +61,7 @@ All CSS for your theme is handled by the **styles.css** file, and all JavaScript
 
 #### Using Sprockets
 
-[Sprockets](http://getsprockets.org) allows you to bring in CSS and JavaScript from different directories into a single file. We've created **stylesheets** and **javascripts** directories by default that you can put your code in, but you could delete those and put files anywhere you'd like. After that, use [Sprockets directives](https://github.com/sstephenson/sprockets#the-directive-processor) to package them into **styles.css** and **scripts.js** respectively.
+[Sprockets](http://getsprockets.org) allows you to bring in CSS and JavaScript from different directories into a single file. We've created **stylesheets** and **javascripts** directories by default that you can put your code in, but you could delete those and put files anywhere you'd like. After that, use [Sprockets directives](https://github.com/sstephenson/sprockets#the-directive-processor) to package them into **styles.css** and **scripts.js**.
 
 ##### styles.css
 
@@ -93,7 +93,7 @@ You can embed the CSS and JavaScript into your theme by passing the theme variab
 
 ### Images
 
-All images for your theme should go in the **images** directory. You can reference an image in your code by passing its name to the [theme_image_url](http://help.bigcartel.com/customer/portal/articles/772749-filters#url) filter:
+And as you've probably guessed by now, all images for your theme go in the **images** directory. You can reference an image in your code by passing its name to the [theme_image_url](http://help.bigcartel.com/customer/portal/articles/772749-filters#url) filter.
 
     {{ 'sample.png' | theme_image_url }}
 

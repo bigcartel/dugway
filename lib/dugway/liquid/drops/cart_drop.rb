@@ -6,15 +6,11 @@ module Dugway
       end
 
       def item_count
-        items.size
+        items.map { |item| item['quantity'] }.inject(:+) || 0
       end
 
       def total
-        total = 0.0
-
-        items.each { |item| total += item['price'] }
-        
-        total
+        items.map { |item| item['price'] }.inject(:+) || 0
       end
 
       def country

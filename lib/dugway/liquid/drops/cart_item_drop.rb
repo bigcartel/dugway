@@ -6,11 +6,11 @@ module Dugway
       end
 
       def product
-        ProductDrop.new(source[:product])
+        ProductDrop.new(source['product'])
       end
 
       def option
-        ProductOptionDrop.new(source[:option])
+        ProductOptionDrop.new(source['option'])
       end
     end
   end

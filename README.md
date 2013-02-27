@@ -90,7 +90,9 @@ Tired of all the manual starting and stopping? Good news, Dugway is built on top
 
 ## Testing your theme
 
-Part of building a great theme is making sure it works well in a variety of contexts and with a variety of content. Dugway makes it easy to test your theme's versatility by customizing the **options** in the **config.ru** file. __Note:__ changing the **config.ru** file will require you to restart the [server](#running-your-theme)
+Part of building a great theme is making sure it works well in a variety of contexts and with a variety of content. Dugway makes it easy to test your theme's versatility by customizing the **options** in the **config.ru** file. 
+
+*Note:* changing the **config.ru** file will require you to restart the [server](#running-your-theme).
 
 ### Store content
 

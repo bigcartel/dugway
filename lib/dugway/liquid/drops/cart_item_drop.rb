@@ -1,12 +1,16 @@
 module Dugway
   module Drops
     class CartItemDrop < BaseDrop 
+      def price
+        unit_price * quantity
+      end
+
       def product
-        nil
+        ProductDrop.new(source[:product])
       end
 
       def option
-        nil
+        ProductOptionDrop.new(source[:option])
       end
     end
   end

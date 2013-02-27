@@ -71,7 +71,7 @@ module Dugway
     def assigns
       {
         'store' => Drops::AccountDrop.new(@store.account),
-        'cart' => Drops::CartDrop.new,
+        'cart' => Drops::CartDrop.new(cart),
         'theme' => Drops::ThemeDrop.new(@theme.customization),
         'page' => Drops::PageDrop.new(@page),
         'product' => Drops::ProductDrop.new(@product),
@@ -96,6 +96,17 @@ module Dugway
         :artist => @artist,
         :settings => @theme.settings
       }
+    end
+
+    def cart
+      @@cart ||= Cart.new(@store)
+
+      if @request.post? && !@cart_updated && cart_params = @request.params.with_indifferent_access[:cart]
+        @@cart.update(cart_params)
+        @cart_updated = true
+      end
+
+      @@cart
     end
     
     def head_content

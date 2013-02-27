@@ -74,6 +74,18 @@ module Dugway
     def product(permalink)
       lookup(permalink, products)
     end
+
+    def product_and_option(option_id)
+      products.each { |product|
+        product['options'].each { |option|
+          if option['id'] == option_id
+            return product, option
+          end
+        }
+      }
+
+      nil
+    end
     
     def search_products(search_terms)
       products.select { |p| p['name'].downcase.include?(search_terms.downcase) || p['description'].downcase.include?(search_terms.downcase) }

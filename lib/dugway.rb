@@ -7,6 +7,7 @@ require 'rack/showexceptions'
 require 'better_errors'
 
 require 'dugway/application'
+require 'dugway/cart'
 require 'dugway/liquifier'
 require 'dugway/logger'
 require 'dugway/request'

@@ -1,16 +1,20 @@
 module Dugway
   module Drops
     class CartDrop < BaseDrop
-      def total
-        0.00
+      def items
+        @items ||= source.items.map { |item| CartItemDrop.new(item) }
       end
 
       def item_count
-        0
+        items.size
       end
 
-      def items
-        []
+      def total
+        total = 0.0
+
+        items.each { |item| total += item['price'] }
+        
+        total
       end
 
       def country

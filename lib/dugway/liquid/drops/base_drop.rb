@@ -18,7 +18,11 @@ module Dugway
       end
 
       def before_method(method_or_key)
-        if source.respond_to?('has_key?') && source.has_key?(method_or_key)
+        if respond_to?(method_or_key)
+          # don't do anything
+        elsif source.respond_to?(method_or_key)
+          return source.send(method_or_key)
+        elsif source.respond_to?('has_key?') && source.has_key?(method_or_key)
           return source[method_or_key]
         elsif source.is_a?(Array) && source.first.has_key?('permalink')
           for item in source

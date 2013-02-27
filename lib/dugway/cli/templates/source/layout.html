@@ -25,75 +25,77 @@
       </a>
     </header>
     
-    <aside>
-      <section>
-        <a href="/cart">Cart ({{ cart.total | money_with_sign }})</a>
-      </section>
-      
-      {% if theme.show_search %}
-      <section>
-        <form action="/products" method="get">
-          <label>Search: <input type="text" name="search"></label>
-        </form>
-      </section>
-      {% endif %}
-      
-      <nav>
-        <h3>Products</h3>
-        <ul>
-          <li><a href="/products">All</a></li>
-          {% for category in categories.active %}
-          <li>{{ category | link_to }}</li>
-          {% endfor %}
-        </ul>
+    <div class="wrap">
+      <aside>
+        <section>
+          <a href="/cart">Cart ({{ cart.total | money_with_sign }})</a>
+        </section>
         
-        {% if artists.active != blank %}
-        <h3>Artists</h3>
+        {% if theme.show_search %}
+        <section>
+          <form action="/products" method="get">
+            <label>Search: <input type="text" name="search"></label>
+          </form>
+        </section>
+        {% endif %}
+        
+        <nav>
+          <h3>Products</h3>
+          <ul>
+            <li><a href="/products">All</a></li>
+            {% for category in categories.active %}
+            <li>{{ category | link_to }}</li>
+            {% endfor %}
+          </ul>
+          
+          {% if artists.active != blank %}
+          <h3>Artists</h3>
+          <ul>
+            <li><a href="/products">All</a></li>
+            {% for artist in artists.active %}
+            <li>{{ artist | link_to }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+          
+          <h3>Info</h3>
+          <ul>
+            {% for page in pages.all %}
+            <li>{{ page | link_to }}</li>
+            {% endfor %}
+            <li><a href="/contact">Contact Us</a></li>
+            {% if store.website != blank %}
+            <li><a href="{{ store.website }}">Back to Site</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+
+        <cite>{{ bigcartel_credit }}</cite>
+      </aside>
+      
+      <section class="content">
+        <h1>{{ page.name }}</h1>
+
+        {% if errors != blank %}
         <ul>
-          <li><a href="/products">All</a></li>
-          {% for artist in artists.active %}
-          <li>{{ artist | link_to }}</li>
+          {% for error in errors %}
+          <li>{{ error }}</li>
           {% endfor %}
         </ul>
         {% endif %}
         
-        <h3>Info</h3>
-        <ul>
-          {% for page in pages.all %}
-          <li>{{ page | link_to }}</li>
-          {% endfor %}
-          <li><a href="/contact">Contact Us</a></li>
-          {% if store.website != blank %}
-          <li><a href="{{ store.website }}">Back to Site</a></li>
-          {% endif %}
-        </ul>
-      </nav>
-    </aside>
-    
-    <section>
-      <h1>{{ page.name }}</h1>
-
-      {% if errors != blank %}
-      <ul>
-        {% for error in errors %}
-        <li>{{ error }}</li>
-        {% endfor %}
-      </ul>
-      {% endif %}
-      
-      {% if page.category == 'custom' %}
-        {{ page_content | paragraphs }}
-      {% else %}
-        {{ page_content }}
-      {% endif %}
-    </section>
+        {% if page.category == 'custom' %}
+          {{ page_content | paragraphs }}
+        {% else %}
+          {{ page_content }}
+        {% endif %}
+      </section>
+    </div>
     
     <footer>
       {% if theme.twitter_username != blank %}
       <p><a href="http://twitter/{{ theme.twitter_username }}">Follow @{{ theme.twitter_username }}</a></p>
-      {% endif %}
-      
-      <cite>{{ bigcartel_credit }}</cite>
+      {% endif %}      
     </footer>
   </body>
 </html>

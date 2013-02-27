@@ -15,6 +15,7 @@
  */
 
 /* Here we're including example files: example_1 is standard CSS, example_2 is Sass
- *= require stylesheets/example_1
- *= require stylesheets/example_2
+ *= require_directory ./stylesheets/vendor
+ *= require stylesheets/layout
+ *= require stylesheets/products
  */

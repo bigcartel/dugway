@@ -1,0 +1,70 @@
+$marginSize: 30px
+$border: dashed 1px #ddd
+
+body
+  margin: 100px
+  background: {{ theme.background_color }}
+  color: {{ theme.text_color }}
+
+a
+  color: #72C29B
+  text-decoration: none
+
+a:hover
+  color: #60AA85
+
+ul, ol
+  list-style: none
+  padding: 0
+
+header
+  padding-bottom: $marginSize
+  border-bottom: $border
+  margin-bottom: $marginSize
+  font-family: {{ theme.header_font | font_family }}
+  text-align: center
+
+  a
+    color: #666
+    font-size: 2.5em
+
+  a:hover
+    color: #333
+
+h1, h2, h3, h4, h5
+  font-family: {{ theme.header_font | font_family }}
+
+div.wrap
+  display: table
+  width: 100%
+
+aside
+  display: table-cell
+  width: 20%
+  padding-right: $marginSize
+  border-right: $border
+
+  li
+    line-height: 1.5em
+
+    a
+      font-size: .75em
+      color: #999
+
+    a:hover
+      color: #333
+
+  cite a
+    display: block
+    width: 79px
+    height: 23px
+    border: none
+    text-indent: 100%
+    white-space: nowrap
+    overflow: hidden
+    background: url({{ 'badge.png' | theme_image_url }}) no-repeat
+
+section.content
+  display: table-cell
+  width: 80%
+  padding-left: $marginSize

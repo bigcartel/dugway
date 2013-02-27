@@ -1,5 +1,5 @@
 {
-  "name": "<%= name.capitalize %>",
+  "name": "Sample",
   "version": "0.0.1",
   "images": [
     {
@@ -17,24 +17,24 @@
     {
       "variable": "header_font",
       "label": "Header Font",
-      "default": "Helvetica"
+      "default": "Inconsolata"
     },  
     {
       "variable": "text_font",
       "label": "Text Font",
-      "default": "Georgia"
+      "default": "Helvetica"
     }
   ],
   "colors": [
     {
       "variable": "background_color",
       "label": "Background",
-      "default": "#222222"
+      "default": "#FAFAFA"
     },
     {
       "variable": "text_color",
       "label": "Text Color",
-      "default": "#FFFFFF"
+      "default": "#222222"
     }
   ],
   "options": [

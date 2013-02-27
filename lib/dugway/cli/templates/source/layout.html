@@ -77,7 +77,7 @@
         <h1>{{ page.name }}</h1>
 
         {% if errors != blank %}
-        <ul>
+        <ul class="errors">
           {% for error in errors %}
           <li>{{ error }}</li>
           {% endfor %}

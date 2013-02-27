@@ -1,8 +1,19 @@
+$marginSize: 30px
+$border: dashed 1px #ddd
+
 body#home, body#products
   section.content
     ul
-      li.product
-        float: left
+      overflow: hidden
+    
+    li.product
+      float: left
+      margin-bottom: $marginSize 
+      margin-right: $marginSize
+
+    img
+      display: block
+      margin-bottom: $marginSize / 2
 
     div.pagination
       clear: both

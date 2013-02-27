@@ -2,34 +2,35 @@ $marginSize: 30px
 $border: dashed 1px #ddd
 
 body
-  margin: 100px
   background: {{ theme.background_color }}
   color: {{ theme.text_color }}
+  font: 14px/1.4 normal {{ theme.text_font | font_family }}
+  margin: 100px
 
 a
   color: #72C29B
   text-decoration: none
 
-a:hover
-  color: #60AA85
+  &:hover
+    color: #60AA85
 
 ul, ol
   list-style: none
   padding: 0
 
 header
-  padding-bottom: $marginSize
   border-bottom: $border
-  margin-bottom: $marginSize
   font-family: {{ theme.header_font | font_family }}
+  margin-bottom: $marginSize
+  padding-bottom: $marginSize
   text-align: center
 
   a
     color: #666
     font-size: 2.5em
 
-  a:hover
-    color: #333
+    &:hover
+      color: #333
 
 h1, h2, h3, h4, h5
   font-family: {{ theme.header_font | font_family }}
@@ -39,32 +40,64 @@ div.wrap
   width: 100%
 
 aside
-  display: table-cell
-  width: 20%
-  padding-right: $marginSize
   border-right: $border
+  display: table-cell
+  padding-right: $marginSize
+  width: 20%
 
-  li
-    line-height: 1.5em
+  section
+    margin-bottom: 1.5em
 
-    a
-      font-size: .75em
-      color: #999
+  ul 
+    margin-bottom: 1.5em
+    margin-top: 0
 
-    a:hover
-      color: #333
+    li
+      margin-bottom: .3em
+
+      a
+        color: #999
+        font-size: .9em
+
+        &:hover
+          color: #333
 
   cite a
-    display: block
-    width: 79px
-    height: 23px
-    border: none
-    text-indent: 100%
-    white-space: nowrap
-    overflow: hidden
     background: url({{ 'badge.png' | theme_image_url }}) no-repeat
+    border: none
+    display: block
+    height: 23px
+    overflow: hidden
+    text-indent: 100%
+    width: 79px
+    white-space: nowrap
 
 section.content
   display: table-cell
-  width: 80%
   padding-left: $marginSize
+  width: 80%
+
+form
+  li
+    margin-bottom: 1.2em
+
+  label
+    display: block
+    margin-bottom: .2em
+
+  input,
+  textarea
+    border: 1px solid #ddd
+    padding: 5px
+    width: 350px
+
+
+.errors
+  border-top: 1px soldi #A65A5A
+  margin-bottom: 3em
+
+  li
+    background: #D97576
+    border-bottom: 1px soldi #A65A5A
+    color: #fff
+    padding: 3px 10px

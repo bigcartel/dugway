@@ -40,19 +40,17 @@ module Dugway
     end
     
     def fonts
-      @fonts ||= customization_for_type('fonts')
+      customization_for_type('fonts')
     end
     
     def customization
-      @customization ||= begin
-        Hash.new.tap { |customization|
-          %w( fonts colors options ).each { |type|
-            customization.update(customization_for_type(type))
-          }
-        
-          customization.update(@overridden_customization)
+      Hash.new.tap { |customization|
+        %w( fonts colors options ).each { |type|
+          customization.update(customization_for_type(type))
         }
-      end
+    
+        customization.update(@overridden_customization)
+      }
     end
     
     def name

@@ -20,7 +20,32 @@ With Dugway installed, you can now create a new theme, simply give it a name:
 
     dugway create mytheme
 
-This will create a new directory named *mytheme* that contains a few configuration files and a starter theme to get you going.
+This will create a new directory named *mytheme* that contains a few configuration files and a starter theme to get you going. Here's what it looks like:
+
+    mytheme
+    ├── source
+    │   ├── images
+    │   │   └── all image files for your theme
+    │   ├── javascripts
+    │   │   └── all JavaScript files for your theme
+    │   ├── stylesheets
+    │   │   └── all CSS files for your theme
+    │   ├── cart.html
+    │   ├── checkout.html
+    │   ├── contact.html
+    │   ├── home.html
+    │   ├── layout.html
+    │   ├── maintenance.html
+    │   ├── product.html
+    │   ├── products.html
+    │   ├── screenshot.jpg
+    │   ├── scripts.js
+    │   ├── settings.json
+    │   ├── styles.css
+    │   └── success.html
+    ├── config.ru
+    └── Gemfile
+
 
 ## Developing your theme
 

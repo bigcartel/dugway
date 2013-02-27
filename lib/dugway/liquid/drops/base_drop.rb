@@ -19,7 +19,7 @@ module Dugway
 
       def before_method(method_or_key)
         if respond_to?(method_or_key)
-          # don't do anything
+          # don't do anything, just let it default here
         elsif source.respond_to?(method_or_key)
           return source.send(method_or_key)
         elsif source.respond_to?('has_key?') && source.has_key?(method_or_key)
@@ -39,7 +39,6 @@ module Dugway
       
       def error(msg)
         @context['errors'] << msg
-        Dugway.logger.error msg
       end
     end
   end

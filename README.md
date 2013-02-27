@@ -142,7 +142,7 @@ Another important thing to consider is how store owners will customize your them
 
 ## Building your theme
 
-When you're finished with a new version of your theme, it's time to build it:
+When you're finished with a new version of your theme, it's time to build it.
 
     dugway build
 

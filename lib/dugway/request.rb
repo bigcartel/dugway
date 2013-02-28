@@ -2,6 +2,10 @@ require 'rack/request'
 
 module Dugway
   class Request < Rack::Request
+    def params
+      super.update(env['rack.routing_args']).symbolize_keys
+    end
+
     def file_name
       "#{ permalink }#{ extension }"
     end

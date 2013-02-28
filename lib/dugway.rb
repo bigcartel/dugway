@@ -3,11 +3,11 @@ require 'i18n'
 
 require 'rack/builder'
 require 'rack/commonlogger'
-require 'rack/showexceptions'
 require 'better_errors'
 
-require 'dugway/application'
 require 'dugway/cart'
+require 'dugway/router'
+require 'dugway/controller'
 require 'dugway/liquifier'
 require 'dugway/logger'
 require 'dugway/request'
@@ -18,20 +18,41 @@ require 'dugway/theme_font'
 require 'dugway/extensions/time'
 
 module Dugway
-  def self.application(options={})
-    Rack::Builder.app do
-      use BetterErrors::Middleware
+  class << self
+    def application(options={})
+      @store = Store.new(options[:store] || 'dugway')
+      @theme = Theme.new(source_dir, options[:customization] || {})
 
-      if options[:log]
-        BetterErrors.logger = Dugway.logger
-        use Rack::CommonLogger, Dugway.logger
-      end      
-      
-      run Application.new(options)
+      I18n.load_path += Dir[File.join(File.dirname(__FILE__), 'data', 'locales', '*.yml').to_s]
+      I18n.default_locale = 'en-US'
+      I18n.locale = @store.locale
+
+      Rack::Builder.app do
+        use BetterErrors::Middleware
+
+        if options[:log]
+          BetterErrors.logger = Dugway.logger
+          use Rack::CommonLogger, Dugway.logger
+        end
+        
+        run Controller.new
+      end
     end
-  end
-  
-  def self.logger
-    @logger ||= Logger.new
+
+    def store
+      @store
+    end
+
+    def theme
+      @theme
+    end
+
+    def source_dir
+      @source_dir ||= File.join(Dir.pwd, 'source')
+    end
+    
+    def logger
+      @logger ||= Logger.new
+    end
   end
 end

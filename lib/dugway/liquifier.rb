@@ -65,7 +65,20 @@ module Dugway
     private
 
     def shared_context
-      @shared_context ||= { 'errors' => [] }
+      @shared_context ||= { 'errors' => errors }
+    end
+
+    def errors
+      @errors ||= begin
+        errors = []
+
+        if @request.permalink == 'checkout' && cart.items.empty?
+          errors << 'Must have at least one product to checkout'
+          @request.permalink = 'cart'
+        end
+
+        errors
+      end
     end
     
     def assigns
@@ -101,10 +114,17 @@ module Dugway
     def cart
       @@cart ||= Cart.new(@store)
 
-      if @request.post? && !@cart_updated && cart_params = @request.params.with_indifferent_access[:cart]
-        @@cart.update(cart_params)
-        @cart_updated = true
-      end
+      if @request.post?
+        if !@cart_updated && cart_params = @request.params.with_indifferent_access[:cart]
+          @@cart.update(cart_params)
+          @cart_updated = true
+        end
+
+        if @request.path == '/success'
+          @@cart.reset
+          sleep(3)
+        end
+      end      
 
       @@cart
     end

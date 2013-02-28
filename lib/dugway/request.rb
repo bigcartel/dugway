@@ -5,12 +5,8 @@ module Dugway
     def params
       super.update(env['rack.routing_args']).symbolize_keys
     end
-
-    def file_name
-      "#{ permalink }#{ extension }"
-    end
     
-    def permalink
+    def page_permalink
       case path
       when /^\/$/
         'home'
@@ -29,32 +25,6 @@ module Dugway
     
     def html?
       extension == '.html'
-    end
-    
-    def image?
-      !!(path =~ /^\/images\/.+\.(jpg|jpeg|gif|png)$/)
-    end
-    
-    def custom_page?
-      !Theme::REQUIRED_FILES.include?(file_name)
-    end
-    
-    def product_permalink
-      find_permalink('product')
-    end
-    
-    def category_permalink
-      find_permalink('category')
-    end
-    
-    def artist_permalink
-      find_permalink('artist')
-    end
-    
-    private
-    
-    def find_permalink(type)
-      path.scan(/\/#{ type }\/([a-z0-9\-_]+)$/).try(:first).try(:first)
     end
   end
 end

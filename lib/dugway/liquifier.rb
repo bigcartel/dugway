@@ -21,23 +21,8 @@ module Dugway
       '%}' => '">'
     }
     
-    def initialize(theme, store, request)
-      @theme = theme
-      @store = store
+    def initialize(request)
       @request = request
-      
-      @page = @store.page(request.permalink)
-      @page['url'] = request.path
-      @page['full_url'] = request.url
-      @page['full_path'] = request.fullpath
-      
-      if request.product_permalink && @product = @store.product(request.product_permalink)
-        @page['name'] = @product['name']
-      elsif request.category_permalink && @category = @store.category(request.category_permalink)
-        @page['name'] = @category['name']
-      elsif request.artist_permalink && @artist = @store.artist(request.artist_permalink)
-        @page['name'] = @artist['name']
-      end
     end
     
     def render(content, overridden_assigns={})
@@ -64,8 +49,20 @@ module Dugway
     
     private
 
+    def store
+      Dugway.store
+    end
+
+    def theme
+      Dugway.theme
+    end
+
+    def cart
+      Dugway.cart
+    end
+
     def shared_context
-      @shared_context ||= { 'errors' => errors }
+      @shared_context ||= { 'errors' => [] }
     end
 
     def errors
@@ -83,15 +80,15 @@ module Dugway
     
     def assigns
       {
-        'store' => Drops::AccountDrop.new(@store.account),
+        'store' => Drops::AccountDrop.new(store.account),
         'cart' => Drops::CartDrop.new(cart),
-        'theme' => Drops::ThemeDrop.new(@theme.customization),
+        'theme' => Drops::ThemeDrop.new(theme.customization),
         'page' => Drops::PageDrop.new(@page),
         'product' => Drops::ProductDrop.new(@product),
-        'pages' => Drops::PagesDrop.new(@store.pages.map { |p| Drops::PageDrop.new(p) }),
-        'categories' => Drops::CategoriesDrop.new(@store.categories.map { |c| Drops::CategoryDrop.new(c) }),
-        'artists' => Drops::ArtistsDrop.new(@store.artists.map { |a| Drops::ArtistDrop.new(a) }),
-        'products' => Drops::ProductsDrop.new(@store.products.map { |p| Drops::ProductDrop.new(p) }),
+        'pages' => Drops::PagesDrop.new(store.pages.map { |p| Drops::PageDrop.new(p) }),
+        'categories' => Drops::CategoriesDrop.new(store.categories.map { |c| Drops::CategoryDrop.new(c) }),
+        'artists' => Drops::ArtistsDrop.new(store.artists.map { |a| Drops::ArtistDrop.new(a) }),
+        'products' => Drops::ProductsDrop.new(store.products.map { |p| Drops::ProductDrop.new(p) }),
         'contact' => Drops::ContactDrop.new,
         'head_content' => head_content,
         'bigcartel_credit' => bigcartel_credit
@@ -100,34 +97,15 @@ module Dugway
     
     def registers
       {
-        :store => @store,
         :request => @request,
         :path => @request.path,
         :params => @request.params.with_indifferent_access,
-        :currency => @store.currency,
+        :currency => store.currency,
         :category => @category,
         :artist => @artist,
-        :settings => @theme.settings
+        :settings => theme.settings
       }
-    end
-
-    def cart
-      @@cart ||= Cart.new(@store)
-
-      if @request.post?
-        if !@cart_updated && cart_params = @request.params.with_indifferent_access[:cart]
-          @@cart.update(cart_params)
-          @cart_updated = true
-        end
-
-        if @request.path == '/success'
-          @@cart.reset
-          sleep(3)
-        end
-      end      
-
-      @@cart
-    end
+    end    
     
     def head_content
       content = %{<meta name="generator" content="Big Cartel">}

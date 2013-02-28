@@ -10,8 +10,7 @@ module Dugway
     
     attr_reader :errors
 
-    def initialize(source_dir, overridden_customization={})
-      @source_dir = source_dir
+    def initialize(overridden_customization={})
       @overridden_customization = overridden_customization.stringify_keys
     end
     
@@ -25,10 +24,6 @@ module Dugway
       else
         nil
       end
-    end
-    
-    def find_image_by_env(env)
-      Rack::File.new(@source_dir).call(env)
     end
     
     def layout
@@ -79,8 +74,8 @@ module Dugway
     end
 
     def image_files
-      Dir.glob(File.join(@source_dir, 'images', '**', '*.{png,jpg,jpeg,gif}')).map { |i| 
-        i.gsub(@source_dir, '')[1..-1]
+      Dir.glob(File.join(source_dir, 'images', '**', '*.{png,jpg,jpeg,gif}')).map { |i| 
+        i.gsub(source_dir, '')[1..-1]
       }
     end
 
@@ -99,11 +94,15 @@ module Dugway
     end
     
     private
+
+    def source_dir
+      Dugway.source_dir
+    end
     
     def sprockets
       @sprockets ||= begin
         sprockets = Sprockets::Environment.new
-        sprockets.append_path @source_dir
+        sprockets.append_path source_dir
         
         # CSS engines like Sass and LESS choke on Liquid variables, so here we render the Liquid 
         # if we're viewing the file, or escape and unescape it if we're building the file.
@@ -129,7 +128,7 @@ module Dugway
     end
     
     def read_source_file(file_name)
-      file_path = File.join(@source_dir, file_name)
+      file_path = File.join(source_dir, file_name)
       
       if File.exist?(file_path)
         File.read(file_path)

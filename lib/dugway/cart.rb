@@ -2,8 +2,7 @@ module Dugway
   class Cart
     attr_accessor :items
 
-    def initialize(store)
-      @store = store
+    def initialize
       reset
     end
 
@@ -19,13 +18,17 @@ module Dugway
       update_quantities(updates) if updates
     end
 
+    def empty?
+      items.empty?
+    end
+
     private
 
     def add_item(add)
       id = add[:id].to_i
 
       unless item = items.find { |i| i['option']['id'] == id.to_i }
-        product, option = @store.product_and_option(id)
+        product, option = Dugway.store.product_and_option(id)
 
         if product && option
           item = {

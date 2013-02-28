@@ -5,8 +5,8 @@ require 'rack/builder'
 require 'rack/commonlogger'
 require 'better_errors'
 
+require 'dugway/base_controller'
 require 'dugway/cart'
-require 'dugway/router'
 require 'dugway/controller'
 require 'dugway/liquifier'
 require 'dugway/logger'
@@ -21,11 +21,11 @@ module Dugway
   class << self
     def application(options={})
       @store = Store.new(options[:store] || 'dugway')
-      @theme = Theme.new(source_dir, options[:customization] || {})
+      @theme = Theme.new(options[:customization] || {})
 
       I18n.load_path += Dir[File.join(File.dirname(__FILE__), 'data', 'locales', '*.yml').to_s]
       I18n.default_locale = 'en-US'
-      I18n.locale = @store.locale
+      I18n.locale = Dugway.store.locale
 
       Rack::Builder.app do
         use BetterErrors::Middleware
@@ -45,6 +45,10 @@ module Dugway
 
     def theme
       @theme
+    end
+
+    def cart
+      @cart ||= Cart.new
     end
 
     def source_dir

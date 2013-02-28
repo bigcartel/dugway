@@ -2,7 +2,6 @@ module Dugway
   module Drops
     class BaseDrop < Liquid::Drop
       attr_reader :source
-      attr_reader :store
       attr_reader :request
       attr_reader :params
 
@@ -11,7 +10,6 @@ module Dugway
       end
 
       def context=(current_context)
-        @store = current_context.registers[:store]
         @request = current_context.registers[:request]
         @params = current_context.registers[:params]
         super

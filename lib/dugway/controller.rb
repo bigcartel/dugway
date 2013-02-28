@@ -1,9 +1,9 @@
 module Dugway
-  class Controller < Router
+  class Controller < BaseController
     # Home
 
     get '/' do
-      render_text 'Home'
+      render_text "Home: #{ page['name'] }"
     end
 
     # Products
@@ -12,33 +12,97 @@ module Dugway
       render_text 'Products'
     end
 
-    get '/category/:permalink' do |request|
-      render_text "Category: #{ request.params.inspect }"
+    get '/category/:category' do
+      if category = store.category(params[:category])
+        page['name'] = category['name']
+        render_text "category page: #{ page.inspect }"
+      else
+        render_not_found
+      end
     end
 
-    get '/artist/:permalink' do |request|
-      render_text "Artist: #{ request.params.inspect }"
+    get '/artist/:artist' do
+      if artist = store.artist(params[:artist])
+        page['name'] = artist['name']
+        render_text "artist page: #{ page.inspect }"
+      else
+        render_not_found
+      end
     end
 
     # Product
 
-    get '/product/:permalink' do |request|
-      render_text "Product: #{ request.params.inspect }"
+    get '/product/:product' do
+      if product = store.product(params[:product])
+        page['name'] = product['name']
+        render_text "product page: #{ page.inspect }"
+      else
+        render_not_found
+      end
     end
 
-    # Contact form
+    # Cart
 
-    get '/contact' do
+    get '/cart' do
+      render_text "GET Cart"
+    end
+
+    post '/cart' do
+      cart.update(params[:cart])
+      render_text "POST Cart: #{ request.params.inspect }"
+    end
+
+    # Checkout
+
+    any '/checkout' do
+      if cart.empty?
+        render_text 'Must have at least one product to checkout'
+      else
+        render_text "Checkout"
+      end
+    end
+
+    # Success
+
+    get '/success' do
+      render_text "Success"
+    end
+
+    post '/success' do
+      sleep(3) # Give the checkout page time
+      cart.reset
+      render_text "POST Success"
+    end
+
+    # Contact
+
+    any '/contact' do
       render_text 'GET Contact'
     end
 
-    post '/contact' do
-      render_text 'POST Contact'
+    # Maintenance
+
+    get '/maintenance' do
+      render_text "Maintenance"
     end
 
-    # Images
+    # Custom page
 
-    get %r{^/images/.+\.(jpg|jpeg|gif|png)$} do |request|
+    get '/:permalink' do
+      render_text "Custom page: #{ page.inspect }"
+    end
+
+    # Assets
+
+    get '/styles.css' do
+      render_text 'Styles'
+    end
+
+    get '/scripts.css' do
+      render_text 'Scripts'
+    end
+
+    get %r{^/images/.+\.(jpg|jpeg|gif|png)$} do
       Rack::File.new(Dugway.source_dir).call(request.env)
     end
   end

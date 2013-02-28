@@ -53,7 +53,7 @@ module Dugway
       # Shipping Filters
 
       def shipping_name(area, everywhere = 'Everywhere', everywhere_else = 'Everywhere else')
-        if area.country
+        if area.country.name.present?
           area.country['name']
         elsif area.strict
           everywhere_else

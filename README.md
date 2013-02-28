@@ -125,6 +125,8 @@ The best way to see your theme under a different light is by previewing it with 
 
     options[:store] = 'beeteeth'
 
+*Note:* don't worry, any sensitive data like inventory levels and discount codes is faked by Dugway.
+
 ### Store customization
 
 Another important thing to consider is how store owners will customize your theme. You establish what can be customized in your [settings.json](#settings) file, and Dugway allows you to simulate potential values people could choose by setting them in the **:customization** option. By default we use the **default** values from your **[settings.json](#settings)** file.

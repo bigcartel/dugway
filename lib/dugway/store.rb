@@ -86,6 +86,26 @@ module Dugway
 
       nil
     end
+
+    def previous_product(permalink)
+      products.each_with_index { |product, index|
+        if product['permalink'] == permalink && index > 0 && previous_product = products[index - 1]
+          return previous_product
+        end
+      }
+
+      nil
+    end
+
+    def next_product(permalink)
+      products.each_with_index { |product, index|
+        if product['permalink'] == permalink && (index + 1) < products.size && next_product = products[index + 1]
+          return next_product
+        end
+      }
+
+      nil
+    end
     
     def search_products(search_terms)
       products.select { |p| p['name'].downcase.include?(search_terms.downcase) || p['description'].downcase.include?(search_terms.downcase) }

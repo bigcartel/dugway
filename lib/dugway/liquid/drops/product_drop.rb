@@ -1,14 +1,8 @@
 module Dugway
   module Drops
     class ProductDrop < BaseDrop
-      def css_class
-        @css_class ||= begin
-          c = 'product'
-          c += ' sold' if status == 'sold-out'
-          c += ' soon' if status == 'coming-soon'
-          c += ' sale' if on_sale
-          c
-        end
+      def price
+        nil # price is deprecated in favor of default_price
       end
 
       def min_price
@@ -24,31 +18,31 @@ module Dugway
       end
 
       def has_default_option
-        @has_default_option ||= option.present?
+        @has_default_option ||= options.size == 1 && option.default
       end
 
       def option
-        @option ||= options.blank? ? nil : options[0]
+        @option ||= options.blank? ? nil : options.first
       end
 
       def options
-        @options ||= source['options'].map { |o| ProductOptionDrop.new(o) }
+        @options ||= source['options'].each_with_index.map { |o,i| ProductOptionDrop.new(o.update('position' => i+1, 'product' => self)) }
       end
 
       def options_in_stock
-        @options_in_stock ||= source['options'].map { |o| ProductOptionDrop.new(o) }
+        @options_in_stock ||= options
       end
 
       def shipping
-        @shipping ||= source['shipping'].map { |o| ShippingOptionDrop.new(o) }
+        @shipping ||= source['shipping'].map { |o| ShippingOptionDrop.new(o.update('product' => self)) }
       end
 
       def image
-        @image ||= images.blank? ? nil : images[0]
+        @image ||= images.blank? ? nil : images.first
       end
 
       def images
-        @images ||= source['images'].map { |i| ImageDrop.new(i) }
+        @images ||= source['images'].map { |image| ImageDrop.new(image) }
       end
 
       def image_count
@@ -56,11 +50,23 @@ module Dugway
       end
 
       def previous_product
-        @previous_product ||= source['higher_item'] || ''
+        @previous_product ||= begin
+          if previous_product = store.previous_product(permalink)
+            ProductDrop.new(previous_product)
+          else
+            nil
+          end
+        end
       end
 
       def next_product
-        @next_product ||= source['lower_item'] || ''
+        @next_product ||= begin
+          if next_product = store.next_product(permalink)
+            ProductDrop.new(next_product)
+          else
+            nil
+          end
+        end
       end
 
       def edit_url
@@ -73,6 +79,16 @@ module Dugway
 
       def artists
         @artists ||= ArtistsDrop.new(source['artists'].map { |a| ArtistDrop.new(a) }) rescue []
+      end
+
+      def css_class
+        @css_class ||= begin
+          c = 'product'
+          c += ' sold' if status == 'sold-out'
+          c += ' soon' if status == 'coming-soon'
+          c += ' sale' if on_sale
+          c
+        end
       end
 
       private

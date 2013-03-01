@@ -15,6 +15,18 @@ module Dugway
         super
       end
 
+      def store
+        Dugway.store
+      end
+
+      def theme
+        Dugway.theme
+      end
+
+      def cart
+        Dugway.cart
+      end
+
       def before_method(method_or_key)
         if respond_to?(method_or_key)
           # don't do anything, just let it default here

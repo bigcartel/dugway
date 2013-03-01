@@ -1,5 +1,3 @@
-require 'rack/request'
-
 module Dugway
   class Request < Rack::Request
     def params
@@ -8,23 +6,27 @@ module Dugway
     
     def page_permalink
       case path
-      when /^\/$/
+      when %r{^/$}
         'home'
-      when /^\/(products|category|artist)\//
+      when %r{^/(products|category|artist)/}
         'products'
-      when /^\/product\//
+      when %r{^/product/}
         'product'
       else
         File.basename(path[1..-1], '.*')
       end
     end
     
-    def extension
-      File.extname(path).present? ? File.extname(path) : '.html'
+    def format
+      params[:format] || 'html'
     end
     
     def html?
-      extension == '.html'
+      format == 'html'
+    end
+
+    def js?
+      format == 'js'
     end
   end
 end

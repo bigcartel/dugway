@@ -2,17 +2,21 @@ require 'rack/mount'
 
 module Dugway
   class Controller
+    PERMALINK_REGEX = %r{[a-z0-9\-_]+}
+    FORMAT_REGEX = %r{(\.(?<format>js))?}
+
     class << self
       def routes
         @routes ||= Rack::Mount::RouteSet.new
       end
 
-      def route(method, path, &block)
-        path = interpret_path(path)
+      private
 
+      def route(method, path, &block)
         routes.add_route(Proc.new { |env|
           @page = nil
           @request = Request.new(env)
+          @response = Rack::Response.new
 
           if request.html? && page.blank?
             render_not_found
@@ -21,24 +25,30 @@ module Dugway
           end
         }, { 
           :request_method => method, 
-          :path_info => path 
+          :path_info => interpret_path(path) 
         })
         
         routes.rehash
       end
 
       def interpret_path(path)
-        permalink = %r{[a-z0-9\-_]+}
-        format = %r{(\.(?<format>[a-z]+))?}
-
         if path.is_a?(String)
           case path
-          when %r{^/(\w+)/:(#{ permalink })}
-            %r{^/#{ $1 }/(?<#{ $2 }>#{ permalink })#{ format }$}
-          when %r{^/:(#{ permalink })}
-            %r{^/(?<#{ $1 }>#{ permalink })#{ format }$}
+          # category/artist/product
+          when %r{^/(\w+)/:(#{ PERMALINK_REGEX })\(\.js\)}
+            %r{^/#{ $1 }/(?<#{ $2 }>#{ PERMALINK_REGEX })#{ FORMAT_REGEX }$}
+          # products/cart
+          when %r{^/(\w+)\(\.js\)$}
+            %r{^/#{ $1 }#{ FORMAT_REGEX }$}
+          # custom pages
+          when %r{^/:(#{ PERMALINK_REGEX })}
+            %r{^/(?<#{ $1 }>#{ PERMALINK_REGEX })$}
+          # styles/scripts
+          when %r{^/(\w+)\.(js|css)}
+            %r{^/#{ $1 }\.(?<format>(js|css))$}
+          # everything else
           else
-            %r{^#{ path }#{ format }$}
+            %r{^#{ path }$}
           end
         else
           path
@@ -62,6 +72,10 @@ module Dugway
         @request
       end
 
+      def response
+        @response
+      end
+
       def params
         request.params
       end
@@ -76,7 +90,7 @@ module Dugway
 
       def page
         @page ||= begin
-          if request.html? && page = Dugway.store.page(request.page_permalink)
+          if page = Dugway.store.page(request.page_permalink)
             page['url'] = request.path
             page['full_url'] = request.url
             page['full_path'] = request.fullpath
@@ -88,11 +102,19 @@ module Dugway
       end
 
       def render_text(text)
-        [200, {'Content-Type' => 'text/plain'}, [text]]
+        response.write(text)
+        response.finish
       end
 
       def render_not_found
-        [404, {'Content-Type' => 'text/plain'}, ['Not Found']]
+        response.write('Not Found')
+        response.status = 404
+        response.finish
+      end
+
+      def redirect_to(path)
+        response.redirect(path)
+        response.finish
       end
     end
 

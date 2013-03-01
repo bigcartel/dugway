@@ -5,25 +5,25 @@ module Dugway
     # Home
 
     get '/' do
-      render_text "Home: #{ page['name'] }"
+      render_text "Home: #{ page.inspect }"
     end
 
     # Products
 
-    get '/products' do
+    get '/products(.js)' do
       render_text "Products: #{ params.inspect }"
     end
 
-    get '/category/:category' do
+    get '/category/:category(.js)' do
       if category = store.category(params[:category])
         page['name'] = category['name']
-        render_text "category page: #{ page.inspect }"
+        render_text "Category: #{ page.inspect }"
       else
         render_not_found
       end
     end
 
-    get '/artist/:artist' do
+    get '/artist/:artist(.js)' do
       if artist = store.artist(params[:artist])
         page['name'] = artist['name']
         render_text "artist page: #{ page.inspect }"
@@ -34,7 +34,7 @@ module Dugway
 
     # Product
 
-    get '/product/:product' do
+    get '/product/:product(.js)' do
       if product = store.product(params[:product])
         page['name'] = product['name']
         render_text "product page: #{ page.inspect }"
@@ -45,11 +45,11 @@ module Dugway
 
     # Cart
 
-    get '/cart' do
+    get '/cart(.js)' do
       render_text "GET Cart"
     end
 
-    post '/cart' do
+    post '/cart(.js)' do
       cart.update(params[:cart])
       render_text "POST Cart: #{ request.params.inspect }"
     end
@@ -58,7 +58,8 @@ module Dugway
 
     any '/checkout' do
       if cart.empty?
-        render_text 'Must have at least one product to checkout'
+        # render_text 'Must have at least one product to checkout'
+        redirect_to '/cart'
       else
         render_text "Checkout"
       end
@@ -100,7 +101,7 @@ module Dugway
       render_text 'Styles'
     end
 
-    get '/scripts.css' do
+    get '/scripts.js' do
       render_text 'Scripts'
     end
 

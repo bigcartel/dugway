@@ -5,9 +5,8 @@ require 'rack/builder'
 require 'rack/commonlogger'
 require 'better_errors'
 
-require 'dugway/base_controller'
+require 'dugway/application'
 require 'dugway/cart'
-require 'dugway/controller'
 require 'dugway/liquifier'
 require 'dugway/logger'
 require 'dugway/request'
@@ -35,7 +34,7 @@ module Dugway
           use Rack::CommonLogger, Dugway.logger
         end
         
-        run Controller.new
+        run Application.new
       end
     end
 

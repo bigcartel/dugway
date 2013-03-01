@@ -12,7 +12,6 @@ module Dugway
 
     def update(params)
       add, adds, updates = params.delete(:add), params.delete(:adds), params.delete(:update)
-
       add_item(add) if add
       add_item(adds) if adds
       update_quantities(updates) if updates

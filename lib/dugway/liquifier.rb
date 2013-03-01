@@ -14,7 +14,7 @@ Liquid::Template.register_tag(:paginate, Dugway::Tags::Paginate)
 
 module Dugway
   class Liquifier
-    STYLE_ESCAPE_CHARS = {
+    ESCAPE_CSS = {
       '{{' => '"<<',
       '}}' => '>>"',
       '{%' => '"<',
@@ -28,33 +28,37 @@ module Dugway
     def render(content, variables={})
       variables.symbolize_keys!
 
-      assigns = default_assigns
+      assigns = shared_assigns
       assigns['page_content'] = variables[:page_content]
       assigns['page'] = Drops::PageDrop.new(variables[:page])
       assigns['product'] = Drops::ProductDrop.new(variables[:product])
 
-      registers = default_registers
+      registers = shared_registers
       registers[:category] = variables[:category]
       registers[:artist] = variables[:artist]
+
+      if errors = variables.delete(:errors)
+        shared_context['errors'] << errors
+      end
 
       context = Liquid::Context.new([ assigns, shared_context ], {}, registers)
       Liquid::Template.parse(content).render!(context)
     end
     
-    def self.render_styles(css, theme)
+    def self.render_styles(css)
       Liquid::Template.parse(css).render!(
-        { 'theme' => Drops::ThemeDrop.new(theme.customization) }, 
-        :registers => { :settings => theme.settings }
+        { 'theme' => Drops::ThemeDrop.new(Dugway.theme.customization) }, 
+        :registers => { :settings => Dugway.theme.settings }
       )
     end
     
     def self.escape_styles(css)
-      STYLE_ESCAPE_CHARS.each_pair { |k,v| css.gsub!(k,v) }
+      ESCAPE_CSS.each_pair { |k,v| css.gsub!(k,v) }
       css
     end
     
     def self.unescape_styles(css)
-      STYLE_ESCAPE_CHARS.each_pair { |k,v| css.gsub!(v,k) }
+      ESCAPE_CSS.each_pair { |k,v| css.gsub!(v,k) }
       css
     end
     
@@ -76,7 +80,7 @@ module Dugway
       @shared_context ||= { 'errors' => [] }
     end
     
-    def default_assigns
+    def shared_assigns
       {
         'store' => Drops::AccountDrop.new(store.account),
         'cart' => Drops::CartDrop.new(cart),
@@ -91,7 +95,7 @@ module Dugway
       }
     end
     
-    def default_registers
+    def shared_registers
       {
         :request => @request,
         :path => @request.path,

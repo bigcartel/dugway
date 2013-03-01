@@ -50,15 +50,20 @@ module Dugway
     end
 
     post '/cart(.js)' do
-      cart.update(params[:cart])
-      render_page
+      cart.update(params[:cart].with_indifferent_access)
+
+      if params[:checkout]
+        redirect_to '/checkout'
+      else
+        render_page
+      end
     end
 
     # Checkout
 
     any '/checkout' do
       if cart.empty?
-        # render_text 'Must have at least one product to checkout'
+        error 'Must have at least one product to checkout'
         redirect_to '/cart'
       else
         render_page

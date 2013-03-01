@@ -19,44 +19,47 @@ require 'dugway/extensions/time'
 module Dugway
   class << self
     def application(options={})
-      @@store = Store.new(options[:store] || 'dugway')
-      @@theme = Theme.new(options[:customization] || {})
-      @@cart = Cart.new
-      @@source_dir = File.join(Dir.pwd, 'source')
-      @@logger = options[:log] ? Logger.new : nil
+      @logger = Logger.new
+      @source_dir = File.join(Dir.pwd, 'source')
+      @store = Store.new(options[:store] || 'dugway')
+      @theme = Theme.new(options[:customization] || {})
+      @cart = Cart.new
 
       I18n.load_path += Dir[File.join(File.dirname(__FILE__), 'data', 'locales', '*.yml').to_s]
       I18n.default_locale = 'en-US'
       I18n.locale = Dugway.store.locale
 
       Rack::Builder.app do
+        use Rack::Session::Cookie
         use BetterErrors::Middleware
         
-        BetterErrors.logger = Dugway.logger
-        use Rack::CommonLogger, Dugway.logger
+        if options[:log]
+          BetterErrors.logger = Dugway.logger
+          use Rack::CommonLogger, Dugway.logger
+        end
         
         run Application.new
       end
     end
 
     def store
-      @@store
+      @store
     end
 
     def theme
-      @@theme
+      @theme
     end
 
     def cart
-      @@cart
+      @cart
     end
 
     def source_dir
-      @@source_dir
+      @source_dir
     end
     
     def logger
-      @@logger
+      @logger
     end
   end
 end

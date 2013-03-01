@@ -106,7 +106,7 @@ module Dugway
           if @building
             Liquifier.escape_styles(data)
           else
-            Liquifier.render_styles(data, self)
+            Liquifier.render_styles(data)
           end
         end
         

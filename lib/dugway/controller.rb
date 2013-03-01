@@ -101,7 +101,16 @@ module Dugway
         end
       end
 
+      def error(msg)
+        request.session[:errors] ||= []
+        request.session[:errors] << msg
+      end
+
       def render_file(file_name, variables={})
+        if errors = request.session.delete(:errors)
+          variables.merge!(:errors => errors)
+        end
+
         template = Template.new(file_name)
         content = template.render(request, variables)
 

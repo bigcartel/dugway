@@ -10,6 +10,46 @@ module Dugway
       self.items = []
     end
 
+    def item_count
+      items.map { |item| item.quantity }.inject(:+) || 0
+    end
+
+    def subtotal
+      items.map { |item| item.price }.inject(:+) || 0.0
+    end
+
+    def total
+      subtotal + shipping['amount'] + tax['amount'] - discount['amount']
+    end
+
+    def country
+      nil
+    end
+
+    def shipping
+      { 
+        'enabled' => false,
+        'amount' => 0.0,
+        'strict' => false,
+        'pending' => false
+      }
+    end
+
+    def tax
+      { 
+        'enabled' => false,
+        'amount' => 0.0
+      }
+    end
+
+    def discount
+      { 
+        'enabled' => false,
+        'pending' => false,
+        'amount' => 0.0
+      }
+    end
+
     def update(params)
       add, adds, updates = params.delete(:add), params.delete(:adds), params.delete(:update)
       add_item(add) if add
@@ -21,30 +61,42 @@ module Dugway
       items.empty?
     end
 
+    def as_json(options=nil)
+      {
+        :item_count => item_count,
+        :subtotal => subtotal,
+        :price => subtotal, # deprecated but need this for backwards JS compatibility
+        :total => total,
+        :items => items,
+        :country => country,
+        :shipping => shipping,
+        :discount => discount
+      }
+    end
+
     private
 
     def add_item(add)
       id = add[:id].to_i
 
-      unless item = items.find { |i| i['option']['id'] == id.to_i }
+      unless item = items.find { |i| i.option['id'] == id.to_i }
         product, option = Dugway.store.product_and_option(id)
 
         if product && option
-          item = {
-            'id' => items.size + 1,
-            'name' => option['name'] == 'Default' ? product['name'] : "#{ product['name'] } - #{ option['name'] }",
-            'unit_price' => option['price'],
-            'product' => product,
-            'option' => option,
-            'quantity' => 0
-          }
+          item = CartItem.new
+          item.id = items.size + 1
+          item.name = option['name'] == 'Default' ? product['name'] : "#{ product['name'] } - #{ option['name'] }"
+          item.unit_price = option['price']
+          item.product = product
+          item.option = option
+          item.quantity = 0
 
           items << item
         end
       end
 
       if item
-        item['quantity'] += add[:quantity] ? add[:quantity].to_i : 1
+        item.quantity += add[:quantity] ? add[:quantity].to_i : 1
       end
 
       item
@@ -60,12 +112,33 @@ module Dugway
 
     def update_quantities(updates)
       updates.each_pair { |id, qty|
-        if item = items.find { |i| i['id'] == id.to_i }
-          item['quantity'] = qty.to_i
+        if item = items.find { |i| i.id == id.to_i }
+          item.quantity = qty.to_i
         end
       }
 
-      items.reject! { |item| item['quantity'] == 0 }
+      items.reject! { |item| item.quantity == 0 }
+    end
+  end
+
+  CartItem = Struct.new(:id, :name, :unit_price, :quantity, :product, :option) do
+    def price
+      unit_price * quantity
+    end
+
+    def as_json(options=nil)
+      {
+        :id => id,
+        :name => name,
+        :price => price,
+        :unit_price => unit_price,
+        :shipping => 0.0,
+        :tax => 0.0,
+        :total => price,
+        :quantity => quantity,
+        :product => product['permalink'],
+        :option => option['id']
+      }
     end
   end
 end

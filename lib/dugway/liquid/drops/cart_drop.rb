@@ -5,43 +5,8 @@ module Dugway
         @items ||= source.items.map { |item| CartItemDrop.new(item) }
       end
 
-      def item_count
-        items.map { |item| item.quantity }.inject(:+) || 0
-      end
-
-      def subtotal
-        items.map { |item| item.price }.inject(:+) || 0
-      end
-
-      def total
-        subtotal
-      end
-
-      def country
-        nil
-      end
-
-      def shipping
-        { 
-          'enabled' => false,
-          'amount' => 0.00,
-          'strict' => false,
-          'pending' => false
-        }
-      end
-
-      def tax
-        { 
-          'enabled' => false,
-          'amount' => 0.00
-        }
-      end
-
-      def discount
-        { 
-          'enabled' => false,
-          'pending' => false
-        }
+      def price
+        nil # price is deprecated in favor of subtotal
       end
     end
   end

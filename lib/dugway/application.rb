@@ -11,13 +11,21 @@ module Dugway
     # Products
 
     get '/products(.js)' do
-      render_page
+      if request.html?
+        render_page
+      elsif request.js?
+        render_json store.products
+      end
     end
 
     get '/category/:category(.js)' do
       if category = store.category(params[:category])
-        page['name'] = category['name']
-        render_page(:category => category)
+        if request.html?
+          page['name'] = category['name']
+          render_page(:category => category)
+        elsif request.js?
+          render_json store.category_products(category['permalink'])
+        end
       else
         render_not_found
       end
@@ -25,8 +33,12 @@ module Dugway
 
     get '/artist/:artist(.js)' do
       if artist = store.artist(params[:artist])
-        page['name'] = artist['name']
-        render_page(:artist => artist)
+        if request.html?
+          page['name'] = artist['name']
+          render_page(:artist => artist)
+        elsif request.js?
+          render_json store.artist_products(artist['permalink'])
+        end
       else
         render_not_found
       end
@@ -36,8 +48,12 @@ module Dugway
 
     get '/product/:product(.js)' do
       if product = store.product(params[:product])
-        page['name'] = product['name']
-        render_page(:product => product)
+        if request.html?
+          page['name'] = product['name']
+          render_page(:product => product)
+        elsif request.js?
+          render_json product
+        end
       else
         render_not_found
       end
@@ -45,17 +61,19 @@ module Dugway
 
     # Cart
 
-    get '/cart(.js)' do
-      render_page
-    end
-
-    post '/cart(.js)' do
-      cart.update(params[:cart].with_indifferent_access)
+    any '/cart(.js)' do
+      if cart_params = params[:cart].try(:with_indifferent_access)
+        cart.update(cart_params)
+      end
 
       if params[:checkout]
         redirect_to '/checkout'
       else
-        render_page
+        if request.html?
+          render_page
+        elsif request.js?
+          render_json cart
+        end
       end
     end
 

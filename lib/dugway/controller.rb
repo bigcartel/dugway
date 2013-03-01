@@ -123,6 +123,12 @@ module Dugway
         render_file("#{ page['permalink'] }.html", variables.update({ :page => page }))
       end
 
+      def render_json(object)
+        response.write(object.to_json)
+        response['Content-Type'] = 'application/json'
+        response.finish
+      end
+
       def render_not_found
         response.write('Not Found')
         response.status = 404

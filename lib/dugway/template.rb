@@ -1,8 +1,13 @@
 module Dugway
   class Template
-    def initialize(name, content)
+    attr_reader :name
+
+    def initialize(name)
       @name = name
-      @content = content
+    end
+
+    def content
+      Dugway.theme.file_content(name)
     end
     
     def content_type
@@ -10,7 +15,7 @@ module Dugway
     end
     
     def extension
-      File.extname(@name)
+      File.extname(name)
     end
     
     def html?
@@ -18,25 +23,21 @@ module Dugway
     end
     
     def standalone_html?
-      html? && !!(@content =~ /\{\{\s*head_content\s*\}\}/)
+      html? && !!(content =~ /\{\{\s*head_content\s*\}\}/)
     end
     
-    def success_page?
-      @name == 'success.html'
-    end
-    
-    def render(theme, store, request)
+    def render(request, variables={})
       if html?
-        liquifier = Liquifier.new(theme, store, request)
-        rendered_content = liquifier.render(@content)
+        liquifier = Liquifier.new(request)
+        rendered_content = liquifier.render(content, variables)
         
         if standalone_html?
           rendered_content
         else
-          liquifier.render(theme.layout, 'page_content' => rendered_content)
+          liquifier.render(Dugway.theme.layout, variables.update(:page_content => rendered_content))
         end
       else
-        @content
+        content
       end
     end
   end

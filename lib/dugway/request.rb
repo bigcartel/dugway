@@ -17,8 +17,12 @@ module Dugway
       end
     end
     
+    def extension
+      File.extname(path).present? ? File.extname(path) : '.html'
+    end
+    
     def format
-      params[:format] || 'html'
+      params[:format] || extension[1..-1]
     end
     
     def html?

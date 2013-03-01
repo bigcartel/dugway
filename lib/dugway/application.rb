@@ -5,19 +5,19 @@ module Dugway
     # Home
 
     get '/' do
-      render_text "Home: #{ page.inspect }"
+      render_page
     end
 
     # Products
 
     get '/products(.js)' do
-      render_text "Products: #{ params.inspect }"
+      render_page
     end
 
     get '/category/:category(.js)' do
       if category = store.category(params[:category])
         page['name'] = category['name']
-        render_text "Category: #{ page.inspect }"
+        render_page(:category => category)
       else
         render_not_found
       end
@@ -26,7 +26,7 @@ module Dugway
     get '/artist/:artist(.js)' do
       if artist = store.artist(params[:artist])
         page['name'] = artist['name']
-        render_text "artist page: #{ page.inspect }"
+        render_page(:artist => artist)
       else
         render_not_found
       end
@@ -37,7 +37,7 @@ module Dugway
     get '/product/:product(.js)' do
       if product = store.product(params[:product])
         page['name'] = product['name']
-        render_text "product page: #{ page.inspect }"
+        render_page(:product => product)
       else
         render_not_found
       end
@@ -46,12 +46,12 @@ module Dugway
     # Cart
 
     get '/cart(.js)' do
-      render_text "GET Cart"
+      render_page
     end
 
     post '/cart(.js)' do
       cart.update(params[:cart])
-      render_text "POST Cart: #{ request.params.inspect }"
+      render_page
     end
 
     # Checkout
@@ -61,48 +61,48 @@ module Dugway
         # render_text 'Must have at least one product to checkout'
         redirect_to '/cart'
       else
-        render_text "Checkout"
+        render_page
       end
     end
 
     # Success
 
     get '/success' do
-      render_text "Success"
+      render_page
     end
 
     post '/success' do
       sleep(3) # Give the checkout page time
       cart.reset
-      render_text "POST Success"
+      render_page
     end
 
     # Contact
 
     any '/contact' do
-      render_text 'GET Contact'
+      render_page
     end
 
     # Maintenance
 
     get '/maintenance' do
-      render_text "Maintenance"
+      render_page
     end
 
     # Custom page
 
     get '/:permalink' do
-      render_text "Custom page: #{ page.inspect }"
+      render_page
     end
 
     # Assets
 
     get '/styles.css' do
-      render_text 'Styles'
+      render_file 'styles.css'
     end
 
     get '/scripts.js' do
-      render_text 'Scripts'
+      render_file 'scripts.js'
     end
 
     get %r{^/images/.+\.(jpg|jpeg|gif|png)$} do

@@ -101,9 +101,17 @@ module Dugway
         end
       end
 
-      def render_text(text)
-        response.write(text)
+      def render_file(file_name, variables={})
+        template = Template.new(file_name)
+        content = template.render(request, variables)
+
+        response.write(content)
+        response['Content-Type'] = template.content_type
         response.finish
+      end
+
+      def render_page(variables={})
+        render_file("#{ page['permalink'] }.html", variables.update({ :page => page }))
       end
 
       def render_not_found

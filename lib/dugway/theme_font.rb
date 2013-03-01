@@ -45,7 +45,8 @@ module Dugway
         google_font_url_for_fonts(google_font_names)
       end
 
-      def google_font_url_for_theme_instance(theme)
+      def google_font_url_for_theme
+        theme = Dugway.theme
         fonts = theme.fonts.keys.map { |key|
           theme.customization[key] }.select { |font_name|
             google_font_names.include? font_name }.sort

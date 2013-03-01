@@ -14,18 +14,6 @@ module Dugway
       @overridden_customization = overridden_customization.stringify_keys
     end
     
-    def find_template_by_request(request)
-      name = request.file_name
-      
-      if request.html? && content = read_source_file(name)
-        Template.new(name, content)
-      elsif %w( styles.css scripts.js ).include?(name)
-        Template.new(name, sprockets[name].to_s)
-      else
-        nil
-      end
-    end
-    
     def layout
       read_source_file('layout.html')
     end
@@ -55,18 +43,25 @@ module Dugway
     def version
       settings['version']
     end
-    
-    def build_file(name)
-      @building = true
-      
+
+    def file_content(name)
       case name
       when 'scripts.js'
-        YUI::JavaScriptCompressor.new.compress(sprockets[name].to_s)
+        if @building
+          YUI::JavaScriptCompressor.new.compress(sprockets[name].to_s)
+        else
+          sprockets[name].to_s
+        end
       when 'styles.css'
         sprockets[name].to_s
       else
         read_source_file(name)
       end
+    end
+
+    def build_file(name)
+      @building = true
+      file_content(name)
     end
 
     def files

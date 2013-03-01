@@ -25,8 +25,19 @@ module Dugway
       @request = request
     end
     
-    def render(content, overridden_assigns={})
-      context = Liquid::Context.new([ assigns.update(overridden_assigns), shared_context ], {}, registers)
+    def render(content, variables={})
+      variables.symbolize_keys!
+
+      assigns = default_assigns
+      assigns['page_content'] = variables[:page_content]
+      assigns['page'] = Drops::PageDrop.new(variables[:page])
+      assigns['product'] = Drops::ProductDrop.new(variables[:product])
+
+      registers = default_registers
+      registers[:category] = variables[:category]
+      registers[:artist] = variables[:artist]
+
+      context = Liquid::Context.new([ assigns, shared_context ], {}, registers)
       Liquid::Template.parse(content).render!(context)
     end
     
@@ -64,27 +75,12 @@ module Dugway
     def shared_context
       @shared_context ||= { 'errors' => [] }
     end
-
-    def errors
-      @errors ||= begin
-        errors = []
-
-        if @request.permalink == 'checkout' && cart.items.empty?
-          errors << 'Must have at least one product to checkout'
-          @request.permalink = 'cart'
-        end
-
-        errors
-      end
-    end
     
-    def assigns
+    def default_assigns
       {
         'store' => Drops::AccountDrop.new(store.account),
         'cart' => Drops::CartDrop.new(cart),
         'theme' => Drops::ThemeDrop.new(theme.customization),
-        'page' => Drops::PageDrop.new(@page),
-        'product' => Drops::ProductDrop.new(@product),
         'pages' => Drops::PagesDrop.new(store.pages.map { |p| Drops::PageDrop.new(p) }),
         'categories' => Drops::CategoriesDrop.new(store.categories.map { |c| Drops::CategoryDrop.new(c) }),
         'artists' => Drops::ArtistsDrop.new(store.artists.map { |a| Drops::ArtistDrop.new(a) }),
@@ -95,14 +91,12 @@ module Dugway
       }
     end
     
-    def registers
+    def default_registers
       {
         :request => @request,
         :path => @request.path,
         :params => @request.params.with_indifferent_access,
         :currency => store.currency,
-        :category => @category,
-        :artist => @artist,
         :settings => theme.settings
       }
     end    
@@ -110,7 +104,7 @@ module Dugway
     def head_content
       content = %{<meta name="generator" content="Big Cartel">}
       
-      if google_font_url = ThemeFont.google_font_url_for_theme_instance(@theme)
+      if google_font_url = ThemeFont.google_font_url_for_theme
         content << %{\n<link rel="stylesheet" type="text/css" href="#{ google_font_url }">}
       end
       

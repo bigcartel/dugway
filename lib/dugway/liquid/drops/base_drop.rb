@@ -46,9 +46,13 @@ module Dugway
       def method_missing(method, *args, &block)
         before_method(method.to_s)
       end
-      
+
+      def errors
+        @context['errors']
+      end
+
       def error(msg)
-        @context['errors'] << msg
+        errors << msg
       end
     end
   end

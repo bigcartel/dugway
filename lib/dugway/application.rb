@@ -14,7 +14,7 @@ module Dugway
       if request.html?
         render_page
       elsif request.js?
-        render_json store.products
+        render_json(store.products)
       end
     end
 
@@ -24,7 +24,7 @@ module Dugway
           page['name'] = category['name']
           render_page(:category => category)
         elsif request.js?
-          render_json store.category_products(category['permalink'])
+          render_json(store.category_products(params[:category]))
         end
       else
         render_not_found
@@ -37,7 +37,7 @@ module Dugway
           page['name'] = artist['name']
           render_page(:artist => artist)
         elsif request.js?
-          render_json store.artist_products(artist['permalink'])
+          render_json(store.artist_products(params[:artist]))
         end
       else
         render_not_found
@@ -52,7 +52,7 @@ module Dugway
           page['name'] = product['name']
           render_page(:product => product)
         elsif request.js?
-          render_json product
+          render_json(product)
         end
       else
         render_not_found
@@ -67,12 +67,12 @@ module Dugway
       end
 
       if params[:checkout]
-        redirect_to '/checkout'
+        redirect_to('/checkout')
       else
         if request.html?
           render_page
         elsif request.js?
-          render_json cart
+          render_json(cart)
         end
       end
     end
@@ -81,8 +81,8 @@ module Dugway
 
     any '/checkout' do
       if cart.empty?
-        error 'Must have at least one product to checkout'
-        redirect_to '/cart'
+        error('Must have at least one product to checkout')
+        redirect_to('/cart')
       else
         render_page
       end
@@ -102,7 +102,19 @@ module Dugway
 
     # Contact
 
-    any '/contact' do
+    get '/contact' do
+      render_page
+    end
+
+    post '/contact' do
+      if [ :name, :email, :subject, :message, :captcha ].any? { |f| params[f].blank? }
+        error('All fields are required')
+      elsif !(params[:email] =~ /^([^@\s]+)@((?:[-a-zA-Z0-9]+\.)+[a-zA-Z]{2,})$/)
+        error('Invalid email address')
+      elsif !(params[:captcha] =~ /^rQ9pC$/i)
+        error('Spam check was incorrect')
+      end
+
       render_page
     end
 
@@ -121,11 +133,11 @@ module Dugway
     # Assets
 
     get '/styles.css' do
-      render_file 'styles.css'
+      render_file('styles.css')
     end
 
     get '/scripts.js' do
-      render_file 'scripts.js'
+      render_file('scripts.js')
     end
 
     get %r{^/images/.+\.(jpg|jpeg|gif|png)$} do

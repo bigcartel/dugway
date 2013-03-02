@@ -18,27 +18,12 @@ module Dugway
       end
 
       def captcha
-        %{<img id="captcha_image" src="http://cache1.bigcartel.com/captcha/e60c0edde94b646a4c2b1dcd6d94c8ded723c849.png">}
+        %{<img id="captcha_image" src="https://s3.amazonaws.com/bigcartel/captcha/28e3d1288cbc70c0cd1a2d10845f8e11e1a90d14.png">}
       end
 
       def sent
-        if request.post?
-          if name.blank? || email.blank? || subject.blank? || message.blank?
-            error('All fields are required')
-            false
-          elsif !(email =~ /^([^@\s]+)@((?:[-a-zA-Z0-9]+\.)+[a-zA-Z]{2,})$/)
-            error('Invalid email address')
-            false
-          elsif params[:captcha].blank?
-            error('Spam check was incorrect')
-            false
-          else
-            true
-          end
-        else
-          false
-        end
-      end  
+        request.path == '/contact' && request.post? && errors.blank?
+      end
     end
   end
 end

@@ -71,7 +71,7 @@ describe Dugway::Store do
   describe "#category_products" do
     it "should return an array of products for that category" do
       products = store.category_products('tees')
-      products.size.should == 1
+      products.size.should == 2
       products.first['name'].should == 'My Product'
     end
     
@@ -113,7 +113,7 @@ describe Dugway::Store do
   describe "#products" do
     it "should return an array of the store's products" do
       store.products.should be_present
-      store.products.size.should == 1
+      store.products.size.should == 3
       store.products.first['name'].should == 'My Product'
     end
   end
@@ -128,9 +128,41 @@ describe Dugway::Store do
     end
   end
   
+  describe "#product_and_option" do
+    it "should a product and option by option id" do
+      product, option = store.product_and_option(29474321)
+      product['name'].should == 'My Product'
+      option['name'].should == 'Small'
+    end
+
+    it "should return nil with a bad option id" do
+      store.product_and_option(12345).should be_nil
+    end
+  end
+
+  describe "#previous_product" do
+    it "should return the previous product when there is one" do
+      store.previous_product('my-tee')['name'].should == 'My Product'
+    end
+
+    it "should return nil when there isn't one" do
+      store.previous_product('my-product').should be_nil
+    end
+  end
+
+  describe "#next_product" do
+    it "should return the next product when there is one" do
+      store.next_product('my-tee')['name'].should == 'My Print'
+    end
+
+    it "should return nil when there isn't one" do
+      store.next_product('my-print').should be_nil
+    end
+  end
+
   describe "#search_products" do
     it "should return an array of products for that search term" do
-      products = store.search_products('my')
+      products = store.search_products('product')
       products.size.should == 1
       products.first['name'].should == 'My Product'
     end

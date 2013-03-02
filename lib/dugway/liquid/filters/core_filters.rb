@@ -69,20 +69,23 @@ module Dugway
       end
 
       def options_select(options, id = 'option', class_name = nil)
-        option_tags = options.inject('') { |t,o| t += option_tag((o['name'] + (o['has_custom_price'] ? " - #{ currency['sign'] }#{ money(o['price']) }" : '')), o['id']) }
+        options = options.present? ? options : []
+        option_tags = options.inject('') { |t,o| t += option_tag((o['name'] + (o['has_custom_price'] ? " - #{ money_with_sign(o['price']) }" : '')), o['id']) }
         select_tag('cart[add][id]', option_tags, { :id => id, :class => class_name })
       end
-
+      
       def options_radio(options, id = 'option', class_name = nil)
-        list    = ''
+        list = ''
+        
         for o in options
           list += '<li>'
-          list += radio_button_tag('cart[add][id]', o['id'], o['default'], { :id => "option_#{ o['id'] }", :class => class_name })
-          list += %{ <label for="option_#{ o['id'] }">#{ o['name'] }}
-          list += %{ - #{ currency['sign'] }#{ money(o['price']) }} if o['has_custom_price']
+          list += radio_button_tag('cart[add][id]', o['id'], o['default'], { :id => "option_#{o['id']}", :class => class_name })
+          list += %{ <label for="option_#{o['id']}">#{o['name']}}
+          list += %{ - #{ money_with_sign(o['price']) }} if o['has_custom_price']
           list += %{</label>}
           list += '</li>'
         end
+        
         %{<ul id="#{id}">#{list}</ul>}
       end
 

@@ -20,7 +20,7 @@ require 'dugway/version'
 module Dugway
   class << self
     def application(options={})
-      @logger = Logger.new
+      @logger = Logger.new if options[:log]
       @source_dir = File.join(Dir.pwd, 'source')
       @store = Store.new(options[:store] || 'dugway')
       @theme = Theme.new(options[:customization] || {})
@@ -31,7 +31,7 @@ module Dugway
       I18n.locale = Dugway.store.locale
 
       Rack::Builder.app do
-        use Rack::Session::Cookie
+        use Rack::Session::Cookie, :secret => 'stopwarningmeaboutnothavingasecret'
         use BetterErrors::Middleware
         
         if options[:log]

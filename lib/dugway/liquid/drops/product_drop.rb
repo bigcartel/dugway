@@ -42,7 +42,7 @@ module Dugway
       end
 
       def images
-        @images ||= source['images'].map { |image| ImageDrop.new(image) }
+        @images ||= source['images'].present? ? source['images'].map { |image| ImageDrop.new(image) } : []
       end
 
       def image_count

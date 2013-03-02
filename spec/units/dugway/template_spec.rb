@@ -2,9 +2,14 @@ require 'spec_helper'
 
 describe Dugway::Template do
   let(:name) { 'home.html' }
-  let(:content) { 'Hi there.' }
-  let(:template) { Dugway::Template.new(name, content) }
+  let(:template) { Dugway::Template.new(name) }
   
+  describe "#content" do
+    it "returns the content of the file" do
+      template.content.should == Dugway.theme.file_content(name)
+    end
+  end
+
   describe "#content_type" do
     describe "for HTML" do
       it "returns the proper content type" do
@@ -71,7 +76,7 @@ describe Dugway::Template do
   
   describe "#standalone_html?" do
     describe "for HTML pages with head_content" do
-      let(:content) { 'Hi {{ head_content }} there.' }
+      let(:name) { 'maintenance.html' }
       
       it "returns true" do
         template.standalone_html?.should be_true
@@ -93,47 +98,28 @@ describe Dugway::Template do
     end
   end
   
-  describe "#success_page?" do
-    describe "when it's the success.html template" do
-      let(:name) { 'success.html' }
-      
-      it "returns true" do
-        template.success_page?.should be_true
-      end
-    end
-    
-    describe "when it's not the success.html template" do
-      it "returns false" do
-        template.success_page?.should be_false
-      end
-    end
-  end
-  
   describe "#render" do
-    let(:theme) { fake_theme }
+    let(:theme) { Dugway.theme }
     let(:store) { Dugway::Store.new('dugway') }
     let(:request) { Dugway::Request.new({ 'rack.url_scheme' => 'http', 'HTTP_HOST' => 'sexy.dev', 'PATH_INFO' => '/' }) }
-    let(:layout) { '<html><head>{{ head_content }}</head><body>{{ page_content }}</body></html>' }
-    
-    before(:each) do
-      theme.stub(:layout) { layout }
-    end
+    let(:variables) { {} }
+    let(:layout) { theme.layout }
+    let(:content) { theme.file_content(name) }
     
     describe "when rendering an embedded HTML template" do
       it "calls renders properly with Liquifier" do
-        Dugway::Liquifier.any_instance.should_receive(:render).with(content) { content }
-        Dugway::Liquifier.any_instance.should_receive(:render).with(layout, 'page_content' => content)
-        template.render(theme, store, request)
+        Dugway::Liquifier.any_instance.should_receive(:render).with(content, variables) { content }
+        Dugway::Liquifier.any_instance.should_receive(:render).with(layout, variables.update(:page_content => content))
+        template.render(request, variables)
       end
     end
     
     describe "when rendering a standalone HTML template" do
       let(:name) { 'maintenance.html' }
-      let(:content) { 'Hi {{ head_content }} there.' }
       
       it "calls renders properly with Liquifier" do
-        Dugway::Liquifier.any_instance.should_receive(:render).with(content)
-        template.render(theme, store, request)
+        Dugway::Liquifier.any_instance.should_receive(:render).with(content, variables)
+        template.render(request, variables)
       end
     end
     
@@ -142,22 +128,17 @@ describe Dugway::Template do
       
       it "doesn't liquify it" do
         Dugway::Liquifier.any_instance.should_not_receive(:render)
-        template.render(theme, store, request).should == content
+        template.render(request, variables).should == content
       end
     end
-    
-    describe "when posting to the success page" do
-      let(:name) { 'success.html' }
-      
-      before(:each) do
-        request.stub(:post?) { true }
-        Dugway::Liquifier.any_instance.stub(:render).with(content) { content }
-        Dugway::Liquifier.any_instance.stub(:render).with(layout, 'page_content' => content)
-      end
-      
-      it "sleeps for 3 seconds to give the 'One moment...' time" do
-        template.should_receive(:sleep).with(3)
-        template.render(theme, store, request)
+
+    describe "when passing variables" do
+      let(:variables) { { :errors => ['one', 'two'] } }
+
+      it "calls renders properly with Liquifier" do
+        Dugway::Liquifier.any_instance.should_receive(:render).with(content, variables) { content }
+        Dugway::Liquifier.any_instance.should_receive(:render).with(layout, variables.update(:page_content => content))
+        template.render(request, variables)
       end
     end
   end

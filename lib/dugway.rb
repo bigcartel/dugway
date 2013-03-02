@@ -5,6 +5,7 @@ require 'rack/builder'
 require 'rack/commonlogger'
 require 'better_errors'
 
+require 'dugway/version'
 require 'dugway/application'
 require 'dugway/cart'
 require 'dugway/liquifier'
@@ -15,7 +16,6 @@ require 'dugway/template'
 require 'dugway/theme'
 require 'dugway/theme_font'
 require 'dugway/extensions/time'
-require 'dugway/version'
 
 module Dugway
   class << self

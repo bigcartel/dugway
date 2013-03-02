@@ -9,7 +9,6 @@
 </section>
 
 <section>
-
   <aside>
     {% case product.status %}
       
@@ -22,11 +21,13 @@
       {% when 'active' %}    
         <h5>{{ product.default_price | money_with_sign }}{% if product.on_sale %} <em>On Sale{% endif %}</em></h5>
         <h5>Availability</h5>
+        
         <ul>
           {% for option in product.options %}
           <li>
             {% unless product.has_default_option %}<span>{{ option.name }}</span>{% endunless %}
             <span>{% if option.sold_out %}Sold Out{% else %}{{ option.inventory }}%{% endif %}</span>
+            <div style="width:{{ option.inventory }}%"><!-- inventory --></div>
           </li>
           {% endfor %}
         </ul>

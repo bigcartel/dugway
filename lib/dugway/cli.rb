@@ -5,7 +5,6 @@ require 'dugway'
 require 'dugway/cli/build'
 require 'dugway/cli/create'
 require 'dugway/cli/server'
-require 'dugway/version'
 
 module Dugway
   module Cli

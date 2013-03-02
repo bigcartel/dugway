@@ -6,6 +6,7 @@ module Dugway
 
     format :json
     default_timeout 5
+    headers 'User-Agent' => "Dugway #{ Dugway::VERSION }"
 
     def initialize(subdomain)
       self.class.base_uri "http://api.bigcartel.com/#{ subdomain }"

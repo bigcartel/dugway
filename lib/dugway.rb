@@ -15,6 +15,7 @@ require 'dugway/template'
 require 'dugway/theme'
 require 'dugway/theme_font'
 require 'dugway/extensions/time'
+require 'dugway/version'
 
 module Dugway
   class << self

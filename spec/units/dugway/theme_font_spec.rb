@@ -95,11 +95,13 @@ describe Dugway::ThemeFont do
     end
   end
   
-  describe ".google_font_url_for_theme_instance" do
-    let(:theme) { fake_theme }
+  describe ".google_font_url_for_theme" do
+    let(:fonts) { { :header_font => {}, :body_font => {}, :paragraph_font => {} } }
     
     before(:each) do
-      theme.stub(:fonts) { {:header_font => {}, :body_font => {}, :paragraph_font => {}} }
+      Dugway::Theme.any_instance.stub(:customization) { fonts }
+      Dugway::Theme.any_instance.stub(:fonts) { fonts }
+      
       Dugway::ThemeFont.stub(:all) {[
         Dugway::ThemeFont.new('One Font', 'One Family', 'google'),
         Dugway::ThemeFont.new('Two', 'Two Family', 'default'),
@@ -107,19 +109,28 @@ describe Dugway::ThemeFont do
       ]}
     end
 
-    it "should return a URL if a theme has multiple" do
-      theme.stub(:customization) {{ :header_font => 'One Font', :body_font => 'Two', :paragraph_font => 'Three' }}
-      Dugway::ThemeFont.google_font_url_for_theme_instance(theme).should == "//fonts.googleapis.com/css?family=One+Font|Three"
+    describe "when it has multiple Google fonts" do
+      let(:fonts) { { :header_font => 'One Font', :body_font => 'Two', :paragraph_font => 'Three' } }
+      
+      it "should return the correct URL" do
+        Dugway::ThemeFont.google_font_url_for_theme.should == "//fonts.googleapis.com/css?family=One+Font|Three"
+      end
     end
-    
-    it "should return single font name if a theme has one" do
-      theme.stub(:customization) {{ :header_font => 'One Font', :body_font => 'Two' }}
-      Dugway::ThemeFont.google_font_url_for_theme_instance(theme).should == "//fonts.googleapis.com/css?family=One+Font"
+
+    describe "when it has one Google font" do
+      let(:fonts) { { :header_font => 'One Font', :body_font => 'Two' } }
+      
+      it "should return the correct URL" do
+        Dugway::ThemeFont.google_font_url_for_theme.should == "//fonts.googleapis.com/css?family=One+Font"
+      end
     end
-    
-    it "should return nil if a theme has none" do
-      theme.stub(:customization) {{ :body_font => 'Two' }}
-      Dugway::ThemeFont.google_font_url_for_theme_instance(theme).should be_nil
+
+    describe "when it has no Google fonts" do
+      let(:fonts) { { :body_font => 'Two' } }
+      
+      it "should return the correct URL" do
+        Dugway::ThemeFont.google_font_url_for_theme.should be_nil
+      end
     end
   end
 end

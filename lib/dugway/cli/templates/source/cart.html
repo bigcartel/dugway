@@ -16,9 +16,9 @@
         </a>
       </h2>
       <p>
-        <input type="text" value="{{ item.quantity }}" name="quantity">
-        {{ item.product.default_price | money_with_sign }}
-        <a href="" class="remove">&times;</a>
+        {{ item | item_quantity_input }}
+        {{ item.price | money_with_sign }}
+        <a href="#" class="remove">&times;</a>
       </p>
     </li>
     {% endfor %}

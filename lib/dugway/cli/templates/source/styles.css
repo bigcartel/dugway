@@ -14,10 +14,14 @@
  * ------------------------------------------------------------------------------------------------
  */
 
-/* Here we're including example files: example_1 is standard CSS, example_2 is Sass
+/* 
+ * Here we're including a 3rd-party stylesheet we put in stylesheets/vendor written in normal CSS,
+ * as well as a few custom Sass stylesheets we've written for different areas of the store
+ *
  *= require_directory ./stylesheets/vendor
  *= require stylesheets/layout
  *= require stylesheets/products
  *= require stylesheets/product
  *= require stylesheets/cart
+ *
  */

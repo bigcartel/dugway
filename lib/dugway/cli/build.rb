@@ -41,7 +41,7 @@ module Dugway
       private
       
       def theme
-        @theme ||= Theme.new(self.class.source_root)
+        @theme ||= Dugway.theme
       end
       
       def build_name

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dugway (0.0.1)
+    dugway (0.5.1)
       activesupport (~> 3.2.6)
       better_errors (~> 0.6.0)
       binding_of_caller (~> 0.7.1)
@@ -42,7 +42,7 @@ GEM
     coffee-script (2.2.0)
       coffee-script-source
       execjs
-    coffee-script-source (1.4.0)
+    coffee-script-source (1.5.0)
     commonjs (0.2.6)
     crack (0.3.2)
     debug_inspector (0.0.2)
@@ -55,7 +55,7 @@ GEM
     httparty (0.10.2)
       multi_json (~> 1.0)
       multi_xml (>= 0.5.2)
-    i18n (0.6.1)
+    i18n (0.6.4)
     less (2.2.2)
       commonjs (~> 0.2.6)
     libv8 (3.11.8.13)
@@ -78,16 +78,16 @@ GEM
     rspec-mocks (2.12.2)
     rubyzip (0.9.9)
     sass (3.2.6)
-    sprockets (2.8.2)
+    sprockets (2.9.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    therubyracer (0.11.3)
+    therubyracer (0.11.4)
       libv8 (~> 3.11.8.12)
       ref
     thor (0.17.0)
-    tilt (1.3.3)
+    tilt (1.3.4)
     webmock (1.9.3)
       addressable (>= 2.2.7)
       crack (>= 0.3.2)

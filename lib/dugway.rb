@@ -20,11 +20,7 @@ require 'dugway/extensions/time'
 module Dugway
   class << self
     def application(options={})
-      @logger = Logger.new if options[:log]
-      @source_dir = File.join(Dir.pwd, 'source')
-      @store = Store.new(options[:store] || 'dugway')
-      @theme = Theme.new(options[:customization] || {})
-      @cart = Cart.new
+      @options = options
 
       I18n.load_path += Dir[File.join(File.dirname(__FILE__), 'data', 'locales', '*.yml').to_s]
       I18n.default_locale = 'en-US'
@@ -44,23 +40,27 @@ module Dugway
     end
 
     def store
-      @store
+      @store ||= Store.new(options && options[:store] || 'dugway')
     end
 
     def theme
-      @theme
+      @theme ||= Theme.new(options && options[:customization] || {})
     end
 
     def cart
-      @cart
+      @cart ||= Cart.new
     end
 
     def source_dir
-      @source_dir
+      @source_dir ||= File.join(Dir.pwd, 'source')
     end
     
     def logger
-      @logger
+      @logger ||= Logger.new
+    end
+
+    def options
+      @options
     end
   end
 end

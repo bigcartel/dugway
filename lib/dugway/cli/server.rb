@@ -2,9 +2,7 @@ require 'rack'
 
 module Dugway
   module Cli
-    class Server < Thor::Group
-      include Thor::Actions
-      
+    class Server < Thor::Group      
       class_option :host,
         :type    => :string,
         :aliases => '-h',
@@ -17,11 +15,11 @@ module Dugway
         :default => 9292,
         :desc    => "The port address to bind to"
 
-      class_option :daemonize,
-        :type    => :boolean,
-        :aliases => '-d',
-        :default => false,
-        :desc    => "Run daemonized in the background"
+      class_option :server,
+        :type    => :string,
+        :aliases => '-s',
+        :default => 'thin',
+        :desc    => "Which server to run"
       
       def start
         Rack::Server.start({
@@ -29,7 +27,7 @@ module Dugway
           :environment => 'none',
           :Host => options[:host],
           :Port => options[:port],
-          :daemonize => options[:daemonize]
+          :server => options[:server]
         })
       end
     end

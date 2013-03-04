@@ -36,6 +36,7 @@ Gem::Specification.new do |s|
   s.add_dependency('thor', '~> 0.17.0')
   s.add_dependency('rubyzip', '~> 0.9.9')
   s.add_dependency('yui-compressor', '~> 0.9.6')
+  s.add_dependency('thin', '~> 1.5.0')
   
   s.add_development_dependency('rake', '~> 10.0.3')
   s.add_development_dependency('rspec', '~> 2.12.0')

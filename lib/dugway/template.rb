@@ -29,7 +29,8 @@ module Dugway
     def render(request, variables={})
       if html?
         liquifier = Liquifier.new(request)
-        rendered_content = liquifier.render(content, variables)
+        content_to_render = variables[:page] && variables[:page]['content'] || content
+        rendered_content = liquifier.render(content_to_render, variables)
         
         if standalone_html?
           rendered_content

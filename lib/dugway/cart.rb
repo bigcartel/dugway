@@ -10,6 +10,10 @@ module Dugway
       self.items = []
     end
 
+    def empty?
+      items.empty?
+    end
+
     def item_count
       items.map { |item| item.quantity }.inject(:+) || 0
     end
@@ -53,12 +57,8 @@ module Dugway
     def update(params)
       add, adds, updates = params.delete(:add), params.delete(:adds), params.delete(:update)
       add_item(add) if add
-      add_item(adds) if adds
+      add_items(adds) if adds
       update_quantities(updates) if updates
-    end
-
-    def empty?
-      items.empty?
     end
 
     def as_json(options=nil)
@@ -103,11 +103,7 @@ module Dugway
     end
 
     def add_items(adds)
-      if adds.kind_of?(Array)
-        adds.each { |add| add_item(add) }
-      elsif adds.kind_of?(Hash)
-        adds.each_pair { |key, add| add_item(add.reverse_merge(:id => key)) }
-      end
+      adds.each { |add| add_item(add) }
     end
 
     def update_quantities(updates)

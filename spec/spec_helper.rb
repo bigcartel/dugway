@@ -1,4 +1,5 @@
 require 'webmock/rspec'
+require 'json_expressions/rspec'
 require 'dugway'
 
 RSpec.configure do |config|

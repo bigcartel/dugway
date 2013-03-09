@@ -23,6 +23,7 @@ RSpec.configure do |config|
       Dugway::Theme.new
     }
 
+    # Setup Capybara
     Capybara.app = Dugway.application
   end
 end

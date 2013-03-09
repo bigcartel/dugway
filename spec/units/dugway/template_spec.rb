@@ -141,5 +141,17 @@ describe Dugway::Template do
         template.render(request, variables)
       end
     end
+
+    describe "when passing a page variable containing content" do
+      let(:page) { store.page('about-us') }
+      let(:variables) { { :page => page } }
+      let(:content) { page['content'] }
+
+      it "calls renders properly with Liquifier" do
+        Dugway::Liquifier.any_instance.should_receive(:render).with(content, variables) { content }
+        Dugway::Liquifier.any_instance.should_receive(:render).with(layout, variables.update(:page_content => content))
+        template.render(request, variables)
+      end
+    end
   end
 end

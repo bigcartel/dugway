@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dugway (0.5.1)
+    dugway (0.5.3)
       activesupport (~> 3.2.6)
       better_errors (~> 0.6.0)
       binding_of_caller (~> 0.7.1)
@@ -24,7 +24,7 @@ PATH
       yui-compressor (~> 0.9.6)
 
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     POpen4 (0.1.4)
       Platform (>= 0.4.0)
@@ -43,7 +43,7 @@ GEM
     coffee-script (2.2.0)
       coffee-script-source
       execjs
-    coffee-script-source (1.5.0)
+    coffee-script-source (1.6.1)
     commonjs (0.2.6)
     crack (0.3.2)
     daemons (1.1.9)

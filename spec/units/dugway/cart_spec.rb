@@ -113,8 +113,8 @@ describe Dugway::Cart do
         cart.items.should_not be_empty
 
         item = cart.items.first
-        item.product.should == product
-        item.option.should == product_option
+        item.product['id'].should == product['id']
+        item.option['id'].should == product_option['id']
         item.quantity.should == 2
       end
 
@@ -124,8 +124,8 @@ describe Dugway::Cart do
         cart.items.should_not be_empty
 
         item = cart.items.first
-        item.product.should == product
-        item.option.should == product_option
+        item.product['id'].should == product['id']
+        item.option['id'].should == product_option['id']
         item.quantity.should == 1
       end
 
@@ -135,15 +135,15 @@ describe Dugway::Cart do
         cart.items.should_not be_empty
 
         item = cart.items.first
-        item.product.should == product
-        item.option.should == product_option
+        item.product['id'].should == product['id']
+        item.option['id'].should == product_option['id']
         item.quantity.should == 1
 
         cart.update(add: { id: product_option['id'], quantity: 2 })
 
         item = cart.items.first
-        item.product.should == product
-        item.option.should == product_option
+        item.product['id'].should == product['id']
+        item.option['id'].should == product_option['id']
         item.quantity.should == 3
       end
     end
@@ -155,13 +155,13 @@ describe Dugway::Cart do
         cart.item_count.should == 3
 
         item = cart.items.first
-        item.product.should == product
-        item.option.should == product_option
+        item.product['id'].should == product['id']
+        item.option['id'].should == product_option['id']
         item.quantity.should == 1
 
         item = cart.items.last
-        item.product.should == product_2
-        item.option.should == product_option_2
+        item.product['id'].should == product_2['id']
+        item.option['id'].should == product_option_2['id']
         item.quantity.should == 2
       end
     end

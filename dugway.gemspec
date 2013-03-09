@@ -42,4 +42,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency('rspec', '~> 2.12.0')
   s.add_development_dependency('webmock', '~> 1.9.3')
   s.add_development_dependency('json_expressions', '~> 0.8.2')
+  s.add_development_dependency('capybara', '~> 2.0.2')
 end

@@ -1,5 +1,6 @@
 require 'webmock/rspec'
 require 'json_expressions/rspec'
+require 'capybara/rspec'
 require 'dugway'
 
 RSpec.configure do |config|
@@ -21,5 +22,7 @@ RSpec.configure do |config|
     Dugway.stub(:theme) { 
       Dugway::Theme.new
     }
+
+    Capybara.app = Dugway.application
   end
 end

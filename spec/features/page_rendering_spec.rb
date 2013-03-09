@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'Default pages' do
+feature 'Page rendering' do
   scenario 'home.html' do
     visit '/'
     expect(page).to have_content('Dugway') # layout.html
@@ -46,6 +46,13 @@ feature 'Default pages' do
   scenario 'maintenance.html' do
     visit '/maintenance'
     expect(page).to have_content('Please check back soon.')
+  end
+
+  scenario 'custom page' do
+    visit '/about-us'
+    expect(page).to have_content('Dugway') # layout.html
+    expect(page).to have_content('About Us')
+    expect(page).to have_content("We're really cool!")
   end
 
   scenario 'styles.css' do

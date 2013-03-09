@@ -1,5 +1,6 @@
 {
   "name": "Test Theme",
+  "version": "1.2.3",
   "images": [
     {
       "variable": "logo",

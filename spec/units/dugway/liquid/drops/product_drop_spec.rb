@@ -186,10 +186,10 @@ describe Dugway::Drops::ProductDrop do
   end
 
   describe "#options_in_stock" do
-    it "should return the product's options, since we're not tracking inventory" do
-      options = product.options
+    it "should return the product's options that aren't sold out" do
+      options = product.options_in_stock
       options.should be_an_instance_of(Array)
-      options.size.should == 4
+      options.size.should == 3
 
       option = options.first
       option.should be_an_instance_of(Dugway::Drops::ProductOptionDrop)

@@ -2,7 +2,7 @@ module Dugway
   module Drops
     class ProductOptionDrop < BaseDrop
       def default
-        name.downcase == 'default'
+        position == 1
       end
 
       def has_custom_price

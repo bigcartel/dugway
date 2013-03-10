@@ -34,7 +34,7 @@ module Dugway
       end
 
       def options_in_stock
-        @options_in_stock ||= options
+        @options_in_stock ||= options.reject { |o| o.sold_out }
       end
 
       def shipping

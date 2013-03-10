@@ -83,7 +83,7 @@ describe Dugway::Store do
   describe "#artists" do
     it "should return an array of the store's artists" do
       store.artists.should be_present
-      store.artists.size.should == 2
+      store.artists.size.should == 3
       store.artists.first.should == { 'permalink' => 'artist-one', 'name' => 'Artist One', 'id' => 176141, 'url' => '/artist/artist-one' }
     end
   end

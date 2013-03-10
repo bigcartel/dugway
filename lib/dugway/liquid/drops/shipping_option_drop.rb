@@ -5,6 +5,8 @@ module Dugway
         @country ||= CountryDrop.new(source['country'])
       end
 
+      # internal
+
       def strict
         @strict ||= product.shipping.size > 1 || product.shipping.first.country.name.present?
       end

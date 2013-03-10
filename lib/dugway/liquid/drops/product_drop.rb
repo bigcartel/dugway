@@ -1,6 +1,10 @@
 module Dugway
   module Drops
     class ProductDrop < BaseDrop
+      def created_at
+        Time.parse(source['created_at'])
+      end
+
       def price
         nil # price is deprecated in favor of default_price
       end
@@ -34,7 +38,7 @@ module Dugway
       end
 
       def shipping
-        @shipping ||= source['shipping'].map { |o| ShippingOptionDrop.new(o.update('product' => self)) }
+        @shipping ||= source['shipping'].present? ? source['shipping'].map { |o| ShippingOptionDrop.new(o.update('product' => self)) } : []
       end
 
       def image
@@ -70,15 +74,15 @@ module Dugway
       end
 
       def edit_url
-        "http://bigcartel.com"
+        'http://bigcartel.com'
       end
 
       def categories
-        @categories ||= CategoriesDrop.new(source['categories'].map { |c| CategoryDrop.new(c) }) rescue []
+        @categories ||= source['categories'].map { |c| CategoryDrop.new(c) } rescue []
       end
 
       def artists
-        @artists ||= ArtistsDrop.new(source['artists'].map { |a| ArtistDrop.new(a) }) rescue []
+        @artists ||= source['artists'].map { |a| ArtistDrop.new(a) } rescue []
       end
 
       def css_class

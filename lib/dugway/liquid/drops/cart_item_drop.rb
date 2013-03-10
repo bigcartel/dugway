@@ -5,6 +5,10 @@ module Dugway
         unit_price * quantity
       end
 
+      def total
+        price + shipping
+      end
+
       def product
         ProductDrop.new(source['product'])
       end

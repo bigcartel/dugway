@@ -83,7 +83,7 @@ module Dugway
         product, option = Dugway.store.product_and_option(id)
 
         if product && option
-          item = CartItem.new
+          item = Item.new
           item.id = items.size + 1
           item.name = option['name'] == 'Default' ? product['name'] : "#{ product['name'] } - #{ option['name'] }"
           item.unit_price = option['price']
@@ -117,7 +117,7 @@ module Dugway
     end
   end
 
-  CartItem = Struct.new(:id, :name, :unit_price, :quantity, :product, :option) do
+  Item = Struct.new(:id, :name, :unit_price, :quantity, :product, :option) do
     def price
       unit_price * quantity
     end

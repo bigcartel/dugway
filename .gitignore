@@ -2,6 +2,8 @@
 
 Gemfile.lock
 
+coverage
+
 *.gem
 *.tmproj
 *.sublime*

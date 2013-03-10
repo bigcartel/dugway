@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start
+
 require 'webmock/rspec'
 require 'json_expressions/rspec'
 require 'capybara/rspec'

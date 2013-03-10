@@ -40,7 +40,7 @@ feature 'Page rendering' do
     visit '/contact'
     expect(page).to have_content('Dugway') # layout.html
     expect(page).to have_content('Contact')
-    expect(page).to have_content('Your Name:')
+    expect(page).to have_content('Spam check')
   end
 
   scenario 'maintenance.html' do

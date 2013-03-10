@@ -60,6 +60,14 @@
         </ul>
       </nav>
     </aside>
+
+    {% if errors != blank %}
+    <ul class="errors">
+      {% for error in errors %}
+      <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
     
     <section>
     {% if page.category == 'custom' %}

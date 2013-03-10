@@ -22,7 +22,7 @@ describe Dugway::Drops::ContactDrop do
 
   let(:contact) {
     Dugway::Drops::ContactDrop.new.tap { |drop|
-      drop.context = Liquid::Context.new({}, {}, { :params => params, :errors => errors, :request => request })
+      drop.context = Liquid::Context.new([{}, { 'errors' => errors }], {}, { :params => params, :errors => errors, :request => request })
     }
   }
 
@@ -99,6 +99,21 @@ describe Dugway::Drops::ContactDrop do
   describe "#sent" do
     it "should return false before the form has been sent" do
       contact.sent.should be(false)
+    end
+
+    it "should return false when not on the contact page" do
+      request.stub(:path) { '/blah' }
+      request.stub(:post?) { true }
+      contact.sent.should be(false)
+    end
+
+    describe "when there are errors" do
+      let(:errors) { ['There was a problem'] }
+
+      it "should return false" do
+        request.stub(:post?) { true }
+        contact.sent.should be(false)
+      end
     end
 
     it "should return true when the form has been sent" do

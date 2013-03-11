@@ -22,7 +22,7 @@ module Dugway
       end
 
       def has_default_option
-        @has_default_option ||= options.size == 1 && option.default
+        @has_default_option ||= options.size == 1 && option.name.downcase == 'default'
       end
 
       def option

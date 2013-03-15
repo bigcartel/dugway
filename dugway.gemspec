@@ -8,15 +8,16 @@ Gem::Specification.new do |s|
   s.authors      = ['Big Cartel']
   s.email        = 'dev@bigcartel.com'
   s.homepage     = 'https://github.com/bigcartel/dugway'
-  s.summary      = 'Easily build and test Big Cartel themes locally.'
-  s.description  = 'Easily build and test Big Cartel themes locally.'
+  s.summary      = %{Easily build and test Big Cartel themes.}
+  s.description  = %{Dugway allows you to run your Big Cartel theme on your computer, test it in any browser, write code in your favorite editor, and use fancy new tools like CoffeeScript, Sass, and LESS. It's awesome.}
+  s.license      = 'MIT'
 
   s.files        = `git ls-files`.split($\)
   s.test_files   = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.platform     = Gem::Platform::RUBY
   s.require_path = 'lib'
   s.executable   = 'dugway'
-  
+
   s.add_dependency('bundler', '~> 1.1')
   s.add_dependency('rack', '~> 1.4.1')
   s.add_dependency('rack-mount', '~> 0.8.3')
@@ -37,7 +38,7 @@ Gem::Specification.new do |s|
   s.add_dependency('rubyzip', '~> 0.9.9')
   s.add_dependency('yui-compressor', '~> 0.9.6')
   s.add_dependency('thin', '~> 1.5.0')
-  
+
   s.add_development_dependency('rake', '~> 10.0.3')
   s.add_development_dependency('rspec', '~> 2.12.0')
   s.add_development_dependency('webmock', '~> 1.9.3')

@@ -99,7 +99,7 @@ And as you've probably guessed by now, all images for your theme go in the **ima
 
 ### Settings
 
-Set your theme's name, version, and customizable options in the **settings.json** file. We'll be documenting more about this soon, but for now see the starter file generated for you.
+Set your theme's name, version, and customizable options in the **settings.json** file. We'll be documenting more about this soon, but for now see the starter file generated for you, and check out our [default themes](https://github.com/organizations/bigcartel-themes).
 
 ## Running your theme
 
@@ -115,7 +115,7 @@ Tired of all the manual starting and stopping? Good news, Dugway is built on top
 
 ## Testing your theme
 
-Part of building a great theme is making sure it works well in a variety of contexts and with a variety of content. Dugway makes it easy to test your theme's versatility by customizing the **options** in the **config.ru** file. 
+Part of building a great theme is making sure it works well in a variety of contexts and with a variety of content. Dugway makes it easy to test your theme's versatility by customizing the **options** in the **config.ru** file.
 
 *Note:* changing the **config.ru** file will require you to restart the [server](#running-your-theme).
 

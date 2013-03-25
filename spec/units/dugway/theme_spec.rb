@@ -38,7 +38,7 @@ describe Dugway::Theme do
 
     describe "when there are overridden customization" do
       before(:each) do
-        Dugway.stub(:theme) { 
+        Dugway.stub(:theme) {
           Dugway::Theme.new(:fixed_sidebar => false, :link_color => 'blue')
         }
       end
@@ -92,7 +92,7 @@ describe Dugway::Theme do
     end
 
     it "should sprocketize and compress scripts.js" do
-      theme.build_file('scripts.js').should == %{$(function(){console.log(\"One\")});(function(){$(function(){return console.log(\"Two\")})}).call(this);}
+      theme.build_file('scripts.js').should == %{$(function(){console.log(\"One\")}),function(){$(function(){return console.log(\"Two\")})}.call(this);}
     end
 
     it "should sprocketize and not liquify styles.css" do

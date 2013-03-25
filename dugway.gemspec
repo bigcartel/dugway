@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency('bundler', '~> 1.1')
   s.add_dependency('rack', '~> 1.4.1')
   s.add_dependency('rack-mount', '~> 0.8.3')
-  s.add_dependency('activesupport', '~> 3.2.6')
+  s.add_dependency('activesupport', '~> 3.2.13')
   s.add_dependency('liquid', '~> 2.4.1')
   s.add_dependency('therubyracer', '~> 0.11.3')
   s.add_dependency('coffee-script', '~> 2.2.0')

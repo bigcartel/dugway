@@ -43,8 +43,7 @@ This will create a new directory named *mytheme* that contains a few configurati
     │   ├── settings.json
     │   ├── styles.css
     │   └── success.html
-    ├── config.ru
-    └── Gemfile
+    └── config.ru
 
 
 ## Developing your theme

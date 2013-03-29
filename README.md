@@ -1,4 +1,4 @@
-# Dugway [![Build Status](https://travis-ci.org/bigcartel/dugway.png)](https://travis-ci.org/bigcartel/dugway)
+# Dugway [![Build Status](https://travis-ci.org/bigcartel/dugway.png)](https://travis-ci.org/bigcartel/dugway) [![Gem Version](https://badge.fury.io/rb/dugway.png)](http://badge.fury.io/rb/dugway)
 
 **_The easy way to build Big Cartel themes._**
 

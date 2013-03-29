@@ -19,8 +19,13 @@ module Dugway
         File.join(File.dirname(__FILE__), 'templates')
       end
 
+      def variables
+        @name = name.titleize
+        @theme_dir = name.parameterize
+      end
+
       def core
-        template('config.tt', "#{ theme_dir }/config.ru")
+        template('config.tt', "#{ @theme_dir }/config.ru")
         template('source/settings.json', "#{ source_dir }/settings.json")
       end
 
@@ -35,7 +40,7 @@ module Dugway
 
       def git
         unless options['skip-git']
-          copy_file('gitignore.tt', "#{ theme_dir }/.gitignore")
+          copy_file('gitignore.tt', "#{ @theme_dir }/.gitignore")
         end
       end
 
@@ -45,12 +50,8 @@ module Dugway
 
       private
 
-      def theme_dir
-        name.parameterize
-      end
-
       def source_dir
-        "#{ theme_dir }/source"
+        "#{ @theme_dir }/source"
       end
     end
   end

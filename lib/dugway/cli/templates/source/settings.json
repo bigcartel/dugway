@@ -1,5 +1,5 @@
 {
-  "name": "Sample",
+  "name": "<%= @name %>",
   "version": "0.0.1",
   "images": [
     {
@@ -18,7 +18,7 @@
       "variable": "header_font",
       "label": "Header Font",
       "default": "Inconsolata"
-    },  
+    },
     {
       "variable": "text_font",
       "label": "Text Font",

@@ -10,6 +10,8 @@ module Dugway
           singular
         elsif plural
           plural
+        elsif ActiveSupport.const_defined?(:Inflector)
+          ActiveSupport::Inflector.pluralize(singular)
         else
           singular + "s"
         end

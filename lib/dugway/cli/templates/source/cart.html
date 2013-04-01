@@ -1,7 +1,7 @@
 {% if cart.items != blank %}
 
 <form method="post" action="/cart">
-  <ul>
+  <ul class="unstyled">
     {% for item in cart.items %}
     <li>
       <a href="{{ item.product.url }}">

@@ -4,6 +4,8 @@
 
 Dugway allows you to run your Big Cartel theme on your computer, test it in any browser, write code in your favorite editor, and use fancy new tools like CoffeeScript, Sass, and LESS. It's awesome.
 
+[![Walkthrough](http://cl.ly/image/101e1z3Y3B1w/Screen%20Shot%202013-04-01%20at%205.04.40%20PM.png)](https://vimeo.com/bigcartel/dugway)
+
 ## Disclaimer
 
 **Dugway is a very new project and likely has several bugs, rough edges, and missing features.** If you run into something weird or have a cool idea, see if it's a [known issue](https://github.com/bigcartel/dugway/issues), and otherwise [report it](https://github.com/bigcartel/dugway/issues/new) and we'll do our best to hook you up. Thanks.

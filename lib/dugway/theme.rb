@@ -101,6 +101,8 @@ module Dugway
         sprockets = Sprockets::Environment.new
         sprockets.append_path source_dir
 
+        Sprockets::Sass.options[:line_comments] = false
+
         # CSS engines like Sass and LESS choke on Liquid variables, so here we render the Liquid
         # if we're viewing the file, or escape and unescape it if we're building the file.
 

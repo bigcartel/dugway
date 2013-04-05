@@ -80,7 +80,7 @@ describe Dugway::Theme do
     end
 
     it "should sprocketize and liquify styles.css" do
-      theme.file_content('styles.css').gsub(/\s+/, '').should == %{html,body{height:100%;}a{color:red;}/**/}
+      theme.file_content('styles.css').gsub(/\s+/, '').should == %{html,body{height:100%;}a{background:lime;color:red;}/**/}
     end
   end
 
@@ -96,7 +96,7 @@ describe Dugway::Theme do
     end
 
     it "should sprocketize and not liquify styles.css" do
-      theme.build_file('styles.css').gsub(/\s+/, '').should == %{html,body{height:100%;}a{color:{{theme.link_color}};}/**/}
+      theme.build_file('styles.css').gsub(/\s+/, '').should == %{html,body{height:100%;}a{background:lime;color:{{theme.link_color}};}/**/}
     end
   end
 

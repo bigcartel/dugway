@@ -28,6 +28,7 @@ Gem::Specification.new do |s|
   s.add_dependency('sass', '~> 3.2.5')
   s.add_dependency('less', '~> 2.2.2')
   s.add_dependency('sprockets', '~> 2.0')
+  s.add_dependency('sprockets-sass', '~> 0.9.1')
   s.add_dependency('httparty', '~> 0.10.0')
   s.add_dependency('better_errors', '~> 0.6.0')
   s.add_dependency('binding_of_caller', '~> 0.7.1')

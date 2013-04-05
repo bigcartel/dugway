@@ -2,6 +2,7 @@ require 'coffee-script'
 require 'sass'
 require 'less'
 require 'sprockets'
+require 'sprockets-sass'
 require 'uglifier'
 
 module Dugway

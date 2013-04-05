@@ -31,7 +31,6 @@ Gem::Specification.new do |s|
   s.add_dependency('sprockets-sass', '~> 0.9.1')
   s.add_dependency('compass', '~> 0.12.2')
   s.add_dependency('httparty', '~> 0.10.0')
-  s.add_dependency('better_errors', '~> 0.6.0')
   s.add_dependency('binding_of_caller', '~> 0.7.1')
   s.add_dependency('will_paginate', '~> 3.0.4')
   s.add_dependency('i18n', '~> 0.6.1')

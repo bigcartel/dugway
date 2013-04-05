@@ -3,7 +3,6 @@ require 'i18n'
 
 require 'rack/builder'
 require 'rack/commonlogger'
-require 'better_errors'
 
 require 'dugway/version'
 require 'dugway/application'
@@ -28,13 +27,11 @@ module Dugway
 
       Rack::Builder.app do
         use Rack::Session::Cookie, :secret => 'stopwarningmeaboutnothavingasecret'
-        use BetterErrors::Middleware
-        
+
         if options[:log]
-          BetterErrors.logger = Dugway.logger
           use Rack::CommonLogger, Dugway.logger
         end
-        
+
         run Application.new
       end
     end
@@ -54,7 +51,7 @@ module Dugway
     def source_dir
       @source_dir ||= File.join(Dir.pwd, 'source')
     end
-    
+
     def logger
       @logger ||= Logger.new
     end

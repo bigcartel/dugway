@@ -3,6 +3,7 @@ require 'sass'
 require 'less'
 require 'sprockets'
 require 'sprockets-sass'
+require 'compass'
 require 'uglifier'
 
 module Dugway

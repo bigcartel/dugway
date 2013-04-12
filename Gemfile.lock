@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dugway (0.5.9)
+    dugway (0.6.0)
       activesupport (~> 3.2.13)
       better_errors (~> 0.6.0)
       binding_of_caller (~> 0.7.1)

@@ -14,17 +14,10 @@ Liquid::Template.register_tag(:paginate, Dugway::Tags::Paginate)
 
 module Dugway
   class Liquifier
-    ESCAPE_CSS = {
-      '{{' => '"<<',
-      '}}' => '>>"',
-      '{%' => '"<',
-      '%}' => '">'
-    }
-    
     def initialize(request)
       @request = request
     end
-    
+
     def render(content, variables={})
       variables.symbolize_keys!
 
@@ -44,24 +37,14 @@ module Dugway
       context = Liquid::Context.new([ assigns, shared_context ], {}, registers)
       Liquid::Template.parse(content).render!(context)
     end
-    
+
     def self.render_styles(css)
       Liquid::Template.parse(css).render!(
-        { 'theme' => Drops::ThemeDrop.new(Dugway.theme.customization) }, 
+        { 'theme' => Drops::ThemeDrop.new(Dugway.theme.customization) },
         :registers => { :settings => Dugway.theme.settings }
       )
     end
-    
-    def self.escape_styles(css)
-      ESCAPE_CSS.each_pair { |k,v| css.gsub!(k,v) }
-      css
-    end
-    
-    def self.unescape_styles(css)
-      ESCAPE_CSS.each_pair { |k,v| css.gsub!(v,k) }
-      css
-    end
-    
+
     private
 
     def store
@@ -79,7 +62,7 @@ module Dugway
     def shared_context
       @shared_context ||= { 'errors' => [] }
     end
-    
+
     def shared_assigns
       {
         'store' => Drops::AccountDrop.new(store.account),
@@ -94,7 +77,7 @@ module Dugway
         'bigcartel_credit' => bigcartel_credit
       }
     end
-    
+
     def shared_registers
       {
         :request => @request,
@@ -103,18 +86,18 @@ module Dugway
         :currency => store.currency,
         :settings => theme.settings
       }
-    end    
-    
+    end
+
     def head_content
       content = %{<meta name="generator" content="Big Cartel">}
-      
+
       if google_font_url = ThemeFont.google_font_url_for_theme
         content << %{\n<link rel="stylesheet" type="text/css" href="#{ google_font_url }">}
       end
-      
+
       content
     end
-    
+
     def bigcartel_credit
       '<a href="http://bigcartel.com/" title="Start your own store at Big Cartel now">Online Store by Big Cartel</a>'
     end

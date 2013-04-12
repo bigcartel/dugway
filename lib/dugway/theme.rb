@@ -103,23 +103,8 @@ module Dugway
 
         Sprockets::Sass.options[:line_comments] = false
 
-        # CSS engines like Sass and LESS choke on Liquid variables, so here we render the Liquid
-        # if we're viewing the file, or escape and unescape it if we're building the file.
-
         sprockets.register_preprocessor 'text/css', :liquifier do |context, data|
-          if @building
-            Liquifier.escape_styles(data)
-          else
-            Liquifier.render_styles(data)
-          end
-        end
-
-        sprockets.register_postprocessor 'text/css', :liquifier do |context, data|
-          if @building
-            Liquifier.unescape_styles(data)
-          else
-            data
-          end
+          @building ? data : Liquifier.render_styles(data)
         end
 
         sprockets

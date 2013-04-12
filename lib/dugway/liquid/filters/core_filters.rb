@@ -18,8 +18,8 @@ module Dugway
       end
 
       def paragraphs(text)
-        tags   = '(table|thead|tfoot|caption|colgroup|tbody|tr|td|th|div|dl|dd|dt|ul|ol|li|pre|select|form|map|area|blockquote|address|math|style|input|p|h[1-6]|hr|script|embed|object|param|code|center|dir|fieldset|menu|noframes|noscript|frameset|applet|button|del|iframe|ins)' 
-        text   = text.to_s.gsub(/\r\n?/, "\n") # \r\n and \r -> \n          
+        tags   = '(table|thead|tfoot|caption|colgroup|tbody|tr|td|th|div|dl|dd|dt|ul|ol|li|pre|select|form|map|area|blockquote|address|math|style|input|p|h[1-6]|hr|script|embed|object|param|code|center|dir|fieldset|menu|noframes|noscript|frameset|applet|button|del|iframe|ins)'
+        text   = text.to_s.gsub(/\r\n?/, "\n") # \r\n and \r -> \n
         blocks = text.split(/\n\n+/) # split on double newlines
         blocks.inject('') do | result, block |
           block.strip!
@@ -75,10 +75,10 @@ module Dugway
         option_tags = options.inject('') { |t,o| t += option_tag((o['name'] + (o['has_custom_price'] ? " - #{ money_with_sign(o['price']) }" : '')), o['id']) }
         select_tag('cart[add][id]', option_tags, { :id => id, :class => class_name })
       end
-      
+
       def options_radio(options, id = 'option', class_name = nil)
         list = ''
-        
+
         for o in options
           list += '<li>'
           list += radio_button_tag('cart[add][id]', o['id'], o['default'], { :id => "option_#{o['id']}", :class => class_name })
@@ -87,7 +87,7 @@ module Dugway
           list += %{</label>}
           list += '</li>'
         end
-        
+
         %{<ul id="#{id}">#{list}</ul>}
       end
 
@@ -100,13 +100,14 @@ module Dugway
       end
 
       def country_select(country, label = 'Select your country...', id = 'country', class_name = nil)
-        found     = false
-        countries = [[label, ''], ['------------',''], [country['name'], country['id']], ['------------','']] + Country.options
-        options   = countries.inject('') do |t,c|
-          select  = !found && c[1] == cart.country_id
-          found   = true if select
-          t += option_tag(c[0], c[1], select)
+        divider = '------------'
+        countries = [label, divider, country['name'], divider, 'Åland Islands', 'Afghanistan', 'Albania', 'Algeria', 'American Samoa', 'Andorra', 'Angola', 'Anguilla', 'Antarctica', 'Antigua And Barbuda', 'Argentina', 'Armenia', 'Aruba', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bermuda', 'Bhutan', 'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Bouvet Island', 'Brazil', 'British Indian Ocean Territory', 'British Virgin Islands', 'Brunei Darussalam', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cambodia', 'Cameroon', 'Canada', 'Cape Verde', 'Cayman Islands', 'Central African Republic', 'Chad', 'Chile', 'China', 'Christmas Island', 'Cocos (Keeling) Islands', 'Colombia', 'Comoros', 'Congo', 'Cook Islands', 'Costa Rica', 'Croatia (Hrvatska)', 'Cuba', 'Cyprus', 'Czech Republic', 'Democratic Republic of the Congo', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'East Timor', 'Ecuador', 'Egypt', 'El Salvador', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Ethiopia', 'Falkland Islands (Malvinas)', 'Faroe Islands', 'Fiji', 'Finland', 'France', 'France, Metropolitan', 'French Guiana', 'French Polynesia', 'French Southern Territories', 'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Gibraltar', 'Greece', 'Greenland', 'Grenada', 'Guadeloupe', 'Guam', 'Guatemala', 'Guernsey', 'Guinea', 'Guinea-Bissau', 'Guyana', 'Haiti', 'Heard and McDonald Islands', 'Honduras', 'Hong Kong', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland', 'Isle of Man', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jersey', 'Jordan', 'Kazakhstan', 'Kenya', 'Kiribati', 'Kuwait', 'Kyrgyzstan (Kyrgyz Republic)', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Macau', 'Macedonia', 'Madagascar', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Martinique', 'Mauritania', 'Mauritius', 'Mayotte', 'Mexico', 'Micronesia', 'Moldova', 'Monaco', 'Mongolia', 'Montserrat', 'Morocco', 'Mozambique', 'Myanmar', 'Namibia', 'Nauru', 'Nepal', 'Netherlands', 'Netherlands Antilles', 'Neutral Zone (Saudia Arabia/Iraq)', 'New Caledonia', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'Niue', 'Norfolk Island', 'Northern Mariana Islands', 'Norway', 'Oman', 'Pakistan', 'Palau', 'Palestine', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Pitcairn', 'Poland', 'Portugal', 'Puerto Rico', 'Qatar', 'Reunion', 'Romania', 'Russian Federation', 'Rwanda', 'S. Georgia and S. Sandwich Isls.', 'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Vincent and The Grenadines', 'Samoa', 'San Marino', 'Sao Tome and Principe', 'Saudi Arabia', 'Senegal', 'Seychelles', 'Sierra Leone', 'Singapore', 'Slovakia (Slovak Republic)', 'Slovenia', 'Solomon Islands', 'Somalia', 'South Africa', 'South Korea', 'Soviet Union (former)', 'Spain', 'Sri Lanka', 'St. Helena', 'St. Pierre and Miquelon', 'Sudan', 'Suriname', 'Svalbard and Jan Mayen Islands', 'Swaziland', 'Sweden', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Timore-Leste', 'Togo', 'Tokelau', 'Tonga', 'Trinidad and Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Turks and Caicos Islands', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'United States', 'United States Minor Outlying Islands', 'Uruguay', 'Uzbekistan', 'Vanuatu', 'Vatican City State (Holy See)', 'Venezuela', 'Viet Nam', 'Virgin Islands (US)', 'Wallis and Futuna Islands', 'Western Sahara', 'Yemen', 'Yugoslavia', 'Zaire', 'Zambia', 'Zimbabwe']
+
+        options = countries.inject('') do |t, c|
+          v = c == label || c == divider ? '' : Digest::SHA1.hexdigest(c) # give it a random ID that'll be consistent
+          t += option_tag(c, v)
         end
+
         select_tag('cart[country_id]', options, { :id => id, :class => class_name })
       end
 
@@ -134,7 +135,7 @@ module Dugway
       def contact_tab_index
         @contact_tab_index ||= 0
         @contact_tab_index += 1
-      end  
+      end
     end
   end
 end

@@ -22,7 +22,7 @@ module Dugway
     def application(options={})
       @options = options
 
-      I18n.load_path += Dir[File.join(File.dirname(__FILE__), 'data', 'locales', '*.yml').to_s]
+      I18n.load_path += Dir[File.join(File.dirname(__FILE__), 'dugway', 'data', 'locales', '*.yml').to_s]
       I18n.default_locale = 'en-US'
       I18n.locale = Dugway.store.locale
 

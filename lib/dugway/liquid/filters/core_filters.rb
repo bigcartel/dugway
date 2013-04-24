@@ -36,20 +36,20 @@ module Dugway
       # Money Filters
 
       def money(amount)
-        number_to_currency(amount, :locale => nil, :precision => I18n.translate('number.currency.format.precision'), :unit => '', :separator => I18n.translate('number.currency.format.separator'), :delimiter => I18n.translate('number.currency.format.delimiter'), :format => I18n.translate('number.currency.format.format')).strip
+        number_to_currency(amount, :unit => '').strip
       end
 
       def money_with_sign(amount)
         unit = I18n.translate('number.currency.format.unit')
-        number_to_currency(amount).try(:gsub, unit, "<span class=\"currency_sign\">#{ HTMLEntities.new.encode(unit, :named) }</span>")
+        number_to_currency(amount).gsub(unit, %{<span class="currency_sign">#{ HTMLEntities.new.encode(unit, :named) }</span>})
       end
 
       def money_with_code(amount)
-        %{#{ money(amount) } <span class="currency_code">#{ currency.code }</span>}
+        %{#{ money(amount) } <span class="currency_code">#{ currency['code'] }</span>}
       end
 
       def money_with_sign_and_code(amount)
-        %{#{ money_with_sign(amount) } <span class="currency_code\">#{ currency.code }</span>}
+        %{#{ money_with_sign(amount) } <span class="currency_code">#{ currency['code'] }</span>}
       end
 
       # Shipping Filters

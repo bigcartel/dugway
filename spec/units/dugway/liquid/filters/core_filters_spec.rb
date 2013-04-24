@@ -24,9 +24,33 @@ describe Dugway::Filters::CoreFilters do
     end
   end
 
+  describe "#money" do
+    it "should convert a number to currency format" do
+      rendered_template("{{ 1234.56 | money }}").should == '1,234.56'
+    end
+  end
+
+  describe "#money_with_sign" do
+    it "should convert a number to currency format with a sign" do
+      rendered_template("{{ 1234.56 | money_with_sign }}").should == '<span class="currency_sign">$</span>1,234.56'
+    end
+  end
+
+  describe "#money_with_code" do
+    it "should convert a number to currency format with a code" do
+      rendered_template("{{ 1234.56 | money_with_code }}").should == '1,234.56 <span class="currency_code">USD</span>'
+    end
+  end
+
+  describe "#money_with_sign_and_code" do
+    it "should convert a number to currency format with a sign and code" do
+      rendered_template("{{ 1234.56 | money_with_sign_and_code }}").should == '<span class="currency_sign">$</span>1,234.56 <span class="currency_code">USD</span>'
+    end
+  end
+
   private
 
   def rendered_template(template, assigns={})
-    Liquid::Template.parse(template).render(assigns)
+    Liquid::Template.parse(template).render(assigns, :registers => { :currency => Dugway.store.currency })
   end
 end

@@ -12,7 +12,7 @@ Dugway allows you to run your Big Cartel theme on your computer, test it in any 
 
 ## Install
 
-Dugway is Ruby gem so you'll need to have Ruby installed. Ruby is usually pre-installed on Mac OS X and Linux, and Windows users can install it using [RubyInstaller](http://rubyinstaller.org). From there, simply install the **dugway** gem from the terminal.
+Dugway is Ruby gem so you'll need to have Ruby 1.9.3+ installed. Ruby is usually pre-installed on Mac OS X and Linux, and Windows users can install it using [RubyInstaller](http://rubyinstaller.org). From there, simply install the **dugway** gem from the terminal.
 
     gem install dugway
 

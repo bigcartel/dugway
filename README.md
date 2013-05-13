@@ -78,9 +78,11 @@ All CSS for your theme is handled by the **styles.css** file, and all JavaScript
 
 #### Using Sass, Compass, LESS, and CoffeeScript
 
-Sprockets also allows you to use [Sass](http://sass-lang.com) in your separate files by appending the **.sass** or **.scss** extension after **.css**. You can even use [Compass](http://compass-style.org/) right out of the box to help author your stylesheets by utilizing its mixins for CSS3, typography, and its utilities. Prefer [LESS](http://lesscss.org)? No problem, just append the **.less** extension instead.
+Sprockets also allows you to use [Sass](http://sass-lang.com) in your separate files by appending the **.sass** or **.scss** extension after **.css**. You can even use [Compass](http://compass-style.org/) right out of the box to help author your stylesheets by utilizing its mixins for CSS3, typography, and its utilities.
 
-For you JavaScript folks, you can use [CoffeeScript](http://coffeescript.org) in your separate files by appending the **.coffee** extension after **.js**.
+Prefer [LESS](http://lesscss.org)? No problem, you'll just need to create a [Gemfile like this one](https://gist.github.com/ihearithurts/5569898) in the root directory of your theme, run ```bundle install```, and append the **.less** extension to your CSS files.
+
+For you JavaScript folks, we've backed [CoffeeScript](http://coffeescript.org) support right in. Just append the **.coffee** extension after **.js** to your separate files.
 
 #### Embedding CSS & JavaScript
 

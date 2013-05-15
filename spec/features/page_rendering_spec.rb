@@ -16,6 +16,22 @@ feature 'Page rendering' do
     expect(page).to have_content('$10.00')
   end
 
+  scenario 'products.html via artist' do
+    visit '/artist/artist-one'
+    expect(page).to have_content('Dugway') # layout.html
+    expect(page).to have_content('Artist One')
+    expect(page).to have_content('My Product')
+    expect(page).to have_content('$10.00')
+  end
+
+  scenario 'products.html via category' do
+    visit '/category/tees'
+    expect(page).to have_content('Dugway') # layout.html
+    expect(page).to have_content('Tees')
+    expect(page).to have_content('My Product')
+    expect(page).to have_content('$10.00')
+  end
+
   scenario 'product.html' do
     visit '/product/my-product'
     expect(page).to have_content('Dugway') # layout.html

@@ -30,7 +30,7 @@ module Dugway
 
       def theme_js_url(name)
         if name.is_a?(Drops::ThemeDrop)
-          '/scripts.js'
+          '/theme.js'
         elsif name == 'api'
           'http://cache0.bigcartel.com/api/1/api.usd.js'
         else
@@ -39,7 +39,7 @@ module Dugway
       end
 
       def theme_css_url(theme)
-        '/styles.css'
+        '/theme.css'
       end
 
       def theme_image_url(filename)

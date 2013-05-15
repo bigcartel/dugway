@@ -7,7 +7,7 @@ require 'uglifier'
 
 module Dugway
   class Theme
-    REQUIRED_FILES = %w( layout.html home.html products.html product.html cart.html checkout.html success.html contact.html maintenance.html scripts.js styles.css settings.json screenshot.jpg )
+    REQUIRED_FILES = %w( cart.html checkout.html contact.html home.html layout.html maintenance.html product.html products.html screenshot.jpg settings.json success.html theme.css theme.js )
 
     attr_reader :errors
 
@@ -47,13 +47,13 @@ module Dugway
 
     def file_content(name)
       case name
-      when 'scripts.js'
+      when 'theme.js'
         if @building
           Uglifier.new.compile(sprockets[name].to_s)
         else
           sprockets[name].to_s
         end
-      when 'styles.css'
+      when 'theme.css'
         sprockets[name].to_s
       else
         read_source_file(name)

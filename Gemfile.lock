@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dugway (0.6.7)
+    dugway (0.7.0)
       activesupport (~> 3.2.13)
       better_errors (~> 0.6.0)
       bigcartel-currency-locales

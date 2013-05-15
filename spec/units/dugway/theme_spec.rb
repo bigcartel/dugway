@@ -75,12 +75,12 @@ describe Dugway::Theme do
       }
     end
 
-    it "should sprocketize scripts.js" do
-      theme.file_content('scripts.js').gsub(/\s+/, '').should == %{$(function(){console.log('One')});(function(){$(function(){returnconsole.log('Two');});}).call(this);}
+    it "should sprocketize theme.js" do
+      theme.file_content('theme.js').gsub(/\s+/, '').should == %{console.log('One');(function(){console.log('Two');}).call(this);}
     end
 
-    it "should sprocketize and liquify styles.css" do
-      theme.file_content('styles.css').gsub(/\s+/, '').should == %{html,body{height:100%;}a{background:lime;color:red;}footercitea{background:url(/images/bc_badge.png)no-repeat;}/**/}
+    it "should sprocketize and liquify theme.css" do
+      theme.file_content('theme.css').gsub(/\s+/, '').should == %{html,body{height:100%;}a{background:lime;color:red;}footercitea{background:url(/images/bc_badge.png)no-repeat;}/**/}
     end
   end
 
@@ -91,18 +91,18 @@ describe Dugway::Theme do
       }
     end
 
-    it "should sprocketize and compress scripts.js" do
-      theme.build_file('scripts.js').should == %{$(function(){console.log(\"One\")}),function(){$(function(){return console.log(\"Two\")})}.call(this);}
+    it "should sprocketize and compress theme.js" do
+      theme.build_file('theme.js').should == %{console.log(\"One\"),function(){console.log(\"Two\")}.call(this);}
     end
 
-    it "should sprocketize and not liquify styles.css" do
-      theme.build_file('styles.css').gsub(/\s+/, '').should == %{html,body{height:100%;}a{background:lime;color:{{theme.link_color}};}footercitea{background:url({{'bc_badge.png'|theme_image_url}})no-repeat;}/**/}
+    it "should sprocketize and not liquify theme.css" do
+      theme.build_file('theme.css').gsub(/\s+/, '').should == %{html,body{height:100%;}a{background:lime;color:{{theme.link_color}};}footercitea{background:url({{'bc_badge.png'|theme_image_url}})no-repeat;}/**/}
     end
   end
 
   describe "#files" do
     it "should return an array of all files" do
-      theme.files.should == ["layout.html", "home.html", "products.html", "product.html", "cart.html", "checkout.html", "success.html", "contact.html", "maintenance.html", "scripts.js", "styles.css", "settings.json", "screenshot.jpg", "images/bc_badge.png"]
+      theme.files.should == ["cart.html", "checkout.html", "contact.html", "home.html", "layout.html", "maintenance.html", "product.html", "products.html", "screenshot.jpg", "settings.json", "success.html", "theme.css", "theme.js", "images/bc_badge.png"]
     end
   end
 
@@ -120,13 +120,13 @@ describe Dugway::Theme do
 
     describe "when missing a required file" do
       before(:each) do
-        theme.stub(:read_source_file).with('layout.html') { theme.unstub!(:read_source_file); nil }
+        theme.stub(:read_source_file).with('cart.html') { theme.unstub!(:read_source_file); nil }
       end
 
       it "should not be valid" do
         theme.valid?.should be(false)
         theme.errors.size.should == 1
-        theme.errors.first.should == 'Missing source/layout.html'
+        theme.errors.first.should == 'Missing source/cart.html'
       end
     end
 

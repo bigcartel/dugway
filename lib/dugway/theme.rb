@@ -114,7 +114,7 @@ module Dugway
       file_path = File.join(source_dir, file_name)
 
       if File.exist?(file_path)
-        File.read(file_path)
+        File.read(file_path).encode('utf-8')
       else
         nil
       end

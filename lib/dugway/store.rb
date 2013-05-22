@@ -13,9 +13,9 @@ module Dugway
     end
 
     def account
-      @account ||= get('/store.js')
+      @account ||= get('/store.json')
     end
-    
+
     def theme_pages
       [
         { 'name' => 'Home', 'permalink' => 'home', 'url' => '/', 'category' => 'theme' },
@@ -28,50 +28,50 @@ module Dugway
         { 'name' => 'Maintenance', 'permalink' => 'maintenance', 'url' => '/maintenance', 'category' => 'theme' }
       ]
     end
-    
+
     def custom_pages
       @custom_pages ||= begin
         custom_pages = account.has_key?('pages') ? account['pages'] : []
-        custom_pages = custom_pages.map { |page| get("/page/#{ page['permalink'] }.js") }
+        custom_pages = custom_pages.map { |page| get("/page/#{ page['permalink'] }.json") }
       end
     end
 
     def pages
       @pages ||= theme_pages + custom_pages
     end
-    
+
     def page(permalink)
       lookup(permalink, pages)
     end
-    
+
     def categories
       account.has_key?('categories') ? account['categories'] : []
     end
-    
+
     def category(permalink)
       lookup(permalink, categories)
     end
-    
+
     def category_products(permalink)
       lookup_products(permalink, 'categories')
     end
-    
+
     def artists
       account.has_key?('artists') ? account['artists'] : []
     end
-    
+
     def artist(permalink)
       lookup(permalink, artists)
     end
-    
+
     def artist_products(permalink)
       lookup_products(permalink, 'artists')
     end
-    
+
     def products
-      @products ||= get('/products.js')
+      @products ||= get('/products.json')
     end
-    
+
     def product(permalink)
       lookup(permalink, products)
     end
@@ -107,19 +107,19 @@ module Dugway
 
       nil
     end
-    
+
     def search_products(search_terms)
       products.select { |p| p['name'].downcase.include?(search_terms.downcase) || p['description'].downcase.include?(search_terms.downcase) }
     end
-    
+
     def country
       account['country']
     end
-    
+
     def currency
       account['currency']
     end
-    
+
     def locale
       case currency['code']
       when 'AUD' then 'en-AU'
@@ -148,17 +148,17 @@ module Dugway
       else 'en-US'
       end
     end
-    
+
     private
-    
+
     def get(path)
       self.class.get(path).parsed_response
     end
-  
+
     def lookup(permalink, array)
       array.find { |item| item['permalink'] == permalink }.try(:dup)
     end
-    
+
     def lookup_products(permalink, type)
       products.select { |p| p[type].any? { |c| c['permalink'] == permalink }}
     end

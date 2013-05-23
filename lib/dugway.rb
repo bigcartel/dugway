@@ -1,9 +1,9 @@
 # Set our encodings to ensure we're always dealing with UTF-8 data.
 # Users experiencing problems with their templates should ensure they are saved as UTF-8.
-silence_warnings do
-  Encoding.default_external = Encoding::UTF_8
-  Encoding.default_internal = Encoding::UTF_8
-end
+old_verbose, $VERBOSE = $VERBOSE, nil
+Encoding.default_external = Encoding::UTF_8
+Encoding.default_internal = Encoding::UTF_8
+$VERBOSE = old_verbose
 
 require 'active_support/all'
 require 'i18n'

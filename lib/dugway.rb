@@ -7,6 +7,8 @@ $VERBOSE = old_verbose
 
 require 'active_support/all'
 require 'i18n'
+require 'bigcartel-currency-locales'
+require 'bigcartel/theme/fonts'
 
 require 'rack/builder'
 require 'rack/commonlogger'
@@ -21,7 +23,6 @@ require 'dugway/request'
 require 'dugway/store'
 require 'dugway/template'
 require 'dugway/theme'
-require 'dugway/theme_font'
 require 'dugway/extensions/time'
 
 module Dugway
@@ -29,7 +30,7 @@ module Dugway
     def application(options={})
       @options = options
 
-      I18n.load_path += Dir[File.join(File.dirname(__FILE__), 'dugway', 'data', 'locales', '*.yml').to_s]
+      BigCartel::CurrencyLocales.insert
       I18n.default_locale = 'en-US'
       I18n.locale = Dugway.store.locale
 

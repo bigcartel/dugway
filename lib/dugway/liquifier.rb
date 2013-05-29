@@ -91,7 +91,7 @@ module Dugway
     def head_content
       content = %{<meta name="generator" content="Big Cartel">}
 
-      if google_font_url = ThemeFont.google_font_url_for_theme
+      if google_font_url = ThemeFont.google_font_url_for_theme(Dugway.theme.fonts, Dugway.theme.customization)
         content << %{\n<link rel="stylesheet" type="text/css" href="#{ google_font_url }">}
       end
 

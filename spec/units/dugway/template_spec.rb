@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Dugway::Template do
   let(:name) { 'home.html' }
   let(:template) { Dugway::Template.new(name) }
-  
+
   describe "#content" do
     it "returns the content of the file" do
       template.content.should == Dugway.theme.file_content(name)
@@ -16,88 +16,88 @@ describe Dugway::Template do
         template.content_type.should == 'text/html'
       end
     end
-    
+
     describe "for CSS" do
-      let(:name) { 'styles.css' }
-      
+      let(:name) { 'theme.css' }
+
       it "returns the proper content type" do
         template.content_type.should == 'text/css'
       end
     end
-    
+
     describe "for JS" do
-      let(:name) { 'scripts.js' }
-      
+      let(:name) { 'theme.js' }
+
       it "returns the proper content type" do
         template.content_type.should == 'application/javascript'
       end
     end
   end
-  
+
   describe "#extension" do
     describe "for HTML" do
       it "returns the proper extension" do
         template.extension.should == '.html'
       end
     end
-    
+
     describe "for CSS" do
-      let(:name) { 'styles.css' }
-      
+      let(:name) { 'theme.css' }
+
       it "returns the proper extension" do
         template.extension.should == '.css'
       end
     end
-    
+
     describe "for JS" do
-      let(:name) { 'scripts.js' }
-      
+      let(:name) { 'theme.js' }
+
       it "returns the proper extension" do
         template.extension.should == '.js'
       end
     end
   end
-  
+
   describe "#html?" do
     describe "when it's an HTML template" do
       it "returns true" do
         template.html?.should be_true
       end
     end
-    
+
     describe "when it's not an HTML template" do
-      let(:name) { 'styles.css' }
-      
+      let(:name) { 'theme.css' }
+
       it "returns false" do
         template.html?.should be_false
       end
     end
   end
-  
+
   describe "#standalone_html?" do
     describe "for HTML pages with head_content" do
       let(:name) { 'maintenance.html' }
-      
+
       it "returns true" do
         template.standalone_html?.should be_true
       end
     end
-    
+
     describe "for HTML pages without head_content" do
       it "returns false" do
         template.standalone_html?.should be_false
       end
     end
-    
+
     describe "for non-HTML" do
-      let(:name) { 'styles.css' }
-      
+      let(:name) { 'theme.css' }
+
       it "returns false" do
         template.standalone_html?.should be_false
       end
     end
   end
-  
+
   describe "#render" do
     let(:theme) { Dugway.theme }
     let(:store) { Dugway::Store.new('dugway') }
@@ -105,7 +105,7 @@ describe Dugway::Template do
     let(:variables) { {} }
     let(:layout) { theme.layout }
     let(:content) { theme.file_content(name) }
-    
+
     describe "when rendering an embedded HTML template" do
       it "calls renders properly with Liquifier" do
         Dugway::Liquifier.any_instance.should_receive(:render).with(content, variables) { content }
@@ -113,19 +113,19 @@ describe Dugway::Template do
         template.render(request, variables)
       end
     end
-    
+
     describe "when rendering a standalone HTML template" do
       let(:name) { 'maintenance.html' }
-      
+
       it "calls renders properly with Liquifier" do
         Dugway::Liquifier.any_instance.should_receive(:render).with(content, variables)
         template.render(request, variables)
       end
     end
-    
+
     describe "when rendering non-HTML template" do
-      let(:name) { 'scripts.js' }
-      
+      let(:name) { 'theme.js' }
+
       it "doesn't liquify it" do
         Dugway::Liquifier.any_instance.should_not_receive(:render)
         template.render(request, variables).should == content

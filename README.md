@@ -41,10 +41,10 @@ This will create a new directory named *mytheme* that contains a few configurati
     │   ├── product.html
     │   ├── products.html
     │   ├── screenshot.jpg
-    │   ├── scripts.js
     │   ├── settings.json
-    │   ├── styles.css
-    │   └── success.html
+    │   ├── success.html
+    │   ├── theme.css
+    │   └── theme.js
     └── config.ru
 
 
@@ -58,20 +58,20 @@ Develop the HTML for your theme using our [Theme API](http://help.bigcartel.com/
 
 ### CSS & JavaScript
 
-All CSS for your theme is handled by the **styles.css** file, and all JavaScript by **scripts.js**. If you don't have much CSS or JavaScript, or you're just a glutton for punishment, you could simply put all of your code in these two files. However, we recommend you use [Sprockets](http://getsprockets.org) to break your code into multiple files in separate directories.
+All CSS for your theme is handled by the **theme.css** file, and all JavaScript by **theme.js**. If you don't have much CSS or JavaScript, or you're just a glutton for punishment, you could simply put all of your code in these two files. However, we recommend you use [Sprockets](http://getsprockets.org) to break your code into multiple files in separate directories.
 
 #### Using Sprockets
 
-[Sprockets](http://getsprockets.org) allows you to bring in CSS and JavaScript from different directories into a single file. We've created **stylesheets** and **javascripts** directories by default that you can put your code in, but you could delete those and put files anywhere you'd like. After that, use [Sprockets directives](https://github.com/sstephenson/sprockets#the-directive-processor) to package them into **styles.css** and **scripts.js**.
+[Sprockets](http://getsprockets.org) allows you to bring in CSS and JavaScript from different directories into a single file. We've created **stylesheets** and **javascripts** directories by default that you can put your code in, but you could delete those and put files anywhere you'd like. After that, use [Sprockets directives](https://github.com/sstephenson/sprockets#the-directive-processor) to package them into **theme.css** and **theme.js**.
 
-##### styles.css
+##### theme.css
 
     /*
      *= require stylesheets/example_1
      *= require stylesheets/example_2
      */
 
-##### scripts.js
+##### theme.js
 
     //= require javascripts/example_1
     //= require javascripts/example_2
@@ -88,11 +88,11 @@ And finally, for you JavaScript folks, we've baked [CoffeeScript](http://coffees
 
 You can embed the CSS and JavaScript into your theme by passing the theme variable to the [theme_css_url](http://help.bigcartel.com/customer/portal/articles/772749-filters#url) and [theme_js_url](http://help.bigcartel.com/customer/portal/articles/772749-filters#url) filters.
 
-##### CSS (styles.css)
+##### CSS (theme.css)
 
     <link href="{{ theme | theme_css_url }}" media="screen" rel="stylesheet" type="text/css">
 
-##### JavaScript (scripts.js)
+##### JavaScript (theme.js)
 
     <script src="{{ theme | theme_js_url }}" type="text/javascript"></script>
 

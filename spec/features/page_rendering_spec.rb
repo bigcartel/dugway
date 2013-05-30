@@ -16,6 +16,22 @@ feature 'Page rendering' do
     expect(page).to have_content('$10.00')
   end
 
+  scenario 'products.html via artist' do
+    visit '/artist/artist-one'
+    expect(page).to have_content('Dugway') # layout.html
+    expect(page).to have_content('Artist One')
+    expect(page).to have_content('My Product')
+    expect(page).to have_content('$10.00')
+  end
+
+  scenario 'products.html via category' do
+    visit '/category/tees'
+    expect(page).to have_content('Dugway') # layout.html
+    expect(page).to have_content('Tees')
+    expect(page).to have_content('My Product')
+    expect(page).to have_content('$10.00')
+  end
+
   scenario 'product.html' do
     visit '/product/my-product'
     expect(page).to have_content('Dugway') # layout.html
@@ -55,16 +71,16 @@ feature 'Page rendering' do
     expect(page).to have_content("We're really cool!")
   end
 
-  scenario 'styles.css' do
-    visit '/styles.css'
+  scenario 'theme.css' do
+    visit '/theme.css'
     expect(page).to have_content('height: 100%;') # one.css
     expect(page).to have_content('color: red;') # two.css.sass
     expect(page).to have_content('url(/images/bc_badge.png)') # two.css.sass
   end
 
-  scenario 'scripts.js' do
-    visit '/scripts.js'
-    expect(page).to have_content("console.log('One')") # one.js
-    expect(page).to have_content("console.log('Two')") # two.js.coffee
+  scenario 'theme.js' do
+    visit '/theme.js'
+    expect(page).to have_content("console.log('One');") # one.js
+    expect(page).to have_content("console.log('Two');") # two.js.coffee
   end
 end

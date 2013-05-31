@@ -132,12 +132,12 @@ module Dugway
 
     # Assets
 
-    get '/styles.css' do
-      render_file('styles.css')
+    get '/theme.css' do
+      render_file('theme.css')
     end
 
-    get '/scripts.js' do
-      render_file('scripts.js')
+    get '/theme.js' do
+      render_file('theme.js')
     end
 
     get %r{^/images/.+\.(jpg|jpeg|gif|png|ico)$} do

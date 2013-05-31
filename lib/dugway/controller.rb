@@ -23,11 +23,11 @@ module Dugway
           else
             yield
           end
-        }, { 
-          :request_method => method, 
-          :path_info => interpret_path(path) 
+        }, {
+          :request_method => method,
+          :path_info => interpret_path(path)
         })
-        
+
         routes.rehash
       end
 
@@ -43,9 +43,6 @@ module Dugway
           # custom pages
           when %r{^/:(#{ PERMALINK_REGEX })}
             %r{^/(?<#{ $1 }>#{ PERMALINK_REGEX })$}
-          # styles/scripts
-          when %r{^/(\w+)\.(js|css)}
-            %r{^/#{ $1 }\.(?<format>(js|css))$}
           # everything else
           else
             %r{^#{ path }$}

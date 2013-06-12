@@ -10,6 +10,12 @@ Dugway allows you to run your Big Cartel theme on your computer, test it in any 
 
 **Dugway is a very new project and likely has several bugs, rough edges, and missing features.** If you run into something weird or have a cool idea, see if it's a [known issue](https://github.com/bigcartel/dugway/issues), and otherwise [report it](https://github.com/bigcartel/dugway/issues/new) and we'll do our best to hook you up. Thanks.
 
+### Known Issues & Limitations
+
+* *You can't currently upload a Dugway build/zip to Big Cartel.* This is next on our list, and is what we built Dugway in preparation for. For now you'll still need to copy/paste theme pages individually in the Big Cartel admin, and host images and JavaScript assets separately.
+* *Big Cartel doesn't currently support custom settings.json.* Since we don't support fully uploadable themes yet (as mentioned above), you can't currently use a custom settings.json. For now you'll need to base your theme off of one of our [default themes](https://github.com/bigcartel-themes) and its settings.json.
+* *Dugway doesn't currently support all discounts and shipping features.* For now it's best to test those with a live store so it can interact with actual discount and shipping information.
+
 ## Install
 
 Dugway is Ruby gem so you'll need to have Ruby 1.9.3+ installed. Ruby is usually pre-installed on Mac OS X and Linux, and Windows users can install it using [RubyInstaller](http://rubyinstaller.org). From there, simply install the **dugway** gem from the terminal.

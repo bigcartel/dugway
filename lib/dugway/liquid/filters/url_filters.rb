@@ -16,9 +16,7 @@ module Dugway
             size = size.to_s.downcase
 
             if thumb_size_in_pixels = thumb_size_in_pixels_for(size)
-              dir = url[0..url.rindex('/')]
-              ext = File.extname(url)
-              url = "#{ dir }#{ thumb_size_in_pixels }#{ ext }"
+              url.sub!(/\/-\//, "/max_h-#{thumb_size_in_pixels}+max_w-#{thumb_size_in_pixels}/")
             end
           end
         else
@@ -59,7 +57,7 @@ module Dugway
       end
 
       def thumb_size_in_pixels_for(size)
-        { 'thumb' => 75, 'medium' => 175, 'large' => 300 }[size]
+        { 'thumb' => 75, 'medium' => 175, 'large' => 300 }[size] || 1000
       end
     end
   end

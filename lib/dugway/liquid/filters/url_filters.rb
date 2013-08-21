@@ -9,18 +9,11 @@ module Dugway
       end
 
       def product_image_url(image=nil, size=nil)
-        unless image.blank?
-          url = image['url']
-
-          unless size.blank?
-            size = size.to_s.downcase
-
-            if thumb_size_in_pixels = thumb_size_in_pixels_for(size)
-              url.sub!(/\/-\//, "/max_h-#{thumb_size_in_pixels}+max_w-#{thumb_size_in_pixels}/")
-            end
-          end
+        thumb_size_in_pixels = thumb_size_in_pixels_for(size)
+        if image.blank?
+          url = "http://images.cdn.bigcartel.com/missing/max_h-#{thumb_size_in_pixels || 300}+max_w-#{thumb_size_in_pixels || 300}/missing.png"
         else
-          url = "http://bigcartel.com/images/common/noimage-#{ (size || 'large').to_s }.gif"
+          url = image['url'].sub(/\/-\//, "/max_h-#{thumb_size_in_pixels || 1000}+max_w-#{thumb_size_in_pixels || 1000}/")
         end
 
         url
@@ -57,7 +50,7 @@ module Dugway
       end
 
       def thumb_size_in_pixels_for(size)
-        { 'thumb' => 75, 'medium' => 175, 'large' => 300 }[size] || 1000
+        { 'thumb' => 75, 'medium' => 175, 'large' => 300 }[size]
       end
     end
   end

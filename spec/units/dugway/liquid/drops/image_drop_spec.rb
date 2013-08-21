@@ -5,7 +5,7 @@ describe Dugway::Drops::ImageDrop do
 
   describe "#url" do
     it "should return the image's url" do
-      image.url.should == 'http://cache1.bigcartel.com/product_images/92599166/mens_tee_1.jpg'
+      image.url.should == 'http://cache1.bigcartel.com/product_images/92599166/-/mens_tee_1.jpg'
     end
   end
 

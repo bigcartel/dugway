@@ -70,7 +70,7 @@ module Dugway
     end
 
     def image_files
-      Dir.glob(File.join(source_dir, 'images', '**', '*.{png,jpg,jpeg,gif,ico}')).map { |i|
+      Dir.glob(File.join(source_dir, 'images', '**', '*.{png,jpg,jpeg,gif,ico,svg}')).map { |i|
         i.gsub(source_dir, '')[1..-1]
       }
     end

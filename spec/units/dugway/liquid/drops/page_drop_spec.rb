@@ -3,9 +3,11 @@ require 'spec_helper'
 describe Dugway::Drops::PageDrop do
   let(:page) { 
     page = Dugway.store.page('about-us')
-    page['full_url'] = 'http://test.bigcartel.com/about-us'
-    page['full_path'] = '/about-us'
-    Dugway::Drops::PageDrop.new(page)
+    Dugway::Drops::PageDrop.new(page).tap { |drop|
+      drop.context = Liquid::Context.new({}, {}, {
+        :request => Rack::Request.new({'PATH_INFO' => '/about-us', 'rack.url_scheme' => 'http', 'HTTP_HOST' => 'test.bigcartel.com', 'SERVER_PORT' => 80})
+      })
+    }
   }
 
   describe "#id" do

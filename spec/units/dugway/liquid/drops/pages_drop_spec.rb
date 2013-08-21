@@ -26,4 +26,10 @@ describe Dugway::Drops::PagesDrop do
       pages.blah.should be_nil
     end
   end
+
+  private
+
+  def rendered_template(template, assigns={}, registers={})
+    Liquid::Template.parse(template).render(assigns, :registers => { :currency => Dugway.store.currency }.merge(registers))
+  end
 end

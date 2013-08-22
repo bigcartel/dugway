@@ -79,12 +79,10 @@ module Dugway
       end
 
       def per_page
-        per_page = if @context['internal'].present?
-          if @context['internal']['per_page'].present?
-            @context['internal']['per_page']
-          else
-            @theme[:settings][:products_per_page]
-          end
+        per_page = if @context['internal'] and @context['internal']['per_page'].present?
+          @context['internal']['per_page']
+        elsif theme.settings['products_per_page']
+          theme.settings['products_per_page']
         else
           100
         end

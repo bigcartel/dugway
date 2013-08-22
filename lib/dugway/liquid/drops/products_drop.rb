@@ -28,7 +28,8 @@ module Dugway
       private
 
       def order
-        begin case @context['internal']['order']
+        if @context['internal']
+          case @context['internal']['order']
           when 'newest', 'date'
             'date'
           # We don't pass these in the API, so fake it
@@ -37,6 +38,8 @@ module Dugway
           else
             'position'
           end
+        else
+          'position'
         end
       end
 
@@ -49,10 +52,10 @@ module Dugway
           array.sort_by! { |p| p[order] }
         end
 
-        array.paginate({
-          :page => (@context.registers[:params][:page] || 1).to_i,
-          :per_page => @context['internal']['per_page']
-        })
+       array.paginate({
+         :page => (page || 1),
+         :per_page => per_page
+       })
       end
 
       def artist
@@ -66,6 +69,28 @@ module Dugway
       def search_terms
         params[:search]
       end  
+
+      def page
+        if @context['internal'].present? && @context['internal'].has_key?('page') # has_key? here because 'page' will be nil for get blocks
+          @context['internal']['page']
+        else
+          @context.registers[:params][:page] if @context.registers[:params]
+        end
+      end
+
+      def per_page
+        per_page = if @context['internal'].present?
+          if @context['internal']['per_page'].present?
+            @context['internal']['per_page']
+          else
+            @theme[:settings][:products_per_page]
+          end
+        else
+          100
+        end
+
+        per_page.to_i
+      end
 
       def dropify(products)
         products.map { |p| ProductDrop.new(p) }

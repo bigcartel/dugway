@@ -8,7 +8,7 @@ describe Dugway::Filters::UrlFilters do
 
     describe "when image is not missing" do
       it "should show image with default size" do
-        template = rendered_template("{{ image | product_image_url }}", 'image' => product_image).should
+        template = rendered_template("{{ image | product_image_url }}", 'image' => product_image)
         template.should =~ /max_h-1000\+max_w-1000/
         template.should =~ /#{Regexp.escape(File.basename(image_url))}/
       end
@@ -28,13 +28,13 @@ describe Dugway::Filters::UrlFilters do
 
     describe "when image is missing" do
       it "should show missing image with default large size" do
-        template = rendered_template("{{ image | product_image_url }}", 'image' => nil).should
+        template = rendered_template("{{ image | product_image_url }}", 'image' => nil)
         template.should =~ /max_h-300\+max_w-300/
         template.should =~ /missing\.png/
       end
 
       it "should show missing image with custom size" do
-        template = rendered_template("{{ image | product_image_url: 'thumb' }}", 'image' => nil).should
+        template = rendered_template("{{ image | product_image_url: 'thumb' }}", 'image' => nil)
         template.should =~ /max_h-75\+max_w-75/
         template.should =~ /missing\.png/
       end

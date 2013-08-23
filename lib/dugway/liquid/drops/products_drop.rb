@@ -59,11 +59,11 @@ module Dugway
       end
 
       def artist
-        @context.registers[:artist]['permalink'] rescue nil
+        @context.registers[:artist]['permalink'] rescue @context.registers[:params]['artist']
       end
 
       def category
-        @context.registers[:category]['permalink'] rescue nil
+        @context.registers[:category]['permalink'] rescue @context.registers[:params]['category']
       end
 
       def search_terms

@@ -8,6 +8,33 @@ module Dugway
         content_tag :a, text, options
       end
 
+      # To get max_w-100
+      # Eg product.primary_image | product_image_url | constrain : '100'
+      # To get max_h-100
+      # Eg product.primary_image | product_image_url | constrain : '-', '100'
+      # To get max_h-100+max_w-100
+      # Eg product.primary_image | product_image_url | constrain : '100', '100'
+      def constrain(url = nil, width = 0, height = 0)
+        if url
+          width = width.to_i
+          height = height.to_i
+
+          unless width == 0 && height == 0
+            url.gsub!(/(max_w-)\d+/) do |match|
+              width == 0 ? '' : "#{ $1 }#{ width }"
+            end
+
+            url.gsub!(/(max_h-)\d+/) do |match|
+              height == 0 ? '' : "#{ $1 }#{ height }"
+            end
+
+            url.gsub!(/\+/, '') if width == 0 || height == 0
+          end
+
+          url
+        end
+      end
+
       def product_image_url(image = nil, size = nil)
         width, height = legacy_size_for(size)
 
@@ -55,6 +82,8 @@ module Dugway
       end
 
       def legacy_size_for(size)
+        size = size.present? ? size : :original
+
         Hash.new([ 1000, 1000 ]).merge({
           thumb: [ 75, 75 ],
           medium: [ 175, 175 ],

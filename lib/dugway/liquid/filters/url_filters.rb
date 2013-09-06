@@ -77,7 +77,7 @@ module Dugway
 
       protected
       def image_url_hash(url, max_h = 1000, max_w = 1000)
-        url.gsub!(/\/-\//, "/max_h-#{ max_h }+max_w-#{ max_w }/")
+        url = url.gsub(/\/-\//, "/max_h-#{ max_h }+max_w-#{ max_w }/")
         url
       end
 

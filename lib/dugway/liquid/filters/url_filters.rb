@@ -16,22 +16,28 @@ module Dugway
       # Eg product.primary_image | product_image_url | constrain : '100', '100'
       def constrain(url = nil, width = 0, height = 0)
         if url
+          parsed_url = URI.parse(url)
+          path_parts = parsed_url.path.split('/')
+
           width = width.to_i
           height = height.to_i
 
-          unless width == 0 && height == 0
-            url.gsub!(/(max_w-)\d+/) do |match|
-              width == 0 ? '' : "#{ $1 }#{ width }"
-            end
+          path_parts.slice(-2).tap do |size|
+            unless width == 0 && height == 0
+              size.gsub!(/(max_w-)\d+/) do |match|
+                width == 0 ? '' : "#{ $1 }#{ width }"
+              end
 
-            url.gsub!(/(max_h-)\d+/) do |match|
-              height == 0 ? '' : "#{ $1 }#{ height }"
-            end
+              size.gsub!(/(max_h-)\d+/) do |match|
+                height == 0 ? '' : "#{ $1 }#{ height }"
+              end
 
-            url.gsub!(/\+/, '') if width == 0 || height == 0
+              size.gsub!(/\+/, '') if width == 0 || height == 0
+            end
           end
 
-          url
+          parsed_url.path = path_parts.join('/')
+          parsed_url.to_s
         end
       end
 

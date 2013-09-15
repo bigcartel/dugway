@@ -7,8 +7,8 @@ require 'uglifier'
 
 module Dugway
   class Theme
-    REQUIRED_FILES = %w( cart.html checkout.html contact.html home.html layout.html maintenance.html product.html products.html screenshot.jpg settings.json success.html theme.css theme.js )
-
+    REQUIRED_FILES = %w( cart.html checkout.html contact.html home.html layout.html maintenance.html product.html products.html screenshot.jpg success.html theme.css theme.js )
+    SETTINGS_FILES = %w( settings.coffee settings.json )
     attr_reader :errors
 
     def initialize(overridden_customization={})
@@ -19,8 +19,24 @@ module Dugway
       read_source_file('layout.html')
     end
 
+    def settings_file
+      SETTINGS_FILES.select { |file| !read_source_file(file).nil? }.first
+    end
+
+    def coffee_settings
+      coffee = CoffeeScript.compile(read_source_file(settings_file), {bare: true})
+      # remove the surrounding (); from compiled CoffeeScript
+      coffee.gsub!(/\A\(\{/, '{').gsub!(/\}\)\;\Z/, '}')
+      # ensure quoted keys
+      coffee.gsub!(/^\s*([\w]+):/, '"\1":')
+    end
+
     def settings
-      JSON.parse(read_source_file('settings.json'))
+      if settings_file =~ /\.coffee\z/
+        JSON.parse(coffee_settings)
+      else
+        JSON.parse(read_source_file(settings_file))
+      end
     end
 
     def fonts
@@ -66,7 +82,7 @@ module Dugway
     end
 
     def files
-      REQUIRED_FILES + image_files
+      REQUIRED_FILES + image_files << settings_file
     end
 
     def image_files
@@ -81,9 +97,12 @@ module Dugway
       REQUIRED_FILES.each { |file|
         @errors << "Missing source/#{ file }" if read_source_file(file).nil?
       }
+      if SETTINGS_FILES.all? { |file| read_source_file(file).nil? }
+        @errors << "Missing settings file (source/settings.coffee OR source/settings.json"
+      end
 
-      @errors << 'Missing theme name in source/settings.json' if name.blank?
-      @errors << 'Invalid theme version in source/settings.json (ex: 1.0.3)' unless !!(version =~ /\d+\.\d+\.\d+/)
+      @errors << 'Missing theme name in source/settings.[coffee/json]' if name.blank?
+      @errors << 'Invalid theme version in source/settings.[coffee/json] (ex: 1.0.3)' unless !!(version =~ /\d+\.\d+\.\d+/)
       @errors << 'Missing images in source/images' if image_files.empty?
 
       @errors.empty?

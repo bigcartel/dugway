@@ -54,19 +54,6 @@ module Dugway
       def error(msg)
         errors << msg
       end
-
-      private
-      def settings_images
-        @settings_images ||= settings.has_key?('images') ? settings['images'] : []
-      end
-
-      def settings_image_sets
-        @settings_image_sets ||= settings.has_key?('image_sets') ? settings['image_sets'] : []
-      end
-
-      def settings
-        @settings ||= @context.registers[:settings]
-      end
     end
   end
 end

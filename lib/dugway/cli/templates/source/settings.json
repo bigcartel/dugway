@@ -13,6 +13,18 @@
       "description": "Adds a repeating background image"
     }
   ],
+  "image_sets": [
+    {
+      "variable": "slideshow_images",
+      "label": "Slideshow",
+      "description": "This is a slideshow"
+    },
+    {
+      "variable": "lookbook_images",
+      "label": "Lookbook",
+      "description": "This is a lookbook"
+    }
+  ],
   "fonts": [
     {
       "variable": "header_font",

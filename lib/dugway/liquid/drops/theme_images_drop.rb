@@ -6,6 +6,15 @@ module Dugway
           ImageDrop.new(source[method_or_key].stringify_keys)
         end
       end
+
+      private
+      def settings_images
+        @settings_images ||= settings.has_key?('images') ? settings['images'] : []
+      end
+
+      def settings
+        @settings ||= @context.registers[:settings]
+      end
     end
   end
 end

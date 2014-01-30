@@ -19,6 +19,15 @@ module Dugway
       def image_sets
         Drops::ThemeImageSetsDrop.new(source)
       end
+
+      private
+      def settings_images
+        @settings_images ||= settings.has_key?('images') ? settings['images'] : []
+      end
+
+      def settings
+        @settings ||= @context.registers[:settings]
+      end
     end
   end
 end

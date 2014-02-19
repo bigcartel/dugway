@@ -1,5 +1,6 @@
 .bundle
 .DS_Store
+.sass-cache
 
 build
 tmp

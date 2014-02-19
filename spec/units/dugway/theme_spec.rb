@@ -11,7 +11,9 @@ describe Dugway::Theme do
 
   describe "#settings" do
     it "should return a hash of the theme's settings" do
-      theme.settings.should == JSON.parse(read_file('settings.json'))
+      theme.settings.should_not be_nil
+      theme.settings.should be_an_instance_of(Hash)
+      theme.settings.should == JSON.parse(theme.coffee_settings)
     end
   end
 
@@ -102,7 +104,8 @@ describe Dugway::Theme do
 
   describe "#files" do
     it "should return an array of all files" do
-      theme.files.should == ["cart.html", "checkout.html", "contact.html", "home.html", "layout.html", "maintenance.html", "product.html", "products.html", "screenshot.jpg", "settings.json", "success.html", "theme.css", "theme.js", "images/bc_badge.png", "images/small.svg"]
+      files_array = ["cart.html", "checkout.html", "contact.html", "home.html", "layout.html", "maintenance.html", "product.html", "products.html", "screenshot.jpg", "success.html", "theme.css", "theme.js", "images/bc_badge.png", "images/small.svg"]
+      theme.files.should == files_array << theme.settings_file
     end
   end
 
@@ -138,7 +141,7 @@ describe Dugway::Theme do
       it "should not be valid" do
         theme.valid?.should be(false)
         theme.errors.size.should == 1
-        theme.errors.first.should == 'Missing theme name in source/settings.json'
+        theme.errors.first.should == 'Missing theme name in source/settings.[coffee/json]'
       end
     end
 
@@ -150,7 +153,7 @@ describe Dugway::Theme do
       it "should not be valid" do
         theme.valid?.should be(false)
         theme.errors.size.should == 1
-        theme.errors.first.should == 'Invalid theme version in source/settings.json (ex: 1.0.3)'
+        theme.errors.first.should == 'Invalid theme version in source/settings.[coffee/json] (ex: 1.0.3)'
       end
     end
 
@@ -162,7 +165,7 @@ describe Dugway::Theme do
       it "should not be valid" do
         theme.valid?.should be(false)
         theme.errors.size.should == 1
-        theme.errors.first.should == 'Invalid theme version in source/settings.json (ex: 1.0.3)'
+        theme.errors.first.should == 'Invalid theme version in source/settings.[coffee/json] (ex: 1.0.3)'
       end
     end
 

@@ -26,13 +26,14 @@ module Dugway
 
       def core
         template('config.tt', "#{ @theme_dir }/config.ru")
-        template('source/settings.json', "#{ source_dir }/settings.json")
+        template('source/settings.coffee', "#{ source_dir }/settings.coffee")
       end
 
       def source
         unless options['skip-source']
           Dir.glob("#{ self.class.source_root }/source/**/*.{html,jpg,png,js,coffee,css,sass}") do |file|
             file_name = file.gsub("#{ self.class.source_root }/source/", '')
+            next if file_name =~ /settings.coffee/
             copy_file "source/#{ file_name }", "#{ source_dir }/#{ file_name }"
           end
         end

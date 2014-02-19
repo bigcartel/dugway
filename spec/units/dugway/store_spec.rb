@@ -180,15 +180,13 @@ describe Dugway::Store do
 
   describe "#currency" do
     it "returns the store's currency" do
-      store.currency.should == { 'sign' => '$', 'name' => 'U.S. Dollar', 'id' => 1, 'code' => 'USD' }
+      store.currency.should == { 'sign' => '$', 'name' => 'U.S. Dollar', 'id' => 1, 'code' => 'USD', 'locale' => 'en-US' }
     end
   end
 
   describe "#locale" do
     it "returns the store's locale based on their currency" do
       store.locale.should == 'en-US'
-      store.stub(:currency) {{ 'code' => 'JPY' }}
-      store.locale.should == 'ja'
     end
   end
 end

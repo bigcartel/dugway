@@ -121,32 +121,7 @@ module Dugway
     end
 
     def locale
-      case currency['code']
-      when 'AUD' then 'en-AU'
-      when 'BRL' then 'pt-BR'
-      when 'CAD' then 'en-US'
-      when 'CZK' then 'cs'
-      when 'DKK' then 'da'
-      when 'EUR' then 'eu'
-      when 'HKD' then 'en-US'
-      when 'HUF' then 'hu'
-      when 'ILS' then 'il'
-      when 'JPY' then 'ja'
-      when 'MYR' then 'ms-MY'
-      when 'MXN' then 'es-MX'
-      when 'TWD' then 'zh-TW'
-      when 'NZD' then 'en-US'
-      when 'NOK' then 'nb'
-      when 'PHP' then 'en-PH'
-      when 'PLN' then 'pl'
-      when 'GBP' then 'en-GB'
-      when 'SGD' then 'en-US'
-      when 'SEK' then 'sv-SE'
-      when 'CHF' then 'gsw-CH'
-      when 'THB' then 'th'
-      when 'TRY' then 'tr'
-      else 'en-US'
-      end
+      currency['locale']
     end
 
     private

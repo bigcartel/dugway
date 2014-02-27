@@ -18,21 +18,25 @@ describe Dugway::Drops::ThemeDrop do
     }
   }
 
+  let(:context) {
+    Liquid::Context.new({}, {}, { :settings => Dugway.theme.settings })
+  }
+
   let(:theme) {
     Dugway::Drops::ThemeDrop.new(Dugway.theme.customization.update(customization.stringify_keys)).tap { |drop|
-      drop.context = Liquid::Context.new({}, {}, { :settings => Dugway.theme.settings })
+      drop.context = context
     }
   }
 
   let(:images) {
     Dugway::Drops::ThemeImagesDrop.new(theme.source).tap { |drop|
-      drop.context = Liquid::Context.new({}, {}, { :settings => Dugway.theme.settings })
+      drop.context = context
     }
   }
 
   let(:image_sets) {
     Dugway::Drops::ThemeImageSetsDrop.new(theme.source).tap { |drop|
-      drop.context = Liquid::Context.new({}, {}, { :settings => Dugway.theme.settings })
+      drop.context = context
     }
   }
 

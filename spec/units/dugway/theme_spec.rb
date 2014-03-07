@@ -102,13 +102,19 @@ describe Dugway::Theme do
 
   describe "#files" do
     it "should return an array of all files" do
-      theme.files.should == ["cart.html", "checkout.html", "contact.html", "home.html", "layout.html", "maintenance.html", "product.html", "products.html", "screenshot.jpg", "settings.json", "success.html", "theme.css", "theme.js", "images/bc_badge.png", "images/small.svg"]
+      theme.files.should == ["cart.html", "checkout.html", "contact.html", "home.html", "layout.html", "maintenance.html", "product.html", "products.html", "screenshot.jpg", "settings.json", "success.html", "theme.css", "theme.js", "images/bc_badge.png", "images/small.svg", "fonts/icons.ttf", "fonts/icons.woff"]
     end
   end
 
   describe "#image_files" do
     it "should return an array of all image files" do
       theme.image_files.should == ["images/bc_badge.png", "images/small.svg"]
+    end
+  end
+
+  describe "#font_files" do
+    it "shoud return an array of all font files" do
+      theme.font_files.should == %w( fonts/icons.ttf fonts/icons.woff )
     end
   end
 

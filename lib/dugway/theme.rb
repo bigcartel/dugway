@@ -66,11 +66,17 @@ module Dugway
     end
 
     def files
-      REQUIRED_FILES + image_files
+      REQUIRED_FILES + image_files + font_files
     end
 
     def image_files
       Dir.glob(File.join(source_dir, 'images', '**', '*.{png,jpg,jpeg,gif,ico,svg}')).map { |i|
+        i.gsub(source_dir, '')[1..-1]
+      }
+    end
+
+    def font_files
+      Dir.glob(File.join(source_dir, 'fonts', '**', '*.{eot,ttf,otf,woff,svg}')).map { |i|
         i.gsub(source_dir, '')[1..-1]
       }
     end

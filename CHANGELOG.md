@@ -6,4 +6,11 @@
  * `dugway build` will include font files in the zip
 
 #### 0.8.4
- * The beginning of time as far as this doc is concerned
+ * Support `image_sets` in `settings.json`
+ * Support the new [constrain](http://help.bigcartel.com/customer/portal/articles/772749-filters#constrain) filter
+
+#### 0.7.0
+ * Rename `scripts.js` and `styles.css` to `theme.js` and `theme.css`
+
+#### Pre-0.7.0
+ * Initial launch and bug fixes

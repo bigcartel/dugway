@@ -12,7 +12,7 @@ Dugway allows you to run your Big Cartel theme on your computer, test it in any 
 
 ### Known Issues & Limitations
 
-* *You can't currently upload a Dugway build/zip to Big Cartel.* This is next on our list, and is what we built Dugway in preparation for. For now you'll still need to copy/paste theme pages individually in the Big Cartel admin, and host images and JavaScript assets separately.
+* *You can't currently upload a Dugway build/zip to Big Cartel.* This is next on our list, and is what we built Dugway in preparation for. For now you'll still need to copy/paste theme pages individually in the Big Cartel admin, and host images, fonts, and JavaScript assets separately.
 * *Big Cartel doesn't currently support custom settings.json.* Since we don't support fully uploadable themes yet (as mentioned above), you can't currently use a custom settings.json. For now you'll need to base your theme off of one of our [default themes](https://github.com/bigcartel-themes) and its settings.json.
 * *Dugway doesn't currently support all discounts and shipping features.* For now it's best to test those with a live store so it can interact with actual discount and shipping information.
 
@@ -167,4 +167,4 @@ When you're finished with a new version of your theme, it's time to build it.
 
     dugway build
 
-This will create a zip file for the current version in your **build** directory containing all HTML, images, and packaged JS and CSS.
+This will create a zip file for the current version in your **build** directory containing all HTML, images, fonts, and packaged JS and CSS.

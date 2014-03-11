@@ -108,6 +108,12 @@ And as you've probably guessed by now, all images for your theme go in the **ima
 
     {{ 'sample.png' | theme_image_url }}
 
+### Fonts
+
+Fonts work more or less the same as images. Place font files (say if you have created a custom icon font) in the **fonts** directory. Reference them by passing it's name to the `theme_font_url` filter. Please be aware of licensing restrictions. If you're using a font from a forge and don't have permission to host the files directly or have restrictions about only making them available to certain domains you will need to use another mechanism for hosting your fonts. Any font uploaded as part of a dugway bundle will essentialy be publicly available and not CORS restricted to specific domains.
+
+    {{ 'myfont.woff' | theme_font_url }}
+
 ### Settings
 
 Set your theme's name, version, and customizable options in the **settings.json** file. We'll be documenting more about this soon, but for now see the starter file generated for you, and check out our [default themes](https://github.com/bigcartel-themes).

@@ -69,6 +69,10 @@ module Dugway
         "/images/#{ filename }"
       end
 
+      def theme_font_url(filename)
+        "/fonts/#{ filename }"
+      end
+
       private
 
       def link_args_to_options(args)

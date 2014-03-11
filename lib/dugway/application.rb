@@ -140,7 +140,7 @@ module Dugway
       render_file('theme.js')
     end
 
-    get %r{^/images/.+\.(jpg|jpeg|gif|png|ico|svg)$} do
+    get %r{^/images|fonts/.+$} do
       Rack::File.new(Dugway.source_dir).call(request.env)
     end
   end

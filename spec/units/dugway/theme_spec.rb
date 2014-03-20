@@ -240,3 +240,4 @@ describe Dugway::Theme do
     File.read(File.join(Dugway.source_dir, file_name))
   end
 end
+

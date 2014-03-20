@@ -5,7 +5,8 @@
     {
       "variable": "logo",
       "label": "Logo",
-      "description": "Good for an image up to 150 pixels wide"
+      "description": "Good for an image up to 150 pixels wide",
+      "default": "logo_bc.png"
     },
     {
       "variable": "background_image",
@@ -17,7 +18,14 @@
     {
       "variable": "slideshow_images",
       "label": "Slideshow",
-      "description": "This is a slideshow"
+      "description": "This is a slideshow",
+      "defaults": [
+        "slideshow/1.gif",
+        "slideshow/2.gif",
+        "slideshow/3.gif",
+        "slideshow/4.gif",
+        "slideshow/5.gif"
+      ]
     },
     {
       "variable": "lookbook_images",

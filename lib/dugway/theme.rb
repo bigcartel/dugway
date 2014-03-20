@@ -27,9 +27,17 @@ module Dugway
       customization_for_type('fonts')
     end
 
+    def images
+      customization_for_type('images')
+    end
+
+    def image_sets
+      customization_for_type('image_sets')
+    end
+
     def customization
       Hash.new.tap { |customization|
-        %w( fonts colors options ).each { |type|
+        %w( fonts colors options images image_sets ).each { |type|
           customization.update(customization_for_type(type))
         }
 
@@ -129,11 +137,33 @@ module Dugway
     def customization_for_type(type)
       Hash.new.tap { |hash|
         if settings.has_key?(type)
-          settings[type].each { |setting|
-            hash[setting['variable']] = setting['default']
-          }
+          case type
+          when 'images'
+            settings[type].each { |setting|
+              if name = setting['default']
+                hash[setting['variable']] = { :url => image_path_from_setting_name(name), :width => 1, :height => 1 }
+              end
+            }
+          when 'image_sets'
+            settings[type].each { |setting|
+              if defaults = setting['default'] || setting['defaults']
+                hash[setting['variable']] ||= []
+                defaults.each do |name|
+                  hash[setting['variable']] << { :url => image_path_from_setting_name(name), :width => 1, :height => 1 }
+                end
+              end
+            }
+          else
+            settings[type].each { |setting|
+              hash[setting['variable']] = setting['default']
+            }
+          end
         end
       }
+    end
+
+    def image_path_from_setting_name(name)
+      image_files.detect { |path| path =~ /#{ Regexp.escape(name) }$/ }
     end
   end
 end

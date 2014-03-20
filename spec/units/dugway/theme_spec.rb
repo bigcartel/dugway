@@ -24,15 +24,45 @@ describe Dugway::Theme do
     end
   end
 
+  describe "#images" do
+    it "should return a hash of the image settings" do
+      theme.images.should == {
+        'logo' => { :url => 'images/logo_bc.png', :width => 1, :height => 1 }
+      }
+    end
+  end
+
+  describe "#image_sets" do
+    it "should return a hash of the image set settings" do
+      theme.image_sets.should == {
+        'slideshow_images' => [
+          { :url => 'images/slideshow/1.gif', :width => 1, :height => 1 },
+          { :url => 'images/slideshow/2.gif', :width => 1, :height => 1 },
+          { :url => 'images/slideshow/3.gif', :width => 1, :height => 1 },
+          { :url => 'images/slideshow/4.gif', :width => 1, :height => 1 },
+          { :url => 'images/slideshow/5.gif', :width => 1, :height => 1 }
+        ]
+      }
+    end
+  end
+
   describe "#customization" do
-    it "should return a hash of font, color, and option settings values" do
+    it "should return a hash of font, color, option, images and image sets settings values" do
       theme.customization.should == {
         'background_color' => '#222222',
         'fixed_sidebar' => true,
         'font' => 'Georgia',
         'header_font' => 'Helvetica',
         'link_color' => 'red',
-        'show_search' => false
+        'show_search' => false,
+        'logo' => { :url => 'images/logo_bc.png', :width => 1, :height => 1 },
+        'slideshow_images' => [
+          { :url => "images/slideshow/1.gif", :width => 1, :height => 1 },
+          { :url => "images/slideshow/2.gif", :width => 1, :height => 1 },
+          { :url => "images/slideshow/3.gif", :width => 1, :height => 1 },
+          { :url => "images/slideshow/4.gif", :width => 1, :height => 1 },
+          { :url => "images/slideshow/5.gif", :width => 1, :height => 1 }
+        ]
       }
     end
 
@@ -50,7 +80,15 @@ describe Dugway::Theme do
           'font' => 'Georgia',
           'header_font' => 'Helvetica',
           'link_color' => 'blue',
-          'show_search' => false
+          'show_search' => false,
+          'logo' => { :url => 'images/logo_bc.png', :width => 1, :height => 1 },
+          'slideshow_images' => [
+            { :url => "images/slideshow/1.gif", :width => 1, :height => 1 },
+            { :url => "images/slideshow/2.gif", :width => 1, :height => 1 },
+            { :url => "images/slideshow/3.gif", :width => 1, :height => 1 },
+            { :url => "images/slideshow/4.gif", :width => 1, :height => 1 },
+            { :url => "images/slideshow/5.gif", :width => 1, :height => 1 }
+          ]
         }
       end
     end
@@ -102,13 +140,13 @@ describe Dugway::Theme do
 
   describe "#files" do
     it "should return an array of all files" do
-      theme.files.should == ["cart.html", "checkout.html", "contact.html", "home.html", "layout.html", "maintenance.html", "product.html", "products.html", "screenshot.jpg", "settings.json", "success.html", "theme.css", "theme.js", "images/bc_badge.png", "images/small.svg", "fonts/icons.ttf", "fonts/icons.woff"]
+      theme.files.should =~ ["cart.html", "checkout.html", "contact.html", "home.html", "layout.html", "maintenance.html", "product.html", "products.html", "screenshot.jpg", "settings.json", "success.html", "theme.css", "theme.js", "images/bc_badge.png", "images/logo_bc.png", "images/slideshow/1.gif", "images/slideshow/2.gif", "images/slideshow/3.gif", "images/slideshow/4.gif", "images/slideshow/5.gif", "images/small.svg", "fonts/icons.ttf", "fonts/icons.woff"]
     end
   end
 
   describe "#image_files" do
     it "should return an array of all image files" do
-      theme.image_files.should == ["images/bc_badge.png", "images/small.svg"]
+      theme.image_files.should =~ ["images/bc_badge.png", "images/logo_bc.png", "images/slideshow/1.gif", "images/slideshow/2.gif", "images/slideshow/3.gif", "images/slideshow/4.gif", "images/slideshow/5.gif", "images/small.svg"]
     end
   end
 
@@ -202,3 +240,4 @@ describe Dugway::Theme do
     File.read(File.join(Dugway.source_dir, file_name))
   end
 end
+

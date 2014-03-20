@@ -163,7 +163,7 @@ module Dugway
     end
 
     def image_path_from_setting_name(name)
-      image_files.detect { |path| path =~ /#{ name }$/ }
+      image_files.detect { |path| path =~ /#{ Regexp.escape(name) }$/ }
     end
   end
 end

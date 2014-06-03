@@ -131,7 +131,12 @@ module Dugway
     end
 
     def lookup(permalink, array)
-      array.find { |item| item['permalink'] == permalink }.try(:dup)
+      if item = array.find { |item| item['permalink'] == permalink }
+        # Create a deep copy
+        Marshal.load(Marshal.dump(item))
+      else
+        nil
+      end
     end
 
     def lookup_products(permalink, type)

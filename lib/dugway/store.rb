@@ -70,6 +70,7 @@ module Dugway
 
     def products
       @products ||= get('/products.json')
+      Marshal.load(Marshal.dump(@products)) # Hack to avoid data munging elsewhere?
     end
 
     def product(permalink)
@@ -131,12 +132,7 @@ module Dugway
     end
 
     def lookup(permalink, array)
-      if item = array.find { |item| item['permalink'] == permalink }
-        # Create a deep copy
-        Marshal.load(Marshal.dump(item))
-      else
-        nil
-      end
+      array.find { |item| item['permalink'] == permalink }
     end
 
     def lookup_products(permalink, type)

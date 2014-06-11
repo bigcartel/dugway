@@ -66,11 +66,11 @@ Develop the HTML for your theme using our [Theme API](http://help.bigcartel.com/
 
 ### CSS & JavaScript
 
-All CSS for your theme is handled by the **theme.css** file, and all JavaScript by **theme.js**. If you don't have much CSS or JavaScript, or you're just a glutton for punishment, you could simply put all of your code in these two files. However, we recommend you use [Sprockets](http://getsprockets.org) to break your code into multiple files in separate directories.
+All CSS for your theme is handled by the **theme.css** file, and all JavaScript by **theme.js**. If you don't have much CSS or JavaScript, or you're just a glutton for punishment, you could simply put all of your code in these two files. However, we recommend you use [Sprockets](#using-sprockets) to break your code into multiple files in separate directories.
 
 #### Using Sprockets
 
-[Sprockets](http://getsprockets.org) allows you to bring in CSS and JavaScript from different directories into a single file. We've created **stylesheets** and **javascripts** directories by default that you can put your code in, but you could delete those and put files anywhere you'd like. After that, use [Sprockets directives](https://github.com/sstephenson/sprockets#the-directive-processor) to package them into **theme.css** and **theme.js**.
+[Sprockets](https://github.com/sstephenson/sprockets) allows you to bring in CSS and JavaScript from different directories into a single file. We've created **stylesheets** and **javascripts** directories by default that you can put your code in, but you could delete those and put files anywhere you'd like. After that, use [Sprockets directives](https://github.com/sstephenson/sprockets#the-directive-processor) to package them into **theme.css** and **theme.js**.
 
 ##### theme.css
 

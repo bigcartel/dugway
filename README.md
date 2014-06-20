@@ -62,7 +62,7 @@ All of the assets and source code for your theme goes in the **source** director
 
 ### HTML
 
-Develop the HTML for your theme using our [Theme API](http://help.bigcartel.com/customer/portal/articles/772788-creating-a-custom-theme). Barebones versions of all of the required HTML pages for your theme are provided by default, so feel free to expand on those or replace them entirely.
+Develop the HTML for your theme using our [Theme API](http://help.bigcartel.com/developers/themes/). Barebones versions of all of the required HTML pages for your theme are provided by default, so feel free to expand on those or replace them entirely.
 
 ### CSS & JavaScript
 
@@ -94,7 +94,7 @@ And finally, for you JavaScript folks, we've baked [CoffeeScript](http://coffees
 
 #### Embedding CSS & JavaScript
 
-You can embed the CSS and JavaScript into your theme by passing the theme variable to the [theme_css_url](http://help.bigcartel.com/customer/portal/articles/772749-filters#url) and [theme_js_url](http://help.bigcartel.com/customer/portal/articles/772749-filters#url) filters.
+You can embed the CSS and JavaScript into your theme by passing the theme variable to the [theme_css_url](http://help.bigcartel.com/developers/themes/#themecssurltheme) and [theme_js_url](http://help.bigcartel.com/developers/themes/#themejsurlname) filters.
 
 ##### CSS (theme.css)
 
@@ -106,7 +106,7 @@ You can embed the CSS and JavaScript into your theme by passing the theme variab
 
 ### Images
 
-And as you've probably guessed by now, all images for your theme go in the **images** directory. You can reference an image in your code by passing its name to the [theme_image_url](http://help.bigcartel.com/customer/portal/articles/772749-filters#url) filter.
+And as you've probably guessed by now, all images for your theme go in the **images** directory. You can reference an image in your code by passing its name to the [theme_image_url](http://help.bigcartel.com/developers/themes/#themeimageurlname) filter.
 
     {{ 'sample.png' | theme_image_url }}
 
@@ -140,7 +140,7 @@ Part of building a great theme is making sure it works well in a variety of cont
 
 ### Store content
 
-The best way to see your theme under a different light is by previewing it with a different store's products, categories, pages, currency, and other content. To do this, simply set the **:store** option to any Big Cartel store's subdomain, and Dugway will bring in their content using the standard [Big Cartel API](http://help.bigcartel.com/customer/portal/articles/772771-api). By default we use **dugway** for [dugway.bigcartel.com](http://dugway.bigcartel.com).
+The best way to see your theme under a different light is by previewing it with a different store's products, categories, pages, currency, and other content. To do this, simply set the **:store** option to any Big Cartel store's subdomain, and Dugway will bring in their content using the standard [Big Cartel API](http://help.bigcartel.com/developers/api/). By default we use **dugway** for [dugway.bigcartel.com](http://dugway.bigcartel.com).
 
     options[:store] = 'beeteeth'
 

@@ -7,7 +7,7 @@
 
 #### 0.8.4
  * Support `image_sets` in `settings.json`
- * Support the new [constrain](http://help.bigcartel.com/customer/portal/articles/772749-filters#constrain) filter
+ * Support the new [constrain](http://help.bigcartel.com/developers/themes/#constrainurl-width-height) filter
 
 #### 0.7.0
  * Rename `scripts.js` and `styles.css` to `theme.js` and `theme.css`

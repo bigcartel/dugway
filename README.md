@@ -134,32 +134,34 @@ Tired of all the manual starting and stopping? Good news, Dugway is built on top
 
 ## Testing your theme
 
-Part of building a great theme is making sure it works well in a variety of contexts and with a variety of content. Dugway makes it easy to test your theme's versatility by customizing the **options** in the **config.ru** file.
+Part of building a great theme is making sure it works well in a variety of contexts and with a variety of content. Dugway makes it easy to test your theme's versatility by utilizing the **.dugway.json** file. This file will be specific to your computer for your own testing, and shouldn't be checked into source control.
 
-*Note:* changing the **config.ru** file will require you to restart the [server](#running-your-theme).
+*Note:* changing **.dugway.json** will require you to restart the [server](#running-your-theme).
 
 ### Store content
 
-The best way to see your theme under a different light is by previewing it with a different store's products, categories, pages, currency, and other content. To do this, simply set the **:store** option to any Big Cartel store's subdomain, and Dugway will bring in their content using the standard [Big Cartel API](http://help.bigcartel.com/developers/api/). By default we use **dugway** for [dugway.bigcartel.com](http://dugway.bigcartel.com).
+The best way to see your theme under a different light is by previewing it with a different store's products, categories, pages, currency, and other content. To do this, simply set the **store.subdomain** variable in **.dugway.json** to any Big Cartel store's subdomain, and Dugway will bring in their content using the standard [Big Cartel API](http://help.bigcartel.com/developers/api/). By default we use **dugway** for [dugway.bigcartel.com](http://dugway.bigcartel.com).
 
-    options[:store] = 'beeteeth'
+    "store": {
+      "subdomain": "beeteeth"
+    }
 
 *Note:* don't worry, any sensitive data like inventory levels and discount codes is faked by Dugway.
 
 ### Store customization
 
-Another important thing to consider is how store owners will customize your theme. You establish what can be customized in your [settings.json](#settings) file, and Dugway allows you to simulate potential values people could choose by setting them in the **:customization** option. By default we use the **default** values from your **[settings.json](#settings)** file.
+Another important thing to consider is how store owners will customize your theme. You establish what can be customized in your [settings.json](#settings) file, and Dugway allows you to simulate potential values people could choose by setting them in the **customization** variable in **.dugway.json**. By default we use the **default** values from your **[settings.json](#settings)** file.
 
-    options[:customization] = {
-      :logo => {
-        :url => 'http://placehold.it/200x50/000000/ffffff&text=My+Logo',
-        :width => 200,
-        :height => 50
-      },
-      :background_color => '#CCCCCC',
-      :show_search => true,
-      :twitter_username => 'mytwitter'
-    }
+  "customization": {
+    "logo": {
+      "url": "http://placehold.it/200x50/000000/ffffff&text=My+Logo",
+      "width": 200,
+      "height": 50
+    },
+    "background_color": "#CCCCCC",
+    "show_search": true,
+    "twitter_username": "bigcartel"
+  }
 
 ## Building your theme
 

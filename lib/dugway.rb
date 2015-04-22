@@ -48,7 +48,7 @@ module Dugway
     end
 
     def store
-      @store ||= Store.new(options && options[:store] || 'dugway')
+      @store ||= Store.new(options && options[:store] && options[:store][:subdomain] || 'dugway')
     end
 
     def theme

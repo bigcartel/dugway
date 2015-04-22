@@ -26,6 +26,7 @@ module Dugway
 
       def core
         template('config.tt', "#{ @theme_dir }/config.ru")
+        template('dugway.tt', "#{ @theme_dir }/.dugway.json")
         template('source/settings.json', "#{ source_dir }/settings.json")
       end
 

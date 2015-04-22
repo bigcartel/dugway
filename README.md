@@ -20,41 +20,46 @@ Dugway allows you to run your Big Cartel theme on your computer, test it in any 
 
 Dugway is Ruby gem so you'll need to have Ruby 1.9.3+ installed. Ruby is usually pre-installed on Mac OS X and Linux, and Windows users can install it using [RubyInstaller](http://rubyinstaller.org). From there, simply install the **dugway** gem from the terminal.
 
-    gem install dugway
+```
+gem install dugway
+```
 
 ## Creating a new theme
 
 With Dugway installed, you can now create a new theme, simply give it a name.
 
-    dugway create mytheme
+```
+dugway create mytheme
+```
 
 This will create a new directory named *mytheme* that contains a few configuration files and a starter theme to get you going.
 
-    mytheme
-    ├── source
-    |   ├── fonts
-    │   │   └── all font files for your theme
-    │   ├── images
-    │   │   └── all image files for your theme
-    │   ├── javascripts
-    │   │   └── all JavaScript files for your theme
-    │   ├── stylesheets
-    │   │   └── all CSS files for your theme
-    │   ├── cart.html
-    │   ├── checkout.html
-    │   ├── contact.html
-    │   ├── home.html
-    │   ├── layout.html
-    │   ├── maintenance.html
-    │   ├── product.html
-    │   ├── products.html
-    │   ├── screenshot.jpg
-    │   ├── settings.json
-    │   ├── success.html
-    │   ├── theme.css
-    │   └── theme.js
-    └── config.ru
-
+```
+mytheme
+├── source
+|   ├── fonts
+│   │   └── all font files for your theme
+│   ├── images
+│   │   └── all image files for your theme
+│   ├── javascripts
+│   │   └── all JavaScript files for your theme
+│   ├── stylesheets
+│   │   └── all CSS files for your theme
+│   ├── cart.html
+│   ├── checkout.html
+│   ├── contact.html
+│   ├── home.html
+│   ├── layout.html
+│   ├── maintenance.html
+│   ├── product.html
+│   ├── products.html
+│   ├── screenshot.jpg
+│   ├── settings.json
+│   ├── success.html
+│   ├── theme.css
+│   └── theme.js
+└── config.ru
+```
 
 ## Developing your theme
 
@@ -74,15 +79,19 @@ All CSS for your theme is handled by the **theme.css** file, and all JavaScript 
 
 ##### theme.css
 
-    /*
-     *= require stylesheets/example_1
-     *= require stylesheets/example_2
-     */
+```css
+/*
+ *= require stylesheets/example_1
+ *= require stylesheets/example_2
+ */
+```
 
 ##### theme.js
 
-    //= require javascripts/example_1
-    //= require javascripts/example_2
+```js
+//= require javascripts/example_1
+//= require javascripts/example_2
+```
 
 #### Using Sass, Compass, LESS, and CoffeeScript
 
@@ -98,23 +107,31 @@ You can embed the CSS and JavaScript into your theme by passing the theme variab
 
 ##### CSS (theme.css)
 
-    <link href="{{ theme | theme_css_url }}" media="screen" rel="stylesheet" type="text/css">
+```html
+<link href="{{ theme | theme_css_url }}" media="screen" rel="stylesheet" type="text/css">
+```
 
 ##### JavaScript (theme.js)
 
-    <script src="{{ theme | theme_js_url }}" type="text/javascript"></script>
+```html
+<script src="{{ theme | theme_js_url }}" type="text/javascript"></script>
+```
 
 ### Images
 
 And as you've probably guessed by now, all images for your theme go in the **images** directory. You can reference an image in your code by passing its name to the [theme_image_url](http://help.bigcartel.com/developers/themes/#themeimageurlname) filter.
 
-    {{ 'sample.png' | theme_image_url }}
+```
+{{ 'sample.png' | theme_image_url }}
+```
 
 ### Fonts
 
 Fonts work more or less the same as images. Place font files (say if you have created a custom icon font) in the **fonts** directory. Reference them by passing its name to the `theme_font_url` filter. Please be aware of licensing restrictions. If you're using a font from a forge and don't have permission to host the files directly or have restrictions about only making them available to certain domains, you will need to use another mechanism for hosting your fonts. Any font uploaded as part of a Dugway bundle will essentialy be publicly available and not CORS-restricted to specific domains.
 
-    {{ 'myfont.woff' | theme_font_url }}
+```
+{{ 'myfont.woff' | theme_font_url }}
+```
 
 ### Settings
 
@@ -124,7 +141,9 @@ Set your theme's name, version, and customizable options in the **settings.json*
 
 Run your theme in any browser by starting the Dugway server:
 
-    dugway server
+```
+dugway server
+```
 
 By default this will serve your theme at http://0.0.0.0:9292. You can then stop the server by hitting CTRL+C.
 
@@ -134,37 +153,45 @@ Tired of all the manual starting and stopping? Good news, Dugway is built on top
 
 ## Testing your theme
 
-Part of building a great theme is making sure it works well in a variety of contexts and with a variety of content. Dugway makes it easy to test your theme's versatility by customizing the **options** in the **config.ru** file.
+Part of building a great theme is making sure it works well in a variety of contexts and with a variety of content. Dugway makes it easy to test your theme's versatility by utilizing the **.dugway.json** file. This file will be specific to your computer for your own testing, and shouldn't be checked into source control.
 
-*Note:* changing the **config.ru** file will require you to restart the [server](#running-your-theme).
+*Note:* changing **.dugway.json** will require you to restart the [server](#running-your-theme).
 
 ### Store content
 
-The best way to see your theme under a different light is by previewing it with a different store's products, categories, pages, currency, and other content. To do this, simply set the **:store** option to any Big Cartel store's subdomain, and Dugway will bring in their content using the standard [Big Cartel API](http://help.bigcartel.com/developers/api/). By default we use **dugway** for [dugway.bigcartel.com](http://dugway.bigcartel.com).
+The best way to see your theme under a different light is by previewing it with a different store's products, categories, pages, currency, and other content. To do this, simply set the **store.subdomain** variable in **.dugway.json** to any Big Cartel store's subdomain, and Dugway will bring in their content using the standard [Big Cartel API](http://help.bigcartel.com/developers/api/). By default we use **dugway** for [dugway.bigcartel.com](http://dugway.bigcartel.com).
 
-    options[:store] = 'beeteeth'
+```json
+"store": {
+  "subdomain": "beeteeth"
+}
+```
 
 *Note:* don't worry, any sensitive data like inventory levels and discount codes is faked by Dugway.
 
 ### Store customization
 
-Another important thing to consider is how store owners will customize your theme. You establish what can be customized in your [settings.json](#settings) file, and Dugway allows you to simulate potential values people could choose by setting them in the **:customization** option. By default we use the **default** values from your **[settings.json](#settings)** file.
+Another important thing to consider is how store owners will customize your theme. You establish what can be customized in your [settings.json](#settings) file, and Dugway allows you to simulate potential values people could choose by setting them in the **customization** variable in **.dugway.json**. By default we use the **default** values from your **[settings.json](#settings)** file.
 
-    options[:customization] = {
-      :logo => {
-        :url => 'http://placehold.it/200x50/000000/ffffff&text=My+Logo',
-        :width => 200,
-        :height => 50
-      },
-      :background_color => '#CCCCCC',
-      :show_search => true,
-      :twitter_username => 'mytwitter'
-    }
+```json
+"customization": {
+  "logo": {
+    "url": "http://placehold.it/200x50/000000/ffffff&text=My+Logo",
+    "width": 200,
+    "height": 50
+  },
+  "background_color": "#CCCCCC",
+  "show_search": true,
+  "twitter_username": "bigcartel"
+}
+```
 
 ## Building your theme
 
 When you're finished with a new version of your theme, it's time to build it.
 
-    dugway build
+```
+dugway build
+```
 
 This will create a zip file for the current version in your **build** directory containing all HTML, images, fonts, and packaged JS and CSS.

@@ -78,33 +78,33 @@ module Dugway
     end
 
     def product_and_option(option_id)
-      products.each { |product|
-        product['options'].each { |option|
+      products.each do |product|
+        product['options'].each do |option|
           if option['id'] == option_id
             return product, option
           end
-        }
-      }
+        end
+      end
 
       nil
     end
 
     def previous_product(permalink)
-      products.each_with_index { |product, index|
+      products.each_with_index do |product, index|
         if product['permalink'] == permalink && index > 0 && previous_product = products[index - 1]
           return previous_product
         end
-      }
+      end
 
       nil
     end
 
     def next_product(permalink)
-      products.each_with_index { |product, index|
+      products.each_with_index do |product, index|
         if product['permalink'] == permalink && (index + 1) < products.size && next_product = products[index + 1]
           return next_product
         end
-      }
+      end
 
       nil
     end

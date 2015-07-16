@@ -36,13 +36,13 @@ module Dugway
     end
 
     def customization
-      Hash.new.tap { |customization|
-        %w( fonts colors options images image_sets ).each { |type|
+      Hash.new.tap do |customization|
+        %w( fonts colors options images image_sets ).each do |type|
           customization.update(customization_for_type(type))
-        }
+        end
 
         customization.update(@overridden_customization)
-      }
+      end
     end
 
     def name
@@ -78,23 +78,23 @@ module Dugway
     end
 
     def image_files
-      Dir.glob(File.join(source_dir, 'images', '**', '*.{png,jpg,jpeg,gif,ico,svg}')).map { |i|
+      Dir.glob(File.join(source_dir, 'images', '**', '*.{png,jpg,jpeg,gif,ico,svg}')).map do |i|
         i.gsub(source_dir, '')[1..-1]
-      }
+      end
     end
 
     def font_files
-      Dir.glob(File.join(source_dir, 'fonts', '**', '*.{eot,ttf,otf,woff,svg}')).map { |i|
+      Dir.glob(File.join(source_dir, 'fonts', '**', '*.{eot,ttf,otf,woff,svg}')).map do |i|
         i.gsub(source_dir, '')[1..-1]
-      }
+      end
     end
 
     def valid?
       @errors = []
 
-      REQUIRED_FILES.each { |file|
+      REQUIRED_FILES.each do |file|
         @errors << "Missing source/#{ file }" if read_source_file(file).nil?
-      }
+      end
 
       @errors << 'Missing theme name in source/settings.json' if name.blank?
       @errors << 'Invalid theme version in source/settings.json (ex: 1.0.3)' unless !!(version =~ /\d+\.\d+\.\d+/)
@@ -135,31 +135,31 @@ module Dugway
     end
 
     def customization_for_type(type)
-      Hash.new.tap { |hash|
+      Hash.new.tap do |hash|
         if settings.has_key?(type)
           case type
           when 'images'
-            settings[type].each { |setting|
+            settings[type].each do |setting|
               if name = setting['default']
                 hash[setting['variable']] = { :url => image_path_from_setting_name(name), :width => 1, :height => 1 }
               end
-            }
+            end
           when 'image_sets'
-            settings[type].each { |setting|
+            settings[type].each do |setting|
               if defaults = setting['default'] || setting['defaults']
                 hash[setting['variable']] ||= []
                 defaults.each do |name|
                   hash[setting['variable']] << { :url => image_path_from_setting_name(name), :width => 1, :height => 1 }
                 end
               end
-            }
+            end
           else
-            settings[type].each { |setting|
+            settings[type].each do |setting|
               hash[setting['variable']] = setting['default']
-            }
+            end
           end
         end
-      }
+      end
     end
 
     def image_path_from_setting_name(name)

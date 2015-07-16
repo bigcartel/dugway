@@ -12,13 +12,13 @@ module Dugway
             html << %(<span class="previous disabled">#{ prev_label }</span>)
           end
 
-          paginate['parts'].each { |part|
+          paginate['parts'].each do |part|
             if part['is_link']
               html << %(<a href="#{ part['url'] }">#{ part['title'] }</a>)
             else
               html << %(<span class="#{ part['title'] == paginate['current_page'].to_s ? 'current' : 'gap' }">#{ part['title'] }</span>)
             end
-          }
+          end
 
           next_label = next_label.blank? ? paginate['next']['title'] : next_label
           if paginate['next']['is_link']

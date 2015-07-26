@@ -1,4 +1,5 @@
 require 'dugway/controller'
+require 'dugway/contact_form_validator'
 
 module Dugway
   class Application < Controller
@@ -69,14 +70,7 @@ module Dugway
     end
 
     post '/contact' do
-      if [ :name, :email, :subject, :message, :captcha ].any? { |f| params[f].blank? }
-        error('All fields are required')
-      elsif !(params[:email] =~ /^([^@\s]+)@((?:[-a-zA-Z0-9]+\.)+[a-zA-Z]{2,})$/)
-        error('Invalid email address')
-      elsif !(params[:captcha] =~ /^rQ9pC$/i)
-        error('Spam check was incorrect')
-      end
-
+      error(contact_form_error) if contact_form_error
       render_page
     end
 
@@ -104,6 +98,10 @@ module Dugway
 
     def self.cart_params
       params[:cart].try(:with_indifferent_access)
+    end
+
+    def self.contact_form_error
+      ContactFormValidator.new(params).error_message
     end
 
     def self.render_artist_category_response(object, type)

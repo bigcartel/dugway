@@ -16,41 +16,21 @@ module Dugway
     end
 
     get '/category/:category(.js)' do
-      if category = store.category(params[:category])
-        if request.html?
-          page['name'] = category['name']
-          render_page(:category => category)
-        elsif request.js?
-          render_json(store.category_products(params[:category]))
-        end
-      else
-        render_not_found
-      end
+      render_not_found unless category = store.category(params[:category])
+      render_artist_category_response(category, :category)
     end
 
     get '/artist/:artist(.js)' do
-      if artist = store.artist(params[:artist])
-        if request.html?
-          page['name'] = artist['name']
-          render_page(:artist => artist)
-        elsif request.js?
-          render_json(store.artist_products(params[:artist]))
-        end
-      else
-        render_not_found
-      end
+      render_not_found unless artist = store.artist(params[:artist])
+      render_artist_category_response(artist, :artist)
     end
 
     get '/product/:product(.js)' do
-      if product = store.product(params[:product])
-        if request.html?
-          page['name'] = product['name']
-          render_page(:product => product)
-        elsif request.js?
-          render_json(product)
-        end
-      else
-        render_not_found
+      render_not_found unless product = store.product(params[:product])
+      if request.html?
+        set_page_name_and_render_page(product, :product)
+      elsif request.js?
+        render_json(product)
       end
     end
 
@@ -124,5 +104,21 @@ module Dugway
     get %r{^/images|fonts/.+$} do
       Rack::File.new(Dugway.source_dir).call(request.env)
     end
+
+    private
+
+    def self.render_artist_category_response(object, type)
+      if request.html?
+        set_page_name_and_render_page(object, type)
+      elsif request.js?
+        render_json(store.send("#{type}_products", params[type]))
+      end
+    end
+
+    def self.set_page_name_and_render_page(object, type)
+      page['name'] = object['name']
+      render_page(type => object)
+    end
+
   end
 end

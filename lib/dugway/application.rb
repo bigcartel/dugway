@@ -35,18 +35,13 @@ module Dugway
     end
 
     any '/cart(.js)' do
-      if cart_params = params[:cart].try(:with_indifferent_access)
-        cart.update(cart_params)
-      end
+      cart.update(cart_params) if cart_params
+      redirect_to('/checkout') if params[:checkout]
 
-      if params[:checkout]
-        redirect_to('/checkout')
-      else
-        if request.html?
-          render_page
-        elsif request.js?
-          render_json(cart)
-        end
+      if request.html?
+        render_page
+      elsif request.js?
+        render_json(cart)
       end
     end
 
@@ -106,6 +101,10 @@ module Dugway
     end
 
     private
+
+    def self.cart_params
+      params[:cart].try(:with_indifferent_access)
+    end
 
     def self.render_artist_category_response(object, type)
       if request.html?

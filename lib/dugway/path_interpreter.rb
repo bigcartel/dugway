@@ -2,32 +2,44 @@ module Dugway
   class PathInterpreter
     attr_accessor :path
 
-    PERMALINK_REGEX = %r{[a-z0-9\-_]+}
-    FORMAT_REGEX = %r{(\.(?<format>js))?}
-
     def initialize(path)
       @path = path
     end
 
     def call
-      if path.is_a?(String)
-        case path
-        # category/artist/product
-        when %r{^/(\w+)/:(#{ PERMALINK_REGEX })\(\.js\)}
-          %r{^/#{ $1 }/(?<#{ $2 }>#{ PERMALINK_REGEX })#{ FORMAT_REGEX }$}
-        # products/cart
-        when %r{^/(\w+)\(\.js\)$}
-          %r{^/#{ $1 }#{ FORMAT_REGEX }$}
-        # custom pages
-        when %r{^/:(#{ PERMALINK_REGEX })}
-          %r{^/(?<#{ $1 }>#{ PERMALINK_REGEX })$}
-        # everything else
-        else
-          %r{^#{ path }$}
-        end
+      return path unless path.is_a?(String)
+      case path
+      when category_artist_or_product_path
+        %r{^/#{$1}/(?<#{$2}>#{permalink_regex})#{format_regex}$}
+      when product_or_cart_path
+        %r{^/#{$1}#{format_regex}$}
+      when custom_page_path
+        %r{^/(?<#{$1}>#{permalink_regex})$}
       else
-        path
+        %r{^#{path}$}
       end
+    end
+
+    private
+
+    def permalink_regex
+      %r{[a-z0-9\-_]+}
+    end
+
+    def format_regex
+      %r{(\.(?<format>js))?}
+    end
+
+    def category_artist_or_product_path
+      %r{^/(\w+)/:(#{permalink_regex})\(\.js\)}
+    end
+
+    def product_or_cart_path
+      %r{^/(\w+)\(\.js\)$}
+    end
+
+    def custom_page_path
+      %r{^/:(#{permalink_regex})}
     end
   end
 end

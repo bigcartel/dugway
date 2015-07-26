@@ -2,13 +2,10 @@ require 'dugway/controller'
 
 module Dugway
   class Application < Controller
-    # Home
 
     get '/' do
       render_page
     end
-
-    # Products
 
     get '/products(.js)' do
       if request.html?
@@ -44,8 +41,6 @@ module Dugway
       end
     end
 
-    # Product
-
     get '/product/:product(.js)' do
       if product = store.product(params[:product])
         if request.html?
@@ -58,8 +53,6 @@ module Dugway
         render_not_found
       end
     end
-
-    # Cart
 
     any '/cart(.js)' do
       if cart_params = params[:cart].try(:with_indifferent_access)
@@ -77,8 +70,6 @@ module Dugway
       end
     end
 
-    # Checkout
-
     any '/checkout' do
       if cart.empty?
         error('Must have at least one product to checkout')
@@ -87,8 +78,6 @@ module Dugway
         render_page
       end
     end
-
-    # Success
 
     get '/success' do
       render_page
@@ -99,8 +88,6 @@ module Dugway
       cart.reset
       render_page
     end
-
-    # Contact
 
     get '/contact' do
       render_page
@@ -118,19 +105,13 @@ module Dugway
       render_page
     end
 
-    # Maintenance
-
     get '/maintenance' do
       render_page
     end
 
-    # Custom page
-
     get '/:permalink' do
       render_page
     end
-
-    # Assets
 
     get '/theme.css' do
       render_file('theme.css')

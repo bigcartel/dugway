@@ -1,9 +1,8 @@
 require 'rack/mount'
+require 'dugway/path_interpreter'
 
 module Dugway
   class Controller
-    PERMALINK_REGEX = %r{[a-z0-9\-_]+}
-    FORMAT_REGEX = %r{(\.(?<format>js))?}
 
     class << self
       def routes
@@ -25,31 +24,10 @@ module Dugway
           end
         }, {
           :request_method => method,
-          :path_info => interpret_path(path)
+          :path_info => PathInterpreter.new(path).call
         })
 
         routes.rehash
-      end
-
-      def interpret_path(path)
-        if path.is_a?(String)
-          case path
-          # category/artist/product
-          when %r{^/(\w+)/:(#{ PERMALINK_REGEX })\(\.js\)}
-            %r{^/#{ $1 }/(?<#{ $2 }>#{ PERMALINK_REGEX })#{ FORMAT_REGEX }$}
-          # products/cart
-          when %r{^/(\w+)\(\.js\)$}
-            %r{^/#{ $1 }#{ FORMAT_REGEX }$}
-          # custom pages
-          when %r{^/:(#{ PERMALINK_REGEX })}
-            %r{^/(?<#{ $1 }>#{ PERMALINK_REGEX })$}
-          # everything else
-          else
-            %r{^#{ path }$}
-          end
-        else
-          path
-        end
       end
 
       def get(path, &block)
@@ -142,4 +120,5 @@ module Dugway
       self.class.routes.call(env)
     end
   end
+
 end

@@ -25,7 +25,7 @@ CoffeeScript, Sass, and LESS. It's awesome.
 
 ## Install
 
-Dugway is Ruby gem so you'll need to have Ruby 1.9.3+ installed. Ruby is
+Dugway is Ruby gem so you'll need to have Ruby 2.0+ installed. Ruby is
 usually pre-installed on Mac OS X and Linux, and Windows users can install it
 using [RubyInstaller](http://rubyinstaller.org). From there, simply install the
 **dugway** gem from the terminal.
@@ -81,8 +81,8 @@ All of the assets and source code for your theme goes in the **source** director
 Develop the HTML for your theme using our [Theme
 API](http://help.bigcartel.com/developers/themes/). Barebones versions of all
 of the required HTML pages for your theme are provided by default, so feel free
-to expand on those or replace them entirely. Note that the **checkout.html** 
-and **success.html** pages are only used when 
+to expand on those or replace them entirely. Note that the **checkout.html**
+and **success.html** pages are only used when
 [PayPal Standard checkout](https://help.bigcartel.com/basics/settings/#paypal-standard) is enabled.
 
 ### CSS & JavaScript

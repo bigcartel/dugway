@@ -128,7 +128,7 @@ author your stylesheets by utilizing its mixins for CSS3, typography, and its
 utilities.
 
 Prefer [LESS](http://lesscss.org)? No problem, you'll just need to create a
-[Gemfile like this one](https://gist.github.com/ihearithurts/5569898) in the
+[Gemfile like this one](https://gist.github.com/mattwigham/5569898) in the
 root directory of your theme, run ```bundle install```, and append the
 **.less** extension to your CSS files.
 

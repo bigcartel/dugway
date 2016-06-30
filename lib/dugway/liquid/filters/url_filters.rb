@@ -8,47 +8,14 @@ module Dugway
         content_tag :a, text, options
       end
 
-      # To get max_w-100
-      # Eg product.primary_image | product_image_url | constrain : '100'
-      # To get max_h-100
-      # Eg product.primary_image | product_image_url | constrain : '-', '100'
-      # To get max_h-100+max_w-100
-      # Eg product.primary_image | product_image_url | constrain : '100', '100'
       def constrain(url = nil, width = 0, height = 0)
-        if url
-          parsed_url = URI.parse(url)
-          path_parts = parsed_url.path.split('/')
-
-          width = width.to_i
-          height = height.to_i
-
-          path_parts.slice(-2).tap do |size|
-            unless width == 0 && height == 0
-              size.gsub!(/(max_w-)\d+/) do |match|
-                width == 0 ? '' : "#{ $1 }#{ width }"
-              end
-
-              size.gsub!(/(max_h-)\d+/) do |match|
-                height == 0 ? '' : "#{ $1 }#{ height }"
-              end
-
-              size.gsub!(/\+/, '') if width == 0 || height == 0
-            end
-          end
-
-          parsed_url.path = path_parts.join('/')
-          parsed_url.to_s
-        end
+        image_url url, width, height if url
       end
 
       def product_image_url(image = nil, size = nil)
-        width, height = legacy_size_for(size)
-
-        if image.blank?
-          image_url_hash('http://images.cdn.bigcartel.com/missing/-/missing.png', height, width)
-        else
-          image_url_hash(image['url'], height, width)
-        end
+        url = image ? image['url'] : 'http://images.bigcartel.com/missing.png'
+        size = legacy_size_for(size)
+        image_url url, size, size
       end
 
       def theme_js_url(name)
@@ -85,20 +52,20 @@ module Dugway
         options
       end
 
-      protected
-      def image_url_hash(url, max_h = 1000, max_w = 1000)
-        url = url.gsub(/\/-\//, "/max_h-#{ max_h }+max_w-#{ max_w }/")
-        url
+      def image_url(url, width, height)
+        uri = URI.parse(url)
+        query_hash = Rack::Utils.parse_nested_query uri.query
+        uri.query = query_hash.update('w' => width, 'h' => height).to_query
+        uri.to_s
       end
 
       def legacy_size_for(size)
-        size = size.present? ? size : :original
-
-        Hash.new([ 1000, 1000 ]).merge({
-          thumb: [ 75, 75 ],
-          medium: [ 175, 175 ],
-          large: [ 300, 300 ]
-        })[size.to_sym]
+        case size
+        when 'large'  then 300
+        when 'medium' then 175
+        when 'thumb'  then 75
+        else 1000
+        end
       end
     end
   end

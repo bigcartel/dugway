@@ -10,48 +10,42 @@ describe Dugway::Filters::UrlFilters do
       describe "when image is not missing" do
         it "should show image with default size" do
           template = rendered_template("{{ image | product_image_url }}", 'image' => product_image)
-          template.should =~ /max_h-1000\+max_w-1000/
-          template.should =~ /#{Regexp.escape(File.basename(image_url))}/
+          template.should include("#{image_url}?h=1000&w=1000")
         end
 
         it "should show a image with custom size" do
           template = rendered_template("{{ image | product_image_url: 'thumb' }}", 'image' => product_image)
-          template.should =~ /max_h-75\+max_w-75/
-          template.should =~ /#{Regexp.escape(File.basename(image_url))}/
+          template.should include("#{image_url}?h=75&w=75")
         end
 
         it "should show image with default size when its random crap" do
           template = rendered_template("{{ image | product_image_url: 'snarble' }}", 'image' => product_image)
-          template.should =~ /max_h-1000\+max_w-1000/
-          template.should =~ /#{Regexp.escape(File.basename(image_url))}/
+          template.should include("#{image_url}?h=1000&w=1000")
         end
       end
 
       describe "when image is missing" do
         it "should show missing image with default 1000x1000" do
           template = rendered_template("{{ image | product_image_url }}", 'image' => nil)
-          template.should =~ /max_h-1000\+max_w-1000/
-          template.should =~ /missing\.png/
+          template.should include("http://images.bigcartel.com/missing.png?h=1000&w=1000")
         end
 
         it "should show missing image with custom size" do
           template = rendered_template("{{ image | product_image_url: 'thumb' }}", 'image' => nil)
-          template.should =~ /max_h-75\+max_w-75/
-          template.should =~ /missing\.png/
+          template.should include("http://images.bigcartel.com/missing.png?h=75&w=75")
         end
 
         it "should show missing image with default 1000x1000 when its random crap" do
           template = rendered_template("{{ image | product_image_url: 'snarble' }}", 'image' => nil)
-          template.should =~ /max_h-1000\+max_w-1000/
-          template.should =~ /missing\.png/
+          template.should include("http://images.bigcartel.com/missing.png?h=1000&w=1000")
         end
       end
     end
 
     describe "#constrain" do
       it 'should constrain the image to the specified size' do
-        template = rendered_template("{{ image | product_image_url | constrain: '222', '222' }}", 'image' => product_image)
-        template.should =~ /max_h-222\+max_w-222/
+        template = rendered_template("{{ image | product_image_url | constrain: '123', '456' }}", 'image' => product_image)
+        template.should include("#{image_url}?h=456&w=123")
       end
     end
   end

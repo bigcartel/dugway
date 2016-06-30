@@ -1,14 +1,12 @@
 require 'dugway/controller'
+require 'dugway/contact_form_validator'
 
 module Dugway
   class Application < Controller
-    # Home
 
     get '/' do
       render_page
     end
-
-    # Products
 
     get '/products(.js)' do
       if request.html?
@@ -19,65 +17,34 @@ module Dugway
     end
 
     get '/category/:category(.js)' do
-      if category = store.category(params[:category])
-        if request.html?
-          page['name'] = category['name']
-          render_page(:category => category)
-        elsif request.js?
-          render_json(store.category_products(params[:category]))
-        end
-      else
-        render_not_found
-      end
+      render_not_found unless category = store.category(params[:category])
+      render_artist_category_response(category, :category)
     end
 
     get '/artist/:artist(.js)' do
-      if artist = store.artist(params[:artist])
-        if request.html?
-          page['name'] = artist['name']
-          render_page(:artist => artist)
-        elsif request.js?
-          render_json(store.artist_products(params[:artist]))
-        end
-      else
-        render_not_found
-      end
+      render_not_found unless artist = store.artist(params[:artist])
+      render_artist_category_response(artist, :artist)
     end
-
-    # Product
 
     get '/product/:product(.js)' do
-      if product = store.product(params[:product])
-        if request.html?
-          page['name'] = product['name']
-          render_page(:product => product)
-        elsif request.js?
-          render_json(product)
-        end
-      else
-        render_not_found
+      render_not_found unless product = store.product(params[:product])
+      if request.html?
+        set_page_name_and_render_page(product, :product)
+      elsif request.js?
+        render_json(product)
       end
     end
-
-    # Cart
 
     any '/cart(.js)' do
-      if cart_params = params[:cart].try(:with_indifferent_access)
-        cart.update(cart_params)
-      end
+      cart.update(cart_params) if cart_params
+      redirect_to('/checkout') if params[:checkout]
 
-      if params[:checkout]
-        redirect_to('/checkout')
-      else
-        if request.html?
-          render_page
-        elsif request.js?
-          render_json(cart)
-        end
+      if request.html?
+        render_page
+      elsif request.js?
+        render_json(cart)
       end
     end
-
-    # Checkout
 
     any '/checkout' do
       if cart.empty?
@@ -87,8 +54,6 @@ module Dugway
         render_page
       end
     end
-
-    # Success
 
     get '/success' do
       render_page
@@ -100,37 +65,22 @@ module Dugway
       render_page
     end
 
-    # Contact
-
     get '/contact' do
       render_page
     end
 
     post '/contact' do
-      if [ :name, :email, :subject, :message, :captcha ].any? { |f| params[f].blank? }
-        error('All fields are required')
-      elsif !(params[:email] =~ /^([^@\s]+)@((?:[-a-zA-Z0-9]+\.)+[a-zA-Z]{2,})$/)
-        error('Invalid email address')
-      elsif !(params[:captcha] =~ /^rQ9pC$/i)
-        error('Spam check was incorrect')
-      end
-
+      error(contact_form_error) if contact_form_error
       render_page
     end
-
-    # Maintenance
 
     get '/maintenance' do
       render_page
     end
 
-    # Custom page
-
     get '/:permalink' do
       render_page
     end
-
-    # Assets
 
     get '/theme.css' do
       render_file('theme.css')
@@ -143,5 +93,29 @@ module Dugway
     get %r{^/images|fonts/.+$} do
       Rack::File.new(Dugway.source_dir).call(request.env)
     end
+
+    private
+
+    def self.cart_params
+      params[:cart].try(:with_indifferent_access)
+    end
+
+    def self.contact_form_error
+      ContactFormValidator.new(params).error_message
+    end
+
+    def self.render_artist_category_response(object, type)
+      if request.html?
+        set_page_name_and_render_page(object, type)
+      elsif request.js?
+        render_json(store.send("#{type}_products", params[type]))
+      end
+    end
+
+    def self.set_page_name_and_render_page(object, type)
+      page['name'] = object['name']
+      render_page(type => object)
+    end
+
   end
 end

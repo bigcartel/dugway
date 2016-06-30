@@ -213,7 +213,7 @@ describe Dugway::Drops::ProductDrop do
     it "should return the product's first image" do
       image = product.image
       image.should be_an_instance_of(Dugway::Drops::ImageDrop)
-      image.url.should == 'http://cache1.bigcartel.com/product_images/92599166/-/mens_tee_1.jpg'
+      image.url.should == 'http://images.bigcartel.com/product_images/92599166/mens_tee_1.jpg'
     end
   end
 
@@ -225,7 +225,7 @@ describe Dugway::Drops::ProductDrop do
 
       image = images.first
       image.should be_an_instance_of(Dugway::Drops::ImageDrop)
-      image.url.should == 'http://cache1.bigcartel.com/product_images/92599166/-/mens_tee_1.jpg'
+      image.url.should == 'http://images.bigcartel.com/product_images/92599166/mens_tee_1.jpg'
     end
   end
 

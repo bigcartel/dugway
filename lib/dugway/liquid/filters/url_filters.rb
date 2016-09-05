@@ -8,14 +8,20 @@ module Dugway
         content_tag :a, text, options
       end
 
-      def constrain(url = nil, width = 0, height = 0)
-        image_url url, width, height if url
+      def constrain(url = nil, width = '-', height = '-')
+        return unless url
+        uri = URI.parse(url)
+        query = Rack::Utils.parse_nested_query uri.query
+        query.update('w' => width, 'h' => height)
+        query.delete_if { |k,v| v.nil? || v == '-' }
+        uri.query = query.to_query
+        uri.to_s
       end
 
       def product_image_url(image = nil, size = nil)
         url = image ? image['url'] : 'http://images.bigcartel.com/missing.png'
         size = legacy_size_for(size)
-        image_url url, size, size
+        constrain url, size, size
       end
 
       def theme_js_url(name)
@@ -50,13 +56,6 @@ module Dugway
         }
 
         options
-      end
-
-      def image_url(url, width, height)
-        uri = URI.parse(url)
-        query_hash = Rack::Utils.parse_nested_query uri.query
-        uri.query = query_hash.update('w' => width, 'h' => height).to_query
-        uri.to_s
       end
 
       def legacy_size_for(size)

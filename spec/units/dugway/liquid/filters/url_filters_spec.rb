@@ -43,9 +43,19 @@ describe Dugway::Filters::UrlFilters do
     end
 
     describe "#constrain" do
-      it 'should constrain the image to the specified size' do
+      it "should constrain the image to the specified size" do
         template = rendered_template("{{ image | product_image_url | constrain: '123', '456' }}", 'image' => product_image)
         template.should include("#{image_url}?h=456&w=123")
+      end
+
+      it "should support an optional width argument" do
+        template = rendered_template("{{ image | product_image_url | constrain: '-', '456' }}", 'image' => product_image)
+        template.should include("#{image_url}?h=456")
+      end
+
+      it "should support an optional height argument" do
+        template = rendered_template("{{ image | product_image_url | constrain: '123' }}", 'image' => product_image)
+        template.should include("#{image_url}?w=123")
       end
     end
   end

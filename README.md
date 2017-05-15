@@ -146,13 +146,15 @@ filters.
 
 ##### CSS (theme.css)
 
-```html <link href="{{ theme | theme_css_url }}" media="screen"
-rel="stylesheet" type="text/css"> ```
+```html
+<link href="{{ theme | theme_css_url }}" media="screen" rel="stylesheet" type="text/css">
+```
 
 ##### JavaScript (theme.js)
 
-```html <script src="{{ theme | theme_js_url }}"
-type="text/javascript"></script> ```
+```html 
+<script src="{{ theme | theme_js_url }}" type="text/javascript"></script>
+```
 
 ### Images
 
@@ -162,7 +164,9 @@ name to the
 [theme_image_url](http://help.bigcartel.com/developers/themes/#themeimageurlname)
 filter.
 
-``` {{ 'sample.png' | theme_image_url }} ```
+```
+{{ 'sample.png' | theme_image_url }}
+```
 
 ### Fonts
 
@@ -190,7 +194,9 @@ themes](https://github.com/bigcartel-themes).
 
 Run your theme in any browser by starting the Dugway server:
 
-``` dugway server ```
+```
+dugway server
+```
 
 By default this will serve your theme at http://0.0.0.0:9292. You can then stop
 the server by hitting CTRL+C.

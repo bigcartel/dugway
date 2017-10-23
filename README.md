@@ -8,20 +8,15 @@ CoffeeScript, Sass, and LESS. It's awesome.
 
 [![Walkthrough](http://cl.ly/image/101e1z3Y3B1w/Screen%20Shot%202013-04-01%20at%205.04.40%20PM.png)](https://vimeo.com/bigcartel/dugway)
 
-## Known Issues & Limitations
+## Disclaimer
 
-* *You can't currently upload a Dugway build/zip to Big Cartel.* This is next
-  on our list, and is what we built Dugway in preparation for. For now you'll
-  still need to copy/paste theme pages individually in the Big Cartel admin,
-  and host images, fonts, and JavaScript assets separately.
-* *Big Cartel doesn't currently support custom settings.json.* Since we don't
-  support fully uploadable themes yet (as mentioned above), you can't currently
-  use a custom settings.json. For now you'll need to base your theme off of one
-  of our [default themes](https://github.com/bigcartel-themes) and its
-  settings.json.
-* *Dugway doesn't currently support all discounts and shipping features.* For
-  now it's best to test those with a live store so it can interact with actual
-  discount and shipping information.
+_Dugway is used internally by Big Cartel to develop our themes, and only we are
+able to modify a theme's settings.json file, host a theme's assets, and upload
+a fully packaged theme zip. You're free to use Dugway to develop a custom theme,
+or modify one of our [default themes](https://github.com/bigcartel-themes), but
+you'll need to base your settings.json on one of our [default themes](https://github.com/bigcartel-themes),
+host images, fonts, and JavaScript assets separately, and copy/paste theme pages
+individually in the Big Cartel admin._
 
 ## Install
 
@@ -57,7 +52,6 @@ mytheme
 │   ├── stylesheets
 │   │   └── all CSS files for your theme
 │   ├── cart.html
-│   ├── checkout.html
 │   ├── contact.html
 │   ├── home.html
 │   ├── layout.html
@@ -66,7 +60,6 @@ mytheme
 │   ├── products.html
 │   ├── screenshot.jpg
 │   ├── settings.json
-│   ├── success.html
 │   ├── theme.css
 │   └── theme.js
 └── config.ru
@@ -79,11 +72,9 @@ All of the assets and source code for your theme goes in the **source** director
 ### HTML
 
 Develop the HTML for your theme using our [Theme
-API](http://help.bigcartel.com/developers/themes/). Barebones versions of all
+API](https://developers.bigcartel.com/api/themes). Barebones versions of all
 of the required HTML pages for your theme are provided by default, so feel free
-to expand on those or replace them entirely. Note that the **checkout.html**
-and **success.html** pages are only used when
-[PayPal Standard checkout](https://help.bigcartel.com/basics/settings/#paypal-standard) is enabled.
+to expand on those or replace them entirely.
 
 ### CSS & JavaScript
 
@@ -140,8 +131,8 @@ And finally, for you JavaScript folks, we've baked
 
 You can embed the CSS and JavaScript into your theme by passing the theme
 variable to the
-[theme_css_url](http://help.bigcartel.com/developers/themes/#themecssurltheme)
-and [theme_js_url](http://help.bigcartel.com/developers/themes/#themejsurlname)
+[theme_css_url](https://developers.bigcartel.com/api/themes#theme_css_url)
+and [theme_js_url](https://developers.bigcartel.com/api/themes#theme_js_url)
 filters.
 
 ##### CSS (theme.css)
@@ -152,7 +143,7 @@ filters.
 
 ##### JavaScript (theme.js)
 
-```html 
+```html
 <script src="{{ theme | theme_js_url }}" type="text/javascript"></script>
 ```
 
@@ -161,7 +152,7 @@ filters.
 And as you've probably guessed by now, all images for your theme go in the
 **images** directory. You can reference an image in your code by passing its
 name to the
-[theme_image_url](http://help.bigcartel.com/developers/themes/#themeimageurlname)
+[theme_image_url](https://developers.bigcartel.com/api/themes#theme_image_url)
 filter.
 
 ```
@@ -182,13 +173,6 @@ available and not CORS-restricted to specific domains.
 ```
 {{ 'myfont.woff' | theme_font_url }}
 ```
-
-### Settings
-
-Set your theme's name, version, and customizable options in the
-**settings.json** file. We'll be documenting more about this soon, but for now
-see the starter file generated for you, and check out our [default
-themes](https://github.com/bigcartel-themes).
 
 ## Running your theme
 
@@ -224,7 +208,7 @@ The best way to see your theme under a different light is by previewing it with
 a different store's products, categories, pages, currency, and other content.
 To do this, simply set the **store.subdomain** variable in **.dugway.json** to
 any Big Cartel store's subdomain, and Dugway will bring in their content using
-the standard [Big Cartel API](http://help.bigcartel.com/developers/api/). By
+the standard [Big Cartel API](https://developers.bigcartel.com/api/themes). By
 default we use **dugway** for
 [dugway.bigcartel.com](http://dugway.bigcartel.com).
 

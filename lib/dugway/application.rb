@@ -51,18 +51,10 @@ module Dugway
         error('Must have at least one product to checkout')
         redirect_to('/cart')
       else
-        render_page
+        sleep(3)
+        cart.reset
+        redirect_to('/')
       end
-    end
-
-    get '/success' do
-      render_page
-    end
-
-    post '/success' do
-      sleep(3) # Give the checkout page time
-      cart.reset
-      render_page
     end
 
     get '/contact' do

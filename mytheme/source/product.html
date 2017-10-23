@@ -1,0 +1,67 @@
+<section class="product_images">
+  <img src="{{ product.image | product_image_url }}" alt="Image of {{ product.name | escape }}" class="primary_image">
+
+  {% if product.images.size > 1 %}
+  <ul class="unstyled">
+    {% for image in product.images %}
+    <li{% if forloop.first %} class="selected"{% endif %}><a href="{{ image | product_image_url }}"><img src="{{ image | product_image_url size:"thumb" }}" alt="Image of {{ product.name | escape }}"></a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</section>
+
+<div>
+  <aside>
+    {% case product.status %}
+
+      {% when 'sold-out' %}
+        <h5>{{ product.default_price | money_with_sign }} <em>Sold Out</em></h5>
+
+      {% when 'coming-soon' %}
+        <h5>{{ product.default_price | money_with_sign }} <em>Coming Soon</em></h5>
+
+      {% when 'active' %}
+        <h5>{{ product.default_price | money_with_sign }}{% if product.on_sale %} <em>On Sale{% endif %}</em></h5>
+        <h5>Availability</h5>
+
+        <ul class="unstyled availability">
+          {% for option in product.options %}
+          <li>
+            {% unless product.has_default_option %}<span>{{ option.name }}</span>{% endunless %}
+            <span>{% if option.sold_out %}Sold Out{% endif %}</span>
+            <b>
+              <b style="width:{{ option.inventory }}%"></b>
+            </b>
+          </li>
+          {% endfor %}
+        </ul>
+
+        <form method="post" action="/cart">
+          {% if product.has_default_option %}
+          {{ product.option | hidden_option_input }}
+          {% else %}
+          <div>
+          {{ product.options_in_stock | options_select }}
+          </div>
+          {% endif %}
+
+          <button name="submit" type="submit" title="Add to Cart">Add to Cart</button>
+        </form>
+    {% endcase %}
+  </aside>
+
+  {% for artist in product.artists %}
+    {% if forloop.first %}
+      <h5>by {{ artist.name }}</h5>
+      {% if forloop.length > 2 %}, {% endif %}
+    {% elsif forloop.last %}
+      <h5>and {{ artist.name }}</h5>
+    {% else %}
+      <h5>{{ artist.name }}</h5>,
+    {% endif %}
+  {% endfor %}
+
+  {% if product.description != blank %}
+    {{ product.description | paragraphs }}
+  {% endif %}
+</div>

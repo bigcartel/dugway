@@ -140,7 +140,7 @@ describe Dugway::Theme do
 
   describe "#files" do
     it "should return an array of all files" do
-      theme.files.should =~ ["cart.html", "checkout.html", "contact.html", "home.html", "layout.html", "maintenance.html", "product.html", "products.html", "screenshot.jpg", "settings.json", "success.html", "theme.css", "theme.js", "images/bc_badge.png", "images/logo_bc.png", "images/slideshow/1.gif", "images/slideshow/2.gif", "images/slideshow/3.gif", "images/slideshow/4.gif", "images/slideshow/5.gif", "images/small.svg", "fonts/icons.ttf", "fonts/icons.woff"]
+      theme.files.should =~ ["cart.html", "contact.html", "home.html", "layout.html", "maintenance.html", "product.html", "products.html", "screenshot.jpg", "settings.json", "theme.css", "theme.js", "images/bc_badge.png", "images/logo_bc.png", "images/slideshow/1.gif", "images/slideshow/2.gif", "images/slideshow/3.gif", "images/slideshow/4.gif", "images/slideshow/5.gif", "images/small.svg", "fonts/icons.ttf", "fonts/icons.woff"]
     end
   end
 

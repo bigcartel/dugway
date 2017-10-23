@@ -46,12 +46,6 @@ feature 'Page rendering' do
     expect(page).to have_content('Your cart is empty')
   end
 
-  scenario 'success.html' do
-    visit '/success'
-    expect(page).to have_content('Dugway') # layout.html
-    expect(page).to have_content('Thank You. Your order has been placed.')
-  end
-
   scenario 'contact.html' do
     visit '/contact'
     expect(page).to have_content('Dugway') # layout.html

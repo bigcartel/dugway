@@ -14,7 +14,7 @@ describe Dugway::Store do
   describe "#theme_pages" do
     it "should return an array of the default theme pages" do
       store.theme_pages.should be_present
-      store.theme_pages.size.should == 8
+      store.theme_pages.size.should == 6
       store.theme_pages.first.should == { 'name' => 'Home', 'permalink' => 'home', 'url' => '/', 'category' => 'theme' }
     end
   end
@@ -30,7 +30,7 @@ describe Dugway::Store do
   describe "#pages" do
     it "should return an array of the combined theme and custom pages" do
       store.pages.should be_present
-      store.pages.size.should == 9
+      store.pages.size.should == 7
       store.pages.first.should == { 'name' => 'Home', 'permalink' => 'home', 'url' => '/', 'category' => 'theme' }
       store.pages.last.should == { 'category' => 'custom', 'content' => "<p>We're really cool!</p>", 'permalink' => 'about-us', 'name' => 'About Us', 'id' => 95821979, 'url' => '/about-us' }
     end

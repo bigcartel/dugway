@@ -7,7 +7,7 @@ require 'uglifier'
 
 module Dugway
   class Theme
-    REQUIRED_FILES = %w( cart.html checkout.html contact.html home.html layout.html maintenance.html product.html products.html screenshot.jpg settings.json success.html theme.css theme.js )
+    REQUIRED_FILES = %w( cart.html contact.html home.html layout.html maintenance.html product.html products.html screenshot.jpg settings.json theme.css theme.js )
 
     attr_reader :errors
 

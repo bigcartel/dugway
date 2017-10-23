@@ -8,7 +8,6 @@ Liquid::Template.register_filter(Dugway::Filters::DefaultPagination)
 Liquid::Template.register_filter(Dugway::Filters::UrlFilters)
 Liquid::Template.register_filter(Dugway::Filters::FontFilters)
 
-Liquid::Template.register_tag(:checkoutform, Dugway::Tags::CheckoutForm)
 Liquid::Template.register_tag(:get, Dugway::Tags::Get)
 Liquid::Template.register_tag(:paginate, Dugway::Tags::Paginate)
 

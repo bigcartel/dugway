@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ store.name }} &mdash; {{ page.name }}</title>
+
+    <meta charset="utf-8">
+    <meta name="description" content="{{ page.meta_description }}">
+    <meta name="keywords" content="{{ page.meta_keywords }}">
+
+    <link href="{{ theme | theme_css_url }}" media="screen" rel="stylesheet" type="text/css">
+
+    {{ head_content }}
+  </head>
+
+  <body id="{{ page.permalink }}" class="{{ page.category }}">
+    <div>
+      <h1>We&#8217;re working our site at the moment.</h1>
+      <p>Please check back soon.</p>
+    </div>
+  </body>
+</html>

@@ -9,7 +9,7 @@ module Dugway
     headers 'User-Agent' => "Dugway #{ Dugway::VERSION }"
 
     def initialize(subdomain)
-      self.class.base_uri "http://api.bigcartel.com/#{ subdomain }"
+      self.class.base_uri "https://api.bigcartel.com/#{ subdomain }"
     end
 
     def account
@@ -22,8 +22,6 @@ module Dugway
         { 'name' => 'Products', 'permalink' => 'products', 'url' => '/products', 'category' => 'theme' },
         { 'name' => 'Product', 'permalink' => 'product', 'url' => '/product', 'category' => 'theme' },
         { 'name' => 'Cart', 'permalink' => 'cart', 'url' => '/cart', 'category' => 'theme' },
-        { 'name' => 'Checkout', 'permalink' => 'checkout', 'url' => '/checkout', 'category' => 'theme' },
-        { 'name' => 'Success', 'permalink' => 'success', 'url' => '/success', 'category' => 'theme' },
         { 'name' => 'Contact', 'permalink' => 'contact', 'url' => '/contact', 'category' => 'theme' },
         { 'name' => 'Maintenance', 'permalink' => 'maintenance', 'url' => '/maintenance', 'category' => 'theme' }
       ]
@@ -41,7 +39,11 @@ module Dugway
     end
 
     def page(permalink)
-      lookup(permalink, pages)
+      if permalink != 'checkout'
+        lookup(permalink, pages)
+      else
+        { 'name' => 'Checkout', 'permalink' => 'checkout', 'url' => '/checkout', 'category' => 'other' }
+      end
     end
 
     def categories

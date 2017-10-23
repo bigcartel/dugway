@@ -9,10 +9,6 @@ feature 'Shopping' do
     expect(page).to have_content('Cart ($10.00)')
 
     click_button 'Checkout'
-    expect(page).to have_content('One moment...')
-
-    click_button 'Checkout'
-    expect(page).to have_content('Thank You. Your order has been placed.')
     expect(page).to have_content('Cart ($0.00)')
   end
 

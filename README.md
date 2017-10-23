@@ -223,10 +223,10 @@ default we use **dugway** for
 ### Store customization
 
 Another important thing to consider is how store owners will customize your
-theme. You establish what can be customized in your [settings.json](#settings)
-file, and Dugway allows you to simulate potential values people could choose by
+theme. You establish what can be customized in your settings.json file, and 
+Dugway allows you to simulate potential values people could choose by
 setting them in the **customization** variable in **.dugway.json**. By default
-we use the **default** values from your **[settings.json](#settings)** file.
+we use the **default** values from your **settings.json** file.
 
 ```json
 "customization": {
@@ -240,14 +240,3 @@ we use the **default** values from your **[settings.json](#settings)** file.
   "twitter_username": "bigcartel"
 }
 ```
-
-## Building your theme
-
-When you're finished with a new version of your theme, it's time to build it.
-
-```
-dugway build
-```
-
-This will create a zip file for the current version in your **build** directory
-containing all HTML, images, fonts, and packaged JS and CSS.

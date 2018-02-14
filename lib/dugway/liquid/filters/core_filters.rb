@@ -35,8 +35,13 @@ module Dugway
 
       # Money Filters
 
-      def money(amount)
-        number_to_currency(amount, :unit => '').strip
+      def money(amount, format = nil)
+        case format
+        when 'sign' then money_with_sign(amount)
+        when 'code' then money_with_code(amount)
+        when 'sign_and_code' then money_with_sign_and_code(amount)
+        else number_to_currency(amount, :unit => '').strip
+        end
       end
 
       def money_with_sign(amount)

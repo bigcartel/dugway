@@ -28,6 +28,18 @@ describe Dugway::Filters::CoreFilters do
     it "should convert a number to currency format" do
       rendered_template("{{ 1234.56 | money }}").should == '1,234.56'
     end
+
+    it "should support the 'sign' format argument" do
+      rendered_template("{{ 1234.56 | money: 'sign' }}").should == '<span class="currency_sign">$</span>1,234.56'
+    end
+
+    it "should support the 'code' format argument" do
+      rendered_template("{{ 1234.56 | money: 'code' }}").should == '1,234.56 <span class="currency_code">USD</span>'
+    end
+
+    it "should support the 'sign_and_code' format argument" do
+      rendered_template("{{ 1234.56 | money: 'sign_and_code' }}").should == '<span class="currency_sign">$</span>1,234.56 <span class="currency_code">USD</span>'
+    end
   end
 
   describe "#money_with_sign" do

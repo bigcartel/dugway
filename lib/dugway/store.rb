@@ -127,6 +127,82 @@ module Dugway
       currency['locale']
     end
 
+    def variants
+      [
+        {
+          id: 11,
+          option1: "Blue",
+          option2: "Small",
+          option3: nil,
+          price: "11.00",
+          name: "Blue / Small",
+          quantity: 4
+        },
+        {
+          id: 12,
+          option1: "Blue",
+          option2: "Medium",
+          option3: nil,
+          price: "11.00",
+          name: "Blue / Medium",
+          quantity: 4
+        },
+        {
+          id: 13,
+          option1: "Blue",
+          option2: "Large",
+          option3: nil,
+          price: "11.00",
+          name: "Blue / Large",
+          quantity: 4
+        },
+        {
+          id: 14,
+          option1: "Black",
+          option2: "Small",
+          option3: nil,
+          price: "11.00",
+          name: "Black / Small",
+          quantity: 4
+        },
+        {
+          id: 15,
+          option1: "Black",
+          option2: "Medium",
+          option3: nil,
+          price: "11.00",
+          name: "Black / Medium",
+          quantity: 4
+        },
+        {
+          id: 16,
+          option1: "Black",
+          option2: "Large",
+          option3: nil,
+          price: "11.00",
+          name: "Black / Large",
+          quantity: 4
+        }
+      ]
+    end
+
+    def option_groups
+      [
+        {
+          id: 1,
+          name: "Color",
+          position: 1,
+          values: ["Blue", "Black"]
+        },
+        {
+          id: 2,
+          name: "Size",
+          position: 2,
+          values: ["Small", "Medium", "Large"]
+        },
+      ]
+    end
+
     private
 
     def get(path)

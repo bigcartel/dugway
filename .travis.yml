@@ -2,10 +2,12 @@ language: ruby
 cache: bundler
 sudo: false
 rvm:
-  - 2.0
-  - 2.1
-  - 2.2
   - 2.3
   - 2.4
+  - 2.5
+  - 2.6
+before_install:
+  - gem uninstall -v '>= 2' -i $(rvm gemdir)@global -ax bundler || true
+  - gem install bundler -v '< 2'
 notifications:
   email: false

@@ -152,7 +152,7 @@ describe Dugway::Theme do
 
   describe "#font_files" do
     it "shoud return an array of all font files" do
-      theme.font_files.should == %w( fonts/icons.ttf fonts/icons.woff )
+      theme.font_files.should include("fonts/icons.ttf", "fonts/icons.woff")
     end
   end
 

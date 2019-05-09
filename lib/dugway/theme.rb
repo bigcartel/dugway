@@ -57,7 +57,7 @@ module Dugway
       case name
       when 'theme.js'
         if @building
-          Uglifier.new.compile(sprockets[name].to_s)
+          Uglifier.new(harmony: true).compile(sprockets[name].to_s)
         else
           sprockets[name].to_s
         end

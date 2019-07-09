@@ -37,6 +37,15 @@ module Dugway
         @options_in_stock ||= options.reject { |o| o.sold_out }
       end
 
+      def has_option_groups
+        source['has_option_groups']
+      end
+
+      def option_groups
+        @option_groups ||= source['option_groups'].present? ?
+          source['option_groups'].map { |group| OptionGroupDrop.new(group) } : []
+      end
+
       def shipping
         @shipping ||= source['shipping'].present? ? source['shipping'].map { |o| ShippingOptionDrop.new(o.update('product' => self)) } : []
       end

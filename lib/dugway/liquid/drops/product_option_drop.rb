@@ -22,6 +22,11 @@ module Dugway
       def inventory
         ((quantity.to_f / (quantity + sold).to_f) * 100).round
       end
+
+      def option_group_values
+        @option_group_values ||= source['option_group_values'].present? ?
+          source['option_group_values'].map { |value| OptionGroupValueDrop.new(value) } : []
+      end
     end
   end
 end

@@ -127,6 +127,10 @@ module Dugway
       currency['locale']
     end
 
+    def using_stripe?
+      ENV['USING_STRIPE']
+    end
+
     private
 
     def get(path)

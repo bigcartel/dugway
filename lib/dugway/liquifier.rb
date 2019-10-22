@@ -10,6 +10,7 @@ Liquid::Template.register_filter(Dugway::Filters::FontFilters)
 
 Liquid::Template.register_tag(:get, Dugway::Tags::Get)
 Liquid::Template.register_tag(:paginate, Dugway::Tags::Paginate)
+Liquid::Template.register_tag(:instant_checkout_button, Dugway::Tags::InstantCheckoutButton)
 
 module Dugway
   class Liquifier
@@ -28,6 +29,7 @@ module Dugway
       registers = shared_registers
       registers[:category] = variables[:category]
       registers[:artist] = variables[:artist]
+      registers[:account] = Dugway.store
 
       if errors = variables.delete(:errors)
         shared_context['errors'] << errors

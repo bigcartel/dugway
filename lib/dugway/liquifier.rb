@@ -7,10 +7,11 @@ Liquid::Template.register_filter(Dugway::Filters::CoreFilters)
 Liquid::Template.register_filter(Dugway::Filters::DefaultPagination)
 Liquid::Template.register_filter(Dugway::Filters::UrlFilters)
 Liquid::Template.register_filter(Dugway::Filters::FontFilters)
+Liquid::Template.register_filter(Dugway::Filters::FontFilters)
+Liquid::Template.register_filter(Dugway::Filters::InstantCheckoutFilter)
 
 Liquid::Template.register_tag(:get, Dugway::Tags::Get)
 Liquid::Template.register_tag(:paginate, Dugway::Tags::Paginate)
-Liquid::Template.register_tag(:instant_checkout_button, Dugway::Tags::InstantCheckoutButton)
 
 module Dugway
   class Liquifier

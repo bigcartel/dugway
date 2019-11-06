@@ -120,7 +120,7 @@ utilities.
 
 Prefer [LESS](http://lesscss.org)? No problem, you'll just need to create a
 [Gemfile like this one](https://gist.github.com/mattwigham/5569898) in the
-root directory of your theme, run ```bundle install```, and append the
+root directory of your theme, run `bundle install`, and append the
 **.less** extension to your CSS files.
 
 And finally, for you JavaScript folks, we've baked

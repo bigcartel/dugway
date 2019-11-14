@@ -127,19 +127,12 @@ module Dugway
         id    ||= field
         case field
         when 'message'
-          text_area_tag(field, contact['message'], :id => id, :class => class_name, :tabindex => contact_tab_index)
+          text_area_tag(field, contact['message'], :id => id, :class => class_name)
         when 'captcha'
-          text_field_tag('captcha', '', :id => id, :class => class_name, :tabindex => contact_tab_index)
+          text_field_tag('captcha', '', :id => id, :class => class_name)
         else
-          text_field_tag(field, contact[field], :id => id, :class => class_name, :tabindex => contact_tab_index)
+          text_field_tag(field, contact[field], :id => id, :class => class_name)
         end
-      end
-
-      private
-
-      def contact_tab_index
-        @contact_tab_index ||= 0
-        @contact_tab_index += 1
       end
     end
   end

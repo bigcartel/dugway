@@ -28,7 +28,7 @@ module Dugway
         if name.is_a?(Drops::ThemeDrop)
           '/theme.js'
         elsif name == 'api'
-          'http://cache0.bigcartel.com/api/1/api.usd.js'
+          'http://cache0.bigcartel.com/api/5/api.usd.js'
         else
           name
         end

@@ -23,13 +23,8 @@
       {{ contact | contact_input: 'message' }}
     </li>
     <li>
-      <label for="captcha">Spam check</label>
-      <p>Please enter the characters from the image.</p>
-      <div>{{ contact.captcha }}</div>
-      {{ contact | contact_input: 'captcha' }}
-    </li>
-    <li>
       <button type="submit" name="submit" title="Send us an email">Send</button>
+      <div>{{ contact.recaptcha }}</div>
     </li>
   </ul>
 </form>

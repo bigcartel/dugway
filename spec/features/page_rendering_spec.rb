@@ -50,7 +50,7 @@ feature 'Page rendering' do
     visit '/contact'
     expect(page).to have_content('Dugway') # layout.html
     expect(page).to have_content('Contact')
-    expect(page).to have_content('Spam check')
+    expect(page).to have_content('protected by reCAPTCHA')
   end
 
   scenario 'maintenance.html' do

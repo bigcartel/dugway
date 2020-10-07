@@ -13,7 +13,7 @@ describe Dugway::Drops::ContactDrop do
     Rack::MockRequest::DEFAULT_ENV.update({
     'PATH_INFO' => '/contact'
   })}
-  
+
   let(:request) { Dugway::Request.new(env) }
 
   let(:errors) {
@@ -93,6 +93,12 @@ describe Dugway::Drops::ContactDrop do
   describe "#captcha" do
     it "should return a captcha image" do
       contact.captcha.should == %{<img id="captcha_image" src="https://s3.amazonaws.com/bigcartel/captcha/28e3d1288cbc70c0cd1a2d10845f8e11e1a90d14.png">}
+    end
+  end
+
+  describe "#recaptcha" do
+    it "returns the recaptcha branding text" do
+      contact.recaptcha.should == %{This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy">Privacy Policy</a> and <a href="https://policies.google.com/terms">Terms of Service</a> apply.}
     end
   end
 

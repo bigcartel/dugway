@@ -16,18 +16,12 @@ feature 'Contact form' do
     expect(page).to have_content('Invalid email address')
   end
 
-  scenario 'with an invalid captcha' do
-    submit_contact_form(:captcha => 'blah')
-    expect(page).to have_content('Spam check was incorrect')
-  end
-
   def submit_contact_form(fields={})
     fields.reverse_merge!(
       :name => 'Joe',
       :email => 'joe@example.com',
       :subject => 'Testing',
       :message => 'Hi there',
-      :captcha => 'rQ9pC'
     )
 
     visit '/contact'
@@ -36,7 +30,6 @@ feature 'Contact form' do
     fill_in 'Email', :with => fields[:email]
     fill_in 'Subject', :with => fields[:subject]
     fill_in 'Message', :with => fields[:message]
-    fill_in 'Spam check', :with => fields[:captcha]
 
     click_button 'Send'
   end

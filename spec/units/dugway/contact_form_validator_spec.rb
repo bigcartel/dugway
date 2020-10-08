@@ -11,7 +11,6 @@ describe Dugway::ContactFormValidator do
       :email => "name@example.com",
       :subject => "subject",
       :message => "message",
-      :captcha => "rQ9pc",
     }
   end
 
@@ -36,19 +35,9 @@ describe Dugway::ContactFormValidator do
       assert_required_fields_error
     end
 
-    it "returns an error for a missing captcha" do
-      validator.params[:captcha] = "   "
-      assert_required_fields_error
-    end
-
     it "returns an error for invalid email format" do
       validator.params[:email] = "foo-at-foo-dot-net"
       expect(validator.error_message).to eq "Invalid email address"
-    end
-
-    it "returns an error for incorrect captcha" do
-      validator.params[:captcha] = "oops"
-      expect(validator.error_message).to eq "Spam check was incorrect"
     end
 
     def assert_required_fields_error

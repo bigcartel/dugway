@@ -182,7 +182,7 @@ Run your theme in any browser by starting the Dugway server:
 dugway server
 ```
 
-By default this will serve your theme at http://0.0.0.0:9292. You can then stop
+By default this will serve your theme at http://127.0.0.1:9292/. You can then stop
 the server by hitting CTRL+C.
 
 ### Pow

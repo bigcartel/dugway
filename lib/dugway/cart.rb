@@ -31,7 +31,7 @@ module Dugway
     end
 
     def shipping
-      { 
+      {
         'enabled' => false,
         'amount' => 0.0,
         'strict' => false,
@@ -40,14 +40,14 @@ module Dugway
     end
 
     def tax
-      { 
+      {
         'enabled' => false,
         'amount' => 0.0
       }
     end
 
     def discount
-      { 
+      {
         'enabled' => false,
         'pending' => false,
         'amount' => 0.0

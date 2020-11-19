@@ -1,7 +1,18 @@
 require 'spec_helper'
 
 describe Dugway::Drops::PagesDrop do
-  let(:pages) { Dugway::Drops::PagesDrop.new(Dugway.store.pages.map { |p| Dugway::Drops::PageDrop.new(p) }) }
+  let(:pages) do
+    Dugway::Drops::PagesDrop.new(
+      Dugway.store.pages.map do |p|
+        case p["permalink"]
+        when "cart"
+          Dugway::Drops::CartDrop.new(p)
+        else
+          Dugway::Drops::PageDrop.new(p)
+        end
+      end
+    )
+  end
 
   describe "#all" do
     it "should return an array of all pages" do
@@ -12,6 +23,14 @@ describe Dugway::Drops::PagesDrop do
       page = all.first
       page.should be_an_instance_of(Dugway::Drops::PageDrop)
       page.name.should == 'About Us'
+    end
+  end
+
+  describe "#cart" do
+    it "returns the cart drop instead of the cart class instance" do
+      cart = pages.cart
+      cart.should be_an_instance_of(Dugway::Drops::CartDrop)
+      cart.name.should == 'Cart'
     end
   end
 

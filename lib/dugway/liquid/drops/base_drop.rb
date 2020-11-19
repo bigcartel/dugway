@@ -42,7 +42,7 @@ module Dugway
 
         nil
       end
-      
+
       def method_missing(method, *args, &block)
         before_method(method.to_s)
       end

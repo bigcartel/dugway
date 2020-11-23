@@ -68,7 +68,7 @@ module Dugway
 
       def search_terms
         params[:search]
-      end  
+      end
 
       def page
         if @context['internal'].present? && @context['internal'].has_key?('page') # has_key? here because 'page' will be nil for get blocks

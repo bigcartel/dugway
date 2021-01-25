@@ -118,7 +118,7 @@ describe Dugway::Theme do
     end
 
     it "should sprocketize and liquify theme.css" do
-      theme.file_content('theme.css').gsub(/\s+/, '').should == %{html,body{height:100%;}a{background:lime;color:red;}footercitea{background:url(/images/bc_badge.png)no-repeat;}/**/}
+      theme.file_content('theme.css').gsub(/\s+/, '').should == %{html,body{height:100%;}a{background:#0f0;color:red;}footercitea{background:url(/images/bc_badge.png)no-repeat;}/**/}
     end
   end
 
@@ -134,7 +134,7 @@ describe Dugway::Theme do
     end
 
     it "should sprocketize and not liquify theme.css" do
-      theme.build_file('theme.css').gsub(/\s+/, '').should == %{html,body{height:100%;}a{background:lime;color:{{theme.link_color}};}footercitea{background:url({{'bc_badge.png'|theme_image_url}})no-repeat;}/**/}
+      theme.build_file('theme.css').gsub(/\s+/, '').should == %{html,body{height:100%;}a{background:#0f0;color:{{theme.link_color}};}footercitea{background:url({{'bc_badge.png'|theme_image_url}})no-repeat;}/**/}
     end
   end
 

@@ -20,10 +20,22 @@ individually in the Big Cartel admin._
 
 ## Install
 
-Dugway is Ruby gem so you'll need to have Ruby 2.0+ installed. Ruby is
+### Install Ruby
+
+Dugway is Ruby gem so you'll need to have Ruby installed. Ruby is
 usually pre-installed on Mac OS X and Linux, and Windows users can install it
-using [RubyInstaller](http://rubyinstaller.org). From there, simply install the
-**dugway** gem from the terminal.
+using [RubyInstaller](http://rubyinstaller.org).
+
+Supported Ruby versions:
+
+- 2.3
+- 2.4
+- 2.5
+- 2.6
+
+### Install Dugway
+
+From there, simply install the **dugway** gem from the terminal.
 
 ```
 gem install dugway

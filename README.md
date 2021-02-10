@@ -1,12 +1,13 @@
-# Dugway [![Build Status](https://travis-ci.org/bigcartel/dugway.png?branch=master)](https://travis-ci.org/bigcartel/dugway) [![Gem Version](https://badge.fury.io/rb/dugway.png)](http://badge.fury.io/rb/dugway)
+# Dugway [![Build Status](https://travis-ci.org/bigcartel/dugway.png?branch=master)](https://travis-ci.org/bigcartel/dugway)
 
 **_The easy way to build Big Cartel themes._**
 
 Dugway allows you to run your Big Cartel theme on your computer, test it in any
-browser, write code in your favorite editor, and use fancy new tools like
-CoffeeScript, Sass, and LESS. It's awesome.
+browser, write code in your favorite editor, and use tools like
+CoffeeScript, Sass, and LESS.
 
-[![Walkthrough](http://cl.ly/image/101e1z3Y3B1w/Screen%20Shot%202013-04-01%20at%205.04.40%20PM.png)](https://vimeo.com/bigcartel/dugway)
+- [Dugway on RubyGems.org](https://rubygems.org/gems/dugway)
+- [Walkthrough video](https://vimeo.com/bigcartel/dugway)
 
 ## Disclaimer
 

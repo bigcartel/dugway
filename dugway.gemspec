@@ -16,6 +16,7 @@ Gem::Specification.new do |s|
   s.test_files   = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.platform     = Gem::Platform::RUBY
   s.require_path = 'lib'
+  s.required_ruby_version = '>= 2.3', '< 2.7'
   s.executables  << 'dugway'
 
   s.add_dependency('bundler', '~> 1.1')

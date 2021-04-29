@@ -1,0 +1,21 @@
+name: Ruby
+
+on: [push,pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        ruby-version: [2.6.7, 2.5.9, 2.4.10, 2.3.8]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby ${{ matrix.ruby-version }}
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler-cache: true
+    - name: Run the default task
+      run: bundle exec rake

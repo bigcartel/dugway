@@ -1,4 +1,4 @@
-# Dugway [![Build Status](https://travis-ci.org/bigcartel/dugway.png?branch=master)](https://travis-ci.org/bigcartel/dugway)
+# Dugway
 
 **_The easy way to build Big Cartel themes._**
 

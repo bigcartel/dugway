@@ -9,3 +9,5 @@ coverage
 *.sublime*
 
 .sass-cache
+
+.ruby-version

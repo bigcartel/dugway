@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.test_files   = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.platform     = Gem::Platform::RUBY
   s.require_path = 'lib'
-  s.required_ruby_version = '>= 2.3', '< 2.7'
+  s.required_ruby_version = '>= 2.3', '< 3'
   s.executables  << 'dugway'
 
   s.add_dependency('bundler')
@@ -43,9 +43,9 @@ Gem::Specification.new do |s|
   s.add_dependency('bigcartel-currency-locales')
 
   s.add_development_dependency('rake', '~> 10.0.3')
-  s.add_development_dependency('rspec', '~> 2.12.0')
+  s.add_development_dependency('rspec', '~> 2.14.1')
   s.add_development_dependency('webmock', '~> 1.9.3')
   s.add_development_dependency('json_expressions', '~> 0.9.0')
-  s.add_development_dependency('capybara', '~> 2.0.2')
+  s.add_development_dependency('capybara', '~> 2.18.0')
   s.add_development_dependency('simplecov', '~> 0.16.1')
 end

@@ -43,7 +43,7 @@ Gem::Specification.new do |s|
   s.add_dependency('bigcartel-currency-locales')
 
   s.add_development_dependency('rake', '~> 10.0.3')
-  s.add_development_dependency('rspec', '~> 2.12.0')
+  s.add_development_dependency('rspec', '~> 2.14.1')
   s.add_development_dependency('webmock', '~> 1.9.3')
   s.add_development_dependency('json_expressions', '~> 0.9.0')
   s.add_development_dependency('capybara', '~> 2.18.0')

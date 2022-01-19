@@ -41,8 +41,8 @@ describe Dugway::Drops::ThemeDrop do
   }
 
   before do
-    theme.stub!(:images).and_return(images)
-    theme.stub!(:image_sets).and_return(image_sets)
+    theme.stub(:images).and_return(images)
+    theme.stub(:image_sets).and_return(image_sets)
   end
 
   describe "#logo" do

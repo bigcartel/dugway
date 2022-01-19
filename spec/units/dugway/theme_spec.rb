@@ -164,7 +164,7 @@ describe Dugway::Theme do
 
     describe "when missing a required file" do
       before(:each) do
-        theme.stub(:read_source_file).with('cart.html') { theme.unstub!(:read_source_file); nil }
+        theme.stub(:read_source_file).with('cart.html') { theme.unstub(:read_source_file); nil }
       end
 
       it "should not be valid" do

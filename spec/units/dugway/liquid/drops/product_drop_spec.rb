@@ -266,4 +266,13 @@ describe Dugway::Drops::ProductDrop do
       end
     end
   end
+
+  describe "#related_products" do
+    it "returns a ProductsDrop with the passed in related products" do
+      product.context = Liquid::Context.new([{}, {}], {}, {})
+      related_products = product.related_products
+      expect(related_products).to be_an_instance_of(Dugway::Drops::ProductsDrop)
+      expect(related_products.all.first["name"]).to eql("My Tee")
+    end
+  end
 end

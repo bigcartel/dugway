@@ -82,6 +82,14 @@ module Dugway
         end
       end
 
+      def related_products
+        @related_products ||= begin
+          relp = ProductsDrop.new(store.related_products(source))
+          relp.context = @context
+          relp
+        end
+      end
+
       def edit_url
         'http://bigcartel.com'
       end

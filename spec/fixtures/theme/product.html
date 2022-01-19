@@ -70,4 +70,14 @@
     {% endcase %}
     {% endif %}
   </div>
+
+  <section class="product_related">
+    {% if product.related_products.all.size > 0 %}
+      <h2>Related Products</h2>
+
+      {% for related_product in product.related_products.all %}
+        <h3>{{ related_product.name }}</h3>
+      {% endfor %}
+    {% endif %}
+  </section>
 </div>

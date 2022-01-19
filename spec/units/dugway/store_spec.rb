@@ -172,6 +172,19 @@ describe Dugway::Store do
     end
   end
 
+  describe "#related_products" do
+    it "returns an array of products with the same categories" do
+      expect(store.related_products(store.products.first)).to eql([store.products[1]])
+    end
+
+    context "with a no products in the same category" do
+      it "returns an empty array" do
+        expect(store.related_products(store.products.last)).to eql([])
+      end
+    end
+  end
+
+
   describe "#country" do
     it "returns the store's country" do
       store.country.should == { 'name' => 'United States', 'id' => 43, 'code' => 'US' }

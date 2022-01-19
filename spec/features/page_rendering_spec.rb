@@ -37,6 +37,8 @@ feature 'Page rendering' do
     expect(page).to have_content('Dugway') # layout.html
     expect(page).to have_content('My Product')
     expect(page).to have_content('$10.00')
+    expect(page).to have_content('Related Products')
+    expect(page).to have_content('My Tee')
   end
 
   scenario 'cart.html' do

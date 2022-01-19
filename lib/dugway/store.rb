@@ -115,6 +115,14 @@ module Dugway
       products.select { |p| p['name'].downcase.include?(search_terms.downcase) || p['description'].downcase.include?(search_terms.downcase) }
     end
 
+    def related_products(product)
+      cats = product["categories"].map { |c| c["permalink"] }
+      products.select do |p|
+        p["permalink"] != product["permalink"] &&
+          (p["categories"].map { |c| c["permalink"] } & cats).length.positive?
+      end.shuffle
+    end
+
     def country
       account['country']
     end

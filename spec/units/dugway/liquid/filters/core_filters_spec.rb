@@ -60,6 +60,25 @@ describe Dugway::Filters::CoreFilters do
     end
   end
 
+  describe "#sample" do
+    let(:fruits) { %W(orange apple peach) }
+    it "returns a single item from the collection" do
+      output = rendered_template("{% assign fruits= '#{fruits.join(',')}' | split: ',' %}{{ fruits | sample }}")
+      expect(fruits).to include(output)
+    end
+
+    it "supports multiple items" do
+      output = rendered_template("{% assign fruits= '#{fruits.join(',')}' | split: ',' %}{{ fruits | sample: 2 | join: ', ' }}")
+      expect(fruits).to include(*output.split(", "))
+    end
+
+    context "when the input does not respond to #sample" do
+      it "returns the input" do
+        expect(rendered_template("{{ 'hi' | sample }}")).to eql('hi')
+      end
+    end
+  end
+
   private
 
   def rendered_template(template, assigns={})

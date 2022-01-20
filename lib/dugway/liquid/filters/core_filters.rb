@@ -135,6 +135,19 @@ module Dugway
         end
       end
 
+      # Collection Filters
+
+      def sample(input, num = 1)
+        return input unless input.respond_to?(:sample)
+
+        num = num.to_i rescue 1
+        if num == 1
+          input.sample
+        else
+          input.sample(num)
+        end
+      end
+
       private
 
       def contact_tab_index

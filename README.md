@@ -6,8 +6,7 @@ Dugway allows you to run your Big Cartel theme on your computer, test it in any
 browser, write code in your favorite editor, and use tools like
 CoffeeScript, Sass, and LESS.
 
-- [Dugway on RubyGems.org](https://rubygems.org/gems/dugway)
-- [Walkthrough video](https://vimeo.com/bigcartel/dugway)
+[View Dugway on RubyGems.org](https://rubygems.org/gems/dugway)
 
 ## Disclaimer
 
@@ -132,11 +131,6 @@ even use [Compass](http://compass-style.org/) right out of the box to help
 author your stylesheets by utilizing its mixins for CSS3, typography, and its
 utilities.
 
-Prefer [LESS](http://lesscss.org)? No problem, you'll just need to create a
-[Gemfile like this one](https://gist.github.com/mattwigham/5569898) in the
-root directory of your theme, run `bundle install`, and append the
-**.less** extension to your CSS files.
-
 And finally, for you JavaScript folks, we've baked
 [CoffeeScript](http://coffeescript.org) support right in. Just append the
 **.coffee** extension after **.js** to your separate JS files.
@@ -198,12 +192,6 @@ dugway server
 
 By default this will serve your theme at http://127.0.0.1:9292/. You can then stop
 the server by hitting CTRL+C.
-
-### Pow
-
-Tired of all the manual starting and stopping? Good news, Dugway is built on
-top of Rack, which means you can use [Pow](http://pow.cx) on Mac. This also
-allows you to access your theme at a pretty URL like _mytheme.dev_.
 
 ## Testing your theme
 

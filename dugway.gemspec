@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.3', '< 3'
   s.executables  << 'dugway'
 
-  s.add_dependency('bundler')
+  s.add_dependency('bundler', '>= 1.0.0')
   s.add_dependency('rack', '~> 1.4.1')
   s.add_dependency('rack-mount', '~> 0.8.3')
   s.add_dependency('activesupport', '~> 5.2')
@@ -39,8 +39,8 @@ Gem::Specification.new do |s|
   s.add_dependency('rubyzip', '~> 0.9.9')
   s.add_dependency('uglifier', '~> 4.1')
   s.add_dependency('thin', '~> 1.8.0')
-  s.add_dependency('bigcartel-theme-fonts')
-  s.add_dependency('bigcartel-currency-locales')
+  s.add_dependency('bigcartel-theme-fonts', '>= 1.0.0')
+  s.add_dependency('bigcartel-currency-locales', '>= 1.0.0')
 
   s.add_development_dependency('rake', '~> 10.0.3')
   s.add_development_dependency('rspec', '~> 2.14.1')

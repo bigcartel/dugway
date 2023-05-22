@@ -69,7 +69,6 @@ feature 'Page rendering' do
     visit '/theme.css'
     expect(page).to have_content('height: 100%;') # one.css
     expect(page).to have_content('color: red;') # two.css.sass
-    expect(page).to have_content('url(/images/bc_badge.png)') # two.css.sass
   end
 
   scenario 'theme.js' do

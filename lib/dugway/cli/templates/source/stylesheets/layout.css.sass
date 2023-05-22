@@ -72,16 +72,6 @@ aside
         &:hover
           color: #333
 
-  cite a
-    background: url(#{"{{ 'badge.png' | theme_image_url }}"}) no-repeat
-    border: none
-    display: block
-    height: 23px
-    overflow: hidden
-    text-indent: 100%
-    width: 79px
-    white-space: nowrap
-
 section.content
   display: table-cell
   padding-left: $marginSize
@@ -111,3 +101,20 @@ form
     border-bottom: 1px soldi #A65A5A
     color: #fff
     padding: 3px 10px
+
+.bigcartel-credit
+  font-size: 14px
+  line-height: 1em
+  display: inline-flex
+  justify-content: center
+  gap: 10px
+  outline-offset: 4px
+
+  &__text
+    font-weight: bold
+    position: relative
+
+  &__lockup
+    display: block
+    fill: currentColor
+    width: 85px

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-  <head> 
-    <title>{{ store.name }} &mdash; {{ page.name }}</title>  
+  <head>
+    <title>{{ store.name }} &mdash; {{ page.name }}</title>
     <meta charset="utf-8">
     <meta name="description" content="{{ page.meta_description }}">
     <meta name="keywords" content="{{ page.meta_keywords }}">
@@ -10,17 +10,17 @@
     <script src="{{ theme | theme_js_url }}" type="text/javascript"></script>
     {{ head_content }}
   </head>
-  
+
   <body id="{{ page.permalink }}" class="{{ page.category }}">
     <header>
       <a href="/" title="{{ store.name | escape }}">{{ store.name }}</a>
     </header>
-    
+
     <aside>
       <section>
         <a href="/cart">Cart ({{ cart.total | money_with_sign }})</a>
       </section>
-      
+
       {% if theme.show_search %}
       <section>
         <form action="/products" method="get">
@@ -28,16 +28,16 @@
         </form>
       </section>
       {% endif %}
-      
+
       <nav>
-        <h3>Products</h3>            
+        <h3>Products</h3>
         <ul>
           <li><a href="/products">All</a></li>
           {% for category in categories.active %}
           <li>{{ category | link_to }}</li>
           {% endfor %}
         </ul>
-        
+
         {% if artists.active != blank %}
         <h3>Artists</h3>
         <ul>
@@ -47,7 +47,7 @@
           {% endfor %}
         </ul>
         {% endif %}
-        
+
         <h3>Info</h3>
         <ul>
           {% for page in pages.all %}
@@ -68,7 +68,7 @@
       {% endfor %}
     </ul>
     {% endif %}
-    
+
     <section>
     {% if page.category == 'custom' %}
       <h1>{{ page.name }}</h1>
@@ -77,9 +77,9 @@
       {{ page_content }}
     {% endif %}
     </section>
-    
+
     <footer>
-      <cite>{{ bigcartel_credit }}</cite>
+      <div>{{ powered_by_big_cartel }}</div>
     </footer>
   </body>
 </html>

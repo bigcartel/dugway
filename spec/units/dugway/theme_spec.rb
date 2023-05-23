@@ -118,7 +118,7 @@ describe Dugway::Theme do
     end
 
     it "should sprocketize and liquify theme.css" do
-      theme.file_content('theme.css').gsub(/\s+/, '').should == %{html,body{height:100%;}a{background:#0f0;color:red;}footercitea{background:url(/images/bc_badge.png)no-repeat;}/**/}
+      theme.file_content('theme.css').gsub(/\s+/, '').should == %{html,body{height:100%;}a{background:#0f0;color:red;}/**/}
     end
   end
 
@@ -134,19 +134,19 @@ describe Dugway::Theme do
     end
 
     it "should sprocketize and not liquify theme.css" do
-      theme.build_file('theme.css').gsub(/\s+/, '').should == %{html,body{height:100%;}a{background:#0f0;color:{{theme.link_color}};}footercitea{background:url({{'bc_badge.png'|theme_image_url}})no-repeat;}/**/}
+      theme.build_file('theme.css').gsub(/\s+/, '').should == %{html,body{height:100%;}a{background:#0f0;color:{{theme.link_color}};}/**/}
     end
   end
 
   describe "#files" do
     it "should return an array of all files" do
-      theme.files.should =~ ["cart.html", "contact.html", "home.html", "layout.html", "maintenance.html", "product.html", "products.html", "screenshot.jpg", "settings.json", "theme.css", "theme.js", "images/bc_badge.png", "images/logo_bc.png", "images/slideshow/1.gif", "images/slideshow/2.gif", "images/slideshow/3.gif", "images/slideshow/4.gif", "images/slideshow/5.gif", "images/small.svg", "fonts/icons.ttf", "fonts/icons.woff"]
+      theme.files.should =~ ["cart.html", "contact.html", "home.html", "layout.html", "maintenance.html", "product.html", "products.html", "screenshot.jpg", "settings.json", "theme.css", "theme.js", "images/logo_bc.png", "images/slideshow/1.gif", "images/slideshow/2.gif", "images/slideshow/3.gif", "images/slideshow/4.gif", "images/slideshow/5.gif", "images/small.svg", "fonts/icons.ttf", "fonts/icons.woff"]
     end
   end
 
   describe "#image_files" do
     it "should return an array of all image files" do
-      theme.image_files.should =~ ["images/bc_badge.png", "images/logo_bc.png", "images/slideshow/1.gif", "images/slideshow/2.gif", "images/slideshow/3.gif", "images/slideshow/4.gif", "images/slideshow/5.gif", "images/small.svg"]
+      theme.image_files.should =~ ["images/logo_bc.png", "images/slideshow/1.gif", "images/slideshow/2.gif", "images/slideshow/3.gif", "images/slideshow/4.gif", "images/slideshow/5.gif", "images/small.svg"]
     end
   end
 

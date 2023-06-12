@@ -37,7 +37,7 @@ Gem::Specification.new do |s|
   s.add_dependency('htmlentities', '~> 4.3.1')
   s.add_dependency('thor', '~> 0.20.3')
   s.add_dependency('rubyzip', '~> 0.9.9')
-  s.add_dependency('uglifier', '~> 4.1')
+  s.add_dependency('terser', '~> 1.1')
   s.add_dependency('thin', '~> 1.8.0')
   s.add_dependency('bigcartel-theme-fonts', '>= 1.0.0')
   s.add_dependency('bigcartel-currency-locales', '>= 1.0.0')

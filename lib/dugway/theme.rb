@@ -3,7 +3,7 @@ require 'sass'
 require 'sprockets'
 require 'sprockets-sass'
 require 'compass'
-require 'uglifier'
+require 'terser'
 
 module Dugway
   class Theme
@@ -57,7 +57,7 @@ module Dugway
       case name
       when 'theme.js'
         if @building
-          Uglifier.new(harmony: true).compile(sprockets[name].to_s)
+          Terser.new.compile(sprockets[name].to_s)
         else
           sprockets[name].to_s
         end

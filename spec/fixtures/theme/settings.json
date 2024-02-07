@@ -38,13 +38,52 @@
       "variable": "header_font",
       "label": "Header Font",
       "default": "Helvetica"
-    },  
+    },
     {
       "variable": "font",
       "label": "Font",
       "default": "Georgia"
     }
   ],
+  "preset_styles": {
+    "preview": {
+      "title_font": "header_font",
+      "body_font": "font",
+      "text_color": "text_color",
+      "background_color": "background_color"
+    },
+    "presets": [
+      {
+        "group_name": "Classic",
+        "styles": [
+          {
+            "style_name": "Classic #1",
+            "fonts": {
+              "header_font": "DM Sans",
+              "font": "DM Sans"
+            },
+            "colors": {
+              "background_color": "#FFFFFF",
+              "link_color": "#111111",
+              "text_color": "#222222"
+            }
+          },
+          {
+            "style_name": "Classic #2",
+            "fonts": {
+              "header_font": "Lora",
+              "font": "Roboto"
+            },
+            "colors": {
+              "background_color": "#F7F7F7",
+              "link_color": "#222222",
+              "text_color": "#336699"
+            }
+          }
+        ]
+      }
+    ]
+  },
   "colors": [
     {
       "variable": "background_color",

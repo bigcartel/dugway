@@ -98,7 +98,6 @@ module Dugway
 
       @errors << 'Missing theme name in source/settings.json' if name.blank?
       @errors << 'Invalid theme version in source/settings.json (ex: 1.0.3)' unless !!(version =~ /\d+\.\d+\.\d+/)
-      @errors << 'Missing images in source/images' if image_files.empty?
 
       if settings['preset_styles']
         validate_preview

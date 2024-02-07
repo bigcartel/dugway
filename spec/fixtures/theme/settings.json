@@ -49,7 +49,7 @@
     "preview": {
       "title_font": "header_font",
       "body_font": "font",
-      "text_color": "text_color",
+      "text_color": "link_color",
       "background_color": "background_color"
     },
     "presets": [
@@ -64,8 +64,7 @@
             },
             "colors": {
               "background_color": "#FFFFFF",
-              "link_color": "#111111",
-              "text_color": "#222222"
+              "link_color": "#111111"
             }
           },
           {
@@ -76,8 +75,7 @@
             },
             "colors": {
               "background_color": "#F7F7F7",
-              "link_color": "#222222",
-              "text_color": "#336699"
+              "link_color": "#222222"
             }
           }
         ]

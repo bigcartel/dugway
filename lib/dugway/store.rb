@@ -127,6 +127,10 @@ module Dugway
       currency['locale']
     end
 
+    def instant_checkout?
+      Dugway.options.dig(:store, :instant_checkout) || false
+    end
+
     private
 
     def get(path)

@@ -7,6 +7,7 @@ Liquid::Template.register_filter(Dugway::Filters::CoreFilters)
 Liquid::Template.register_filter(Dugway::Filters::DefaultPagination)
 Liquid::Template.register_filter(Dugway::Filters::UrlFilters)
 Liquid::Template.register_filter(Dugway::Filters::FontFilters)
+Liquid::Template.register_filter(Dugway::Filters::InstantCheckoutFilter)
 
 Liquid::Template.register_tag(:get, Dugway::Tags::Get)
 Liquid::Template.register_tag(:paginate, Dugway::Tags::Paginate)
@@ -28,6 +29,7 @@ module Dugway
       registers = shared_registers
       registers[:category] = variables[:category]
       registers[:artist] = variables[:artist]
+      registers[:account] = Dugway.store
 
       if errors = variables.delete(:errors)
         shared_context['errors'] << errors

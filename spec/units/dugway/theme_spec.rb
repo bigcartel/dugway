@@ -151,7 +151,7 @@ describe Dugway::Theme do
   end
 
   describe "#font_files" do
-    it "shoud return an array of all font files" do
+    it "should return an array of all font files" do
       theme.font_files.should include("fonts/icons.ttf", "fonts/icons.woff")
     end
   end
@@ -210,28 +210,15 @@ describe Dugway::Theme do
       end
     end
 
-    describe "when missing at least one image" do
-      before(:each) do
-        theme.stub(:image_files) { [] }
-      end
-
-      it "should not be valid" do
-        theme.valid?.should be(false)
-        theme.errors.size.should == 1
-        theme.errors.first.should == 'Missing images in source/images'
-      end
-    end
-
     describe "when there are several errors" do
       before(:each) do
         theme.stub(:name) { nil }
         theme.stub(:version) { nil }
-        theme.stub(:image_files) { [] }
       end
 
       it "should return all of them" do
         theme.valid?.should be(false)
-        theme.errors.size.should == 3
+        theme.errors.size.should == 2
       end
     end
   end

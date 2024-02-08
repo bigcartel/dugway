@@ -98,12 +98,81 @@ module Dugway
 
       @errors << 'Missing theme name in source/settings.json' if name.blank?
       @errors << 'Invalid theme version in source/settings.json (ex: 1.0.3)' unless !!(version =~ /\d+\.\d+\.\d+/)
-      @errors << 'Missing images in source/images' if image_files.empty?
+
+      if settings['preset_styles']
+        validate_preview
+        if settings['preset_styles']['presets']
+          settings['preset_styles']['presets'].each do |preset|
+            validate_preset_styles(preset)
+            validate_style_references(preset)
+          end
+        else
+          @errors << "Missing presets"
+        end
+      end
 
       @errors.empty?
     end
 
     private
+
+    def validate_preview
+      preview = settings['preset_styles']['preview']
+      if preview
+        %w[title_font body_font text_color background_color].each do |key|
+          @errors << "Missing #{key} in preview" unless preview[key]
+        end
+      else
+        @errors << "Missing preview in preset_styles"
+      end
+    end
+
+    def validate_preset_styles(preset)
+      @errors << 'Preset is missing group_name' unless preset['group_name'].is_a?(String)
+      @errors << 'Preset is missing styles' unless preset['styles'].is_a?(Array)
+
+      preset['styles'].each do |style|
+        @errors << 'Style is missing style_name' unless style['style_name'].is_a?(String)
+
+        if style['fonts'].is_a?(Hash) && !style['fonts'].empty?
+          style['fonts'].each_value do |font|
+            @errors << 'Font value should be a string' unless font.is_a?(String)
+          end
+        else
+          @errors << 'Style is missing fonts'
+        end
+
+        if style['colors'].is_a?(Hash) && !style['colors'].empty?
+          style['colors'].each do |key, color|
+            @errors << 'Invalid color format' unless color =~ /^#[0-9A-Fa-f]{6}$/
+          end
+        else
+          @errors << 'Style is missing colors'
+        end
+      end
+
+      @errors << 'Style names should be unique' unless preset['styles'].map { |style| style['style_name'] }.uniq.length == preset['styles'].length
+    end
+
+    def validate_style_references(preset)
+      ['fonts', 'colors'].each do |key_type|
+        validate_keys(preset, settings[key_type], key_type)
+      end
+    end
+
+    def validate_keys(preset, settings, key_type)
+      variables = settings.map { |item| item['variable'] }
+
+      preset['styles'].each do |style|
+        style_keys = style[key_type].keys
+
+        extra_keys = style_keys - variables
+        missing_keys = variables - style_keys
+
+        @errors << "Extra #{key_type} keys: #{extra_keys.join(', ')}" unless extra_keys.empty?
+        @errors << "Missing #{key_type} keys: #{missing_keys.join(', ')}" unless missing_keys.empty?
+      end
+    end
 
     def source_dir
       Dugway.source_dir

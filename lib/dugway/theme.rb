@@ -155,22 +155,22 @@ module Dugway
     end
 
     def validate_style_references(preset)
-      font_variables = settings['fonts'].map { |font| font['variable'] }
-      color_variables = settings['colors'].map { |color| color['variable'] }
+      ['fonts', 'colors'].each do |key_type|
+        validate_keys(preset, settings[key_type], key_type)
+      end
+    end
+
+    def validate_keys(preset, settings, key_type)
+      variables = settings.map { |item| item['variable'] }
 
       preset['styles'].each do |style|
-        style_font_keys = style['fonts'].keys
-        style_color_keys = style['colors'].keys
+        style_keys = style[key_type].keys
 
-        extra_font_keys = style_font_keys - font_variables
-        missing_font_keys = font_variables - style_font_keys
-        @errors << "Extra font keys: #{extra_font_keys.join(', ')}" unless extra_font_keys.empty?
-        @errors << "Missing font keys: #{missing_font_keys.join(', ')}" unless missing_font_keys.empty?
+        extra_keys = style_keys - variables
+        missing_keys = variables - style_keys
 
-        extra_color_keys = style_color_keys - color_variables
-        missing_color_keys = color_variables - style_color_keys
-        @errors << "Extra color keys: #{extra_color_keys.join(', ')}" unless extra_color_keys.empty?
-        @errors << "Missing color keys: #{missing_color_keys.join(', ')}" unless missing_color_keys.empty?
+        @errors << "Extra #{key_type} keys: #{extra_keys.join(', ')}" unless extra_keys.empty?
+        @errors << "Missing #{key_type} keys: #{missing_keys.join(', ')}" unless missing_keys.empty?
       end
     end
 

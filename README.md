@@ -201,8 +201,7 @@ theme's versatility by utilizing the **.dugway.json** file. This file will be
 specific to your computer for your own testing, and shouldn't be checked into
 source control.
 
-*Note:* changing **.dugway.json** will require you to restart the
-[server](#running-your-theme).
+*Note:* As of 1.0.9, changing `.dugway.json` will automatically restart the [server](#running-your-theme). Refresh your browser to see your changes reflected.
 
 ### Store content
 

@@ -1,4 +1,5 @@
 require 'rack'
+require 'listen'
 
 module Dugway
   module Cli
@@ -22,6 +23,13 @@ module Dugway
         :desc    => "The server to run"
 
       def start
+        listener = Listen.to('.', only: /\.dugway\.json$/) do |modified|
+          puts "Config changed, restarting server..."
+          exec "dugway server"
+        end
+
+        Thread.new { listener.start }
+
         Rack::Server.start({
           :config => File.join(Dir.pwd, 'config.ru'),
           :environment => 'none',

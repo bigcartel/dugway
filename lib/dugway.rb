@@ -1,9 +1,13 @@
 # Set our encodings to ensure we're always dealing with UTF-8 data.
 # Users experiencing problems with their templates should ensure they are saved as UTF-8.
-old_verbose, $VERBOSE = $VERBOSE, nil
-Encoding.default_external = Encoding::UTF_8
-Encoding.default_internal = Encoding::UTF_8
-$VERBOSE = old_verbose
+begin
+  original_verbose = $VERBOSE
+  $VERBOSE = nil if ENV['DUGWAY_QUIET']
+  Encoding.default_external = Encoding::UTF_8
+  Encoding.default_internal = Encoding::UTF_8
+ensure
+  $VERBOSE = original_verbose
+end
 
 require 'active_support/all'
 require 'i18n'

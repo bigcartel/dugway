@@ -22,7 +22,17 @@ module Dugway
         :default => 'thin',
         :desc    => "The server to run"
 
+      class_option :suppress_warnings,
+        type: :boolean,
+        aliases: '-q',
+        default: false,
+        desc: "Suppress warnings"
+
       def start
+        if options[:suppress_warnings]
+          $VERBOSE = nil
+        end
+
         listener = Listen.to('.', only: /\.dugway\.json$/) do |modified|
           puts "Config changed, restarting server..."
           exec "dugway server"

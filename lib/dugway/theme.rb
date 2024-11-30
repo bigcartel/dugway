@@ -93,7 +93,7 @@ module Dugway
       end
     end
 
-    def valid?
+    def valid?(validate_colors: true)
       @errors = []
 
       REQUIRED_FILES.each do |file|
@@ -115,7 +115,7 @@ module Dugway
         end
       end
 
-      validate_required_color_settings
+      validate_required_color_settings if validate_colors
 
       @errors.empty?
     end

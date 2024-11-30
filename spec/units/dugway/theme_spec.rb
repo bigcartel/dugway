@@ -18,7 +18,7 @@ describe Dugway::Theme do
   describe "#fonts" do
     it "should return a hash of font settings values" do
       theme.fonts.should == {
-        'font' => 'Georgia',
+        'text_font' => 'Georgia',
         'header_font' => 'Helvetica'
       }
     end
@@ -49,11 +49,16 @@ describe Dugway::Theme do
   describe "#customization" do
     it "should return a hash of font, color, option, images and image sets settings values" do
       theme.customization.should == {
-        'background_color' => '#222222',
+        'background_color' => 'white',
         'fixed_sidebar' => true,
-        'font' => 'Georgia',
+        'text_font' => 'Georgia',
         'header_font' => 'Helvetica',
-        'link_color' => 'red',
+        'primary_text_color' => 'black',
+        'link_text_color' => 'red',
+        'link_hover_color' => 'black',
+        'button_background_color' => 'black',
+        'button_text_color' => 'white',
+        'button_hover_background_color' => 'red',
         'show_search' => false,
         'logo' => { :url => 'images/logo_bc.png', :width => 1, :height => 1 },
         'slideshow_images' => [
@@ -69,17 +74,22 @@ describe Dugway::Theme do
     describe "when there are overridden customization" do
       before(:each) do
         Dugway.stub(:theme) {
-          Dugway::Theme.new(:fixed_sidebar => false, :link_color => 'blue')
+          Dugway::Theme.new(:fixed_sidebar => false, :link_text_color => 'blue')
         }
       end
 
       it "should merge those values into the defaults" do
         theme.customization.should == {
-          'background_color' => '#222222',
+          'background_color' => 'white',
           'fixed_sidebar' => false,
-          'font' => 'Georgia',
+          'text_font' => 'Georgia',
           'header_font' => 'Helvetica',
-          'link_color' => 'blue',
+          'primary_text_color' => 'black',
+          'link_text_color' => 'blue',
+          'link_hover_color' => 'black',
+          'button_background_color' => 'black',
+          'button_text_color' => 'white',
+          'button_hover_background_color' => 'red',
           'show_search' => false,
           'logo' => { :url => 'images/logo_bc.png', :width => 1, :height => 1 },
           'slideshow_images' => [
@@ -134,7 +144,7 @@ describe Dugway::Theme do
     end
 
     it "should sprocketize and not liquify theme.css" do
-      theme.build_file('theme.css').gsub(/\s+/, '').should == %{html,body{height:100%;}a{background:#0f0;color:{{theme.link_color}};}/**/}
+      theme.build_file('theme.css').gsub(/\s+/, '').should == %{html,body{height:100%;}a{background:#0f0;color:{{theme.link_text_color}};}/**/}
     end
   end
 
@@ -227,4 +237,3 @@ describe Dugway::Theme do
     File.read(File.join(Dugway.source_dir, file_name))
   end
 end
-

@@ -37,6 +37,53 @@
       "default": "Helvetica"
     }
   ],
+  "preset_styles": {
+    "preview": {
+      "title_font": "header_font",
+      "body_font": "text_font",
+      "text_color": "primary_text_color",
+      "background_color": "background_color"
+    },
+    "presets": [
+      {
+        "group_name": "Classic",
+        "styles": [
+          {
+            "style_name": "Classic #1",
+            "fonts": {
+              "header_font": "DM Sans",
+              "text_font": "DM Sans"
+            },
+            "colors": {
+              "background_color": "#FFFFFF",
+              "primary_text_color": "#000000",
+              "link_text_color": "#000000",
+              "link_hover_color": "#BF0101",
+              "button_background_color": "#000000",
+              "button_text_color": "#FFFFFF",
+              "button_hover_background_color": "#BF0101"
+            }
+          },
+          {
+            "style_name": "Classic #2",
+            "fonts": {
+              "header_font": "Lora",
+              "text_font": "Roboto"
+            },
+            "colors": {
+              "background_color": "#F7F7F7",
+              "primary_text_color": "#222222",
+              "link_text_color": "#222222",
+              "link_hover_color": "#014ABF",
+              "button_background_color": "#222222",
+              "button_text_color": "#FFFFFF",
+              "button_hover_background_color": "#014ABF"
+            }
+          }
+        ]
+      }
+    ]
+  },
   "colors": [
     {
       "variable": "background_color",
@@ -44,9 +91,34 @@
       "default": "#FAFAFA"
     },
     {
-      "variable": "text_color",
+      "variable": "primary_text_color",
       "label": "Text Color",
       "default": "#222222"
+    },
+    {
+      "variable": "link_text_color",
+      "label": "Text Color",
+      "default": "#222222"
+    },
+    {
+      "variable": "link_hover_color",
+      "label": "Text Color",
+      "default": "#014ABF"
+    },
+    {
+      "variable": "button_background_color",
+      "label": "Text Color",
+      "default": "#222222"
+    },
+    {
+      "variable": "button_text_color",
+      "label": "Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "variable": "button_hover_background_color",
+      "label": "Text Color",
+      "default": "#014ABF"
     }
   ],
   "options": [
@@ -74,10 +146,10 @@
       "description": "The number of products shown per page"
     },
     {
-      "variable": "twitter_username",
-      "label": "Twitter username",
+      "variable": "instagram_url",
+      "label": "Instagram URL",
       "type": "text",
-      "description": "Ex: @bigcartel"
+      "description": "Ex: https://instagram.com/bigcartel"
     }
   ]
 }

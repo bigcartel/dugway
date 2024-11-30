@@ -238,6 +238,6 @@ we use the **default** values from your **settings.json** file.
   },
   "background_color": "#CCCCCC",
   "show_search": true,
-  "twitter_username": "bigcartel"
+  "instagram_username": "https://instagram.com/bigcartel"
 }
 ```

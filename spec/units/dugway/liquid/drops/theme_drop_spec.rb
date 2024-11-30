@@ -73,19 +73,25 @@ describe Dugway::Drops::ThemeDrop do
 
   describe "#font" do
     it "should return the theme's font" do
-      theme.font.should == 'Georgia'
+      theme.text_font.should == 'Georgia'
     end
   end
 
   describe "#background_color" do
     it "should return the theme's background_color" do
-      theme.background_color.should == '#222222'
+      theme.background_color.should == 'white'
     end
   end
 
-  describe "#link_color" do
-    it "should return the theme's link_color" do
-      theme.link_color.should == 'red'
+  describe "#link_text_color" do
+    it "should return the theme's link_text_color" do
+      theme.link_text_color.should == 'red'
+    end
+  end
+
+  describe "#link_hover_color" do
+    it "should return the theme's link_hover_color" do
+      theme.link_hover_color.should == 'black'
     end
   end
 

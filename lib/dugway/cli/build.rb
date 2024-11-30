@@ -5,6 +5,11 @@ module Dugway
     class Build < Thor::Group
       include Thor::Actions
 
+      class_option 'skip-color-validation',
+        type: :boolean,
+        default: false,
+        desc: "Skip color settings validation"
+
       def self.source_root
         File.join(Dir.pwd, 'source')
       end
@@ -14,9 +19,10 @@ module Dugway
       end
 
       def validate
-        unless theme.valid?
+        unless theme.valid?(validate_colors: !options['skip-color-validation'])
           theme.errors.each { |error| say(error, :red) }
-          raise "Theme is invalid"
+          say("\nTheme is invalid", :red)
+          exit(1)
         end
       end
 

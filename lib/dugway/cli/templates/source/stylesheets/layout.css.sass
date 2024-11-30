@@ -1,17 +1,17 @@
 @import 'config'
 
 body
-  background: #{"{{ theme.background_color }}"}
-  color: #{"{{ theme.text_color }}"}
-  font: 14px/1.4 normal #{"{{ theme.text_font | font_family }}"}
+  background: $background-color
+  color: $primary-text-color
+  font: 14px/1.4 normal $text-font
   margin: 100px
 
 a
-  color: #72C29B
+  color: $link-text-color
   text-decoration: none
 
   &:hover
-    color: #60AA85
+    color: $link-hover-color
 
 ul
   list-style-type: disc
@@ -20,7 +20,7 @@ ol
   list-style-type: decimal
 
 ul, ol
-  margin-left: $marginSize
+  margin-left: $margin-size
 
 ul.unstyled,
 ol.unstyled
@@ -30,20 +30,20 @@ ol.unstyled
 
 header
   border-bottom: $border
-  font-family: #{"{{ theme.header_font | font_family }}"}
-  margin-bottom: $marginSize
-  padding-bottom: $marginSize
+  font-family: $header-font
+  margin-bottom: $margin-size
+  padding-bottom: $margin-size
   text-align: center
 
   a
-    color: #666
+    color: $link-text-color
     font-size: 2.5em
 
     &:hover
-      color: #333
+      color: $link-hover-color
 
 h1, h2, h3, h4, h5
-  font-family: #{"{{ theme.header_font | font_family }}"}
+  font-family: $header-font
 
 div.wrap
   display: table
@@ -52,7 +52,7 @@ div.wrap
 aside
   border-right: $border
   display: table-cell
-  padding-right: $marginSize
+  padding-right: $margin-size
   width: 20%
 
   section
@@ -66,15 +66,15 @@ aside
       margin-bottom: .3em
 
       a
-        color: #999
+        color: $link-text-color
         font-size: .9em
 
         &:hover
-          color: #333
+          color: $link-hover-color
 
 section.content
   display: table-cell
-  padding-left: $marginSize
+  padding-left: $margin-size
   width: 80%
 
 form

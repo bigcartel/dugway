@@ -1,0 +1,112 @@
+# Color attributes we require for each theme, which is important for the ThemeColorDrop in 
+# Storefront repo which we expose to sellers and 3rd party developers
+required_color_attributes:
+  - background_color
+  - primary_text_color
+  - link_text_color
+  - link_hover_color
+  - button_background_color
+  - button_text_color
+  - button_hover_background_color
+
+# Specify overrides when a theme does not use the standard color attributes
+# Indicate when an attribute is not used by setting it to ~
+Cosmos:
+  primary_text_color: text_color
+  link_text_color: text_color
+
+Foundry:
+  link_text_color: primary_text_color
+
+Good Vibes:
+  primary_text_color: primary_color
+  link_text_color: primary_color
+  link_hover_color: secondary_color
+  button_background_color: background_color
+  button_text_color: ~
+  button_hover_background_color: ~
+
+Hopscotch:
+  primary_text_color: text_color
+  link_text_color: text_color
+  link_hover_color: secondary_text_color
+  button_background_color: background_color
+  button_text_color: text_color
+  button_hover_background_color: ~
+
+Luna:
+  link_text_color: primary_text_color
+  link_hover_color: link_rollover_color
+  button_background_color: background_color
+  button_text_color: text_color
+  button_hover_background_color: button_rollover_color
+
+Lunch Break:
+  primary_text_color: text_color
+  link_text_color: text_color
+
+Neat:
+  primary_text_color: text_color
+  link_text_color: link_color
+
+Netizen:
+  primary_text_color: text_color
+  link_text_color: text_color
+  link_hover_color: ~
+  button_background_color: button_background_color
+  button_text_color: text_color
+  button_hover_background_color: ~
+
+Nova:
+  primary_text_color: text_color
+  link_text_color: link_color
+  link_hover_color: link_hover
+  button_background_color: background_color
+  button_text_color: text_color
+  button_hover_background_color: ~
+
+PickleJuice:
+  primary_text_color: text_color
+  link_text_color: link_color
+  link_hover_color: link_hover_color
+
+Ranger:
+  link_text_color: primary_text_color
+  button_hover_background_color: ~
+
+Roadie:
+  primary_text_color: text_color
+  link_text_color: text_color
+  button_text_color: button_text_color
+  button_hover_background_color: button_hover_background_color
+
+Sidecar:
+  primary_text_color: body_text_color
+  link_text_color: link_color
+
+Snacks:
+  primary_text_color: text_color
+  link_text_color: text_color
+  link_hover_color: ~
+  button_background_color: accent_background_color
+  button_text_color: accent_text_color
+  button_hover_background_color: ~
+
+Snakebite:
+  primary_text_color: primary_color
+  link_text_color: primary_color
+  link_hover_color: primary_color
+  button_background_color: primary_color
+  button_text_color: primary_color
+  button_hover_background_color: primary_color
+
+Sunscreen:
+  primary_text_color: text_color
+  link_text_color: text_color
+
+Trace:
+  link_text_color: primary_text_color
+  link_hover_color: secondary_text_color
+  button_background_color: primary_text_color
+  button_text_color: background_color
+  button_hover_background_color: primary_text_color

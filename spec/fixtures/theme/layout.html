@@ -11,8 +11,8 @@
     {{ head_content }}
   </head>
 
-  <body id="{{ page.permalink }}" class="{{ page.category }}">
-    <header>
+  <body id="{{ page.permalink }}" class="{{ page.category }}"  data-bc-page-type="{% if page.category == 'custom' %}custom{% else %}{{ page.permalink }}{% endif %}">
+    <header data-bc-hook="header">
       <a href="/" title="{{ store.name | escape }}">{{ store.name }}</a>
     </header>
 
@@ -78,7 +78,7 @@
     {% endif %}
     </section>
 
-    <footer>
+    <footer data-bc-hook="footer">
       <div>{{ powered_by_big_cartel }}</div>
     </footer>
   </body>

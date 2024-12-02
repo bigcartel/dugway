@@ -93,7 +93,7 @@ module Dugway
       end
     end
 
-    def valid?(validate_colors: true)
+    def valid?(validate_colors: true, validate_layout_attributes: true)
       @errors = []
 
       REQUIRED_FILES.each do |file|
@@ -116,6 +116,7 @@ module Dugway
       end
 
       validate_required_color_settings if validate_colors
+      validate_required_layout_attributes if validate_layout_attributes
 
       @errors.empty?
     end
@@ -134,6 +135,23 @@ module Dugway
       unless missing_colors.empty?
         @errors << "Missing required color settings: #{missing_colors.join(', ')}"
       end
+    end
+
+    # Validate that the Layout file has expected attributes for:
+    # - data-bc-page-type on the body tag
+    # - one data-bc-hook="header" and one data-bc-hook="footer" somewhere
+    def validate_required_layout_attributes
+      layout_content = read_source_file('layout.html')
+
+      unless layout_content =~ /<body.*?\bdata-bc-page-type\b/
+        @errors << "layout.html missing `data-bc-page-type` attribute on body tag"
+      end
+
+      header_hooks = layout_content.scan(/data-bc-hook=(?:"|')header(?:"|')/).size
+      footer_hooks = layout_content.scan(/data-bc-hook=(?:"|')footer(?:"|')/).size
+
+      @errors << "layout.html must have exactly one `data-bc-hook=\"header\"`" if header_hooks != 1
+      @errors << "layout.html must have exactly one `data-bc-hook=\"footer\"`" if footer_hooks != 1
     end
 
     private

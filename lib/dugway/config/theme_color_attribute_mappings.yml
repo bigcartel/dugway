@@ -73,7 +73,7 @@ Ranger:
 
 Roadie:
   primary_text_color: text_color
-  link_text_color: text_color
+  link_text_color: primary_text_color
 
 Sidecar:
   primary_text_color: body_text_color

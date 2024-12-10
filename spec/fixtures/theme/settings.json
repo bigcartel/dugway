@@ -40,7 +40,7 @@
       "default": "Helvetica"
     },
     {
-      "variable": "font",
+      "variable": "text_font",
       "label": "Font",
       "default": "Georgia"
     }
@@ -48,8 +48,8 @@
   "preset_styles": {
     "preview": {
       "title_font": "header_font",
-      "body_font": "font",
-      "text_color": "link_color",
+      "body_font": "text_font",
+      "text_color": "primary_text_color",
       "background_color": "background_color"
     },
     "presets": [
@@ -60,22 +60,32 @@
             "style_name": "Classic #1",
             "fonts": {
               "header_font": "DM Sans",
-              "font": "DM Sans"
+              "text_font": "DM Sans"
             },
             "colors": {
               "background_color": "#FFFFFF",
-              "link_color": "#111111"
+              "primary_text_color": "#000000",
+              "link_text_color": "#000000",
+              "link_hover_color": "#BF0101",
+              "button_background_color": "#000000",
+              "button_text_color": "#FFFFFF",
+              "button_hover_background_color": "#BF0101"
             }
           },
           {
             "style_name": "Classic #2",
             "fonts": {
               "header_font": "Lora",
-              "font": "Roboto"
+              "text_font": "Roboto"
             },
             "colors": {
               "background_color": "#F7F7F7",
-              "link_color": "#222222"
+              "primary_text_color": "#222222",
+              "link_text_color": "#222222",
+              "link_hover_color": "#014ABF",
+              "button_background_color": "#222222",
+              "button_text_color": "#FFFFFF",
+              "button_hover_background_color": "#014ABF"
             }
           }
         ]
@@ -86,11 +96,36 @@
     {
       "variable": "background_color",
       "label": "Background",
-      "default": "#222222"
+      "default": "white"
     },
     {
-      "variable": "link_color",
-      "label": "Link Color",
+      "variable": "primary_text_color",
+      "label": "Text",
+      "default": "black"
+    },
+    {
+      "variable": "link_text_color",
+      "label": "Link text",
+      "default": "red"
+    },
+    {
+      "variable": "link_hover_color",
+      "label": "Link hover",
+      "default": "black"
+    },
+    {
+      "variable": "button_background_color",
+      "label": "Button background",
+      "default": "black"
+    },
+    {
+      "variable": "button_text_color",
+      "label": "Button text",
+      "default": "white"
+    },
+    {
+      "variable": "button_hover_background_color",
+      "label": "Button hover background",
       "default": "red"
     }
   ],

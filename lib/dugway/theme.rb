@@ -9,6 +9,10 @@ module Dugway
   class Theme
     REQUIRED_FILES = %w( cart.html contact.html home.html layout.html maintenance.html product.html products.html screenshot.jpg settings.json theme.css theme.js )
 
+    THEME_COLOR_ATTRIBUTE_MAPPINGS = YAML.load_file(
+      File.join(__dir__, 'config', 'theme_color_attribute_mappings.yml')
+    ).freeze
+
     attr_reader :errors
 
     def initialize(overridden_customization={})
@@ -89,7 +93,7 @@ module Dugway
       end
     end
 
-    def valid?
+    def valid?(validate_colors: true)
       @errors = []
 
       REQUIRED_FILES.each do |file|
@@ -111,7 +115,25 @@ module Dugway
         end
       end
 
+      validate_required_color_settings if validate_colors
+
       @errors.empty?
+    end
+
+    def validate_required_color_settings
+      required_colors_attribute_names = THEME_COLOR_ATTRIBUTE_MAPPINGS['required_color_attributes']
+
+      theme_colors = settings['colors'].map { |c| c['variable'] }
+      mappings = THEME_COLOR_ATTRIBUTE_MAPPINGS[name] || {}
+
+      missing_colors = required_colors_attribute_names.reject do |color|
+        theme_colors.include?(color) ||
+        (mappings.key?(color) && (mappings[color].nil? || theme_colors.include?(mappings[color])))
+      end
+
+      unless missing_colors.empty?
+        @errors << "Missing required color settings: #{missing_colors.join(', ')}"
+      end
     end
 
     private

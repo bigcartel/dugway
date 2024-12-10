@@ -18,12 +18,11 @@ Foundry:
   link_text_color: primary_text_color
 
 Good Vibes:
-  primary_text_color: primary_color
-  link_text_color: primary_color
-  link_hover_color: secondary_color
+  link_text_color: primary_text_color
+  link_hover_color: secondary_text_color
   button_background_color: background_color
-  button_text_color: ~
-  button_hover_background_color: ~
+  button_text_color: primary_text_color
+  button_hover_background_color: background_color
 
 Hopscotch:
   primary_text_color: text_color
@@ -43,11 +42,6 @@ Lunch Break:
   link_text_color: text_color
   button_hover_background_color: button_background_hover_color
 
-Neat:
-  primary_text_color: text_color
-  link_text_color: link_color
-  button_hover_background_color: button_background_hover_color
-
 Netizen:
   primary_text_color: text_color
   link_text_color: text_color
@@ -56,12 +50,9 @@ Netizen:
   button_hover_background_color: ~
 
 Nova:
-  primary_text_color: text_color
-  link_text_color: link_color
-  link_hover_color: link_hover
   button_background_color: background_color
-  button_text_color: text_color
-  button_hover_background_color: ~
+  button_text_color: primary_text_color
+  button_hover_background_color: background_color
 
 PickleJuice:
   primary_text_color: text_color
@@ -97,8 +88,7 @@ Snakebite:
   button_hover_background_color: primary_color
 
 Sunscreen:
-  primary_text_color: text_color
-  link_text_color: text_color
+  link_text_color: primary_text_color
 
 Trace:
   link_text_color: primary_text_color

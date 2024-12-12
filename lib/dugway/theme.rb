@@ -168,30 +168,32 @@ module Dugway
     end
 
     def validate_preset_styles(preset)
-      @errors << 'Preset is missing group_name' unless preset['group_name'].is_a?(String)
+      @errors << 'Preset is missing group_name' if preset['group_name'].to_s.strip.empty?
       @errors << 'Preset is missing styles' unless preset['styles'].is_a?(Array)
 
       preset['styles'].each do |style|
-        @errors << 'Style is missing style_name' unless style['style_name'].is_a?(String)
+        @errors << "Style in group '#{preset['group_name']}' - Missing style_name" if style['style_name'].to_s.strip.empty?
 
         if style['fonts'].is_a?(Hash) && !style['fonts'].empty?
           style['fonts'].each_value do |font|
-            @errors << 'Font value should be a string' unless font.is_a?(String)
+            @errors << "Style '#{style['style_name']} - Contains an invalid font name" if font.to_s.strip.empty?
           end
         else
-          @errors << 'Style is missing fonts'
+          @errors << "Style '#{style['style_name']}' - Missing fonts"
         end
 
         if style['colors'].is_a?(Hash) && !style['colors'].empty?
           style['colors'].each do |key, color|
-            @errors << 'Invalid color format' unless color =~ /^#[0-9A-Fa-f]{6}$/
+            unless color =~ /^#[0-9A-Fa-f]{6}$/
+              @errors << "Style '#{style['style_name']}' - Invalid color value '#{color}' for color '#{key}'"
+            end
           end
         else
-          @errors << 'Style is missing colors'
+          @errors << "Style '#{style['style_name']}' - Missing required color settings"
         end
       end
 
-      @errors << 'Style names should be unique' unless preset['styles'].map { |style| style['style_name'] }.uniq.length == preset['styles'].length
+      validate_style_name_uniqueness(preset['styles'])
     end
 
     def validate_style_references(preset)
@@ -209,9 +211,18 @@ module Dugway
         extra_keys = style_keys - variables
         missing_keys = variables - style_keys
 
-        @errors << "Extra #{key_type} keys: #{extra_keys.join(', ')}" unless extra_keys.empty?
-        @errors << "Missing #{key_type} keys: #{missing_keys.join(', ')}" unless missing_keys.empty?
+        @errors << "Style '#{style['style_name']}' - Extra #{key_type} keys: #{extra_keys.join(', ')}" unless extra_keys.empty?
+        @errors << "Style '#{style['style_name']}' - Missing #{key_type} keys: #{missing_keys.join(', ')}" unless missing_keys.empty?
       end
+    end
+
+    def validate_style_name_uniqueness(styles)
+      duplicates = styles
+        .group_by { |s| s['style_name'] }
+        .select { |_, group| group.size > 1 }
+        .keys
+
+      @errors << "Duplicate style names found: #{duplicates.join(', ')}" if duplicates.any?
     end
 
     def source_dir

@@ -231,6 +231,68 @@ describe Dugway::Theme do
         theme.errors.size.should == 2
       end
     end
+
+    describe "when preset styles are invalid" do
+      let(:valid_settings) do
+        {
+          'fonts' => [{'variable' => 'font'}],
+          'colors' => [
+            {'variable' => 'background_color'},
+            {'variable' => 'primary_text_color'},
+            {'variable' => 'link_text_color'},
+            {'variable' => 'link_hover_color'},
+            {'variable' => 'button_background_color'},
+            {'variable' => 'button_text_color'},
+            {'variable' => 'button_hover_background_color'}
+          ],
+          'preset_styles' => {
+            'preview' => {
+              'title_font' => 'font',
+              'body_font' => 'font',
+              'text_color' => '#000000',
+              'background_color' => '#FFFFFF'
+            },
+            'presets' => [{
+              'group_name' => 'Classic',
+              'styles' => [{
+                'style_name' => 'Style 1',
+                'fonts' => {'font' => 'Arial'},
+                'colors' => {
+                  'background_color' => '#FFFFFF',
+                  'primary_text_color' => '#000000',
+                  'link_text_color' => '#000000',
+                  'link_hover_color' => '#000000',
+                  'button_background_color' => '#000000',
+                  'button_text_color' => '#FFFFFF',
+                  'button_hover_background_color' => '#000000'
+                }
+              }]
+            }]
+          }
+        }
+      end
+
+      before(:each) do
+        allow(theme).to receive(:name) { "Test Theme" }
+        allow(theme).to receive(:version) { "1.2.3" }
+      end
+
+      it "requires non-empty group_name" do
+        settings = valid_settings
+        settings['preset_styles']['presets'].first['group_name'] = ' '
+        theme.stub(:settings) { settings }
+        theme.valid?.should be(false)
+        theme.errors.should include('Preset is missing group_name')
+      end
+
+      it "requires non-empty style_name" do
+        settings = valid_settings
+        settings['preset_styles']['presets'].first['styles'].first['style_name'] = '  '
+        theme.stub(:settings) { settings }
+        theme.valid?.should be(false)
+        theme.errors.should include('Style in group \'Classic\' - Missing style_name')
+      end
+    end
   end
 
   def read_file(file_name)

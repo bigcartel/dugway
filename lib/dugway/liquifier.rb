@@ -74,7 +74,7 @@ module Dugway
         'artists' => Drops::ArtistsDrop.new(store.artists.map { |a| Drops::ArtistDrop.new(a) }),
         'products' => Drops::ProductsDrop.new(store.products.map { |p| Drops::ProductDrop.new(p) }),
         'contact' => Drops::ContactDrop.new,
-        'head_content' => head_content,
+        'head_content' => [window_bigcartel_script, head_content].join,
         'bigcartel_credit' => bigcartel_credit,
         'powered_by_big_cartel' => powered_by_big_cartel,
       }
@@ -98,6 +98,15 @@ module Dugway
       end
 
       content
+    end
+
+    def window_bigcartel_script
+      product = @request.params[:product] ? store.product(@request.params[:product]) : nil
+
+      script = "window.bigcartel = window.bigcartel || {};"
+      script << "\nwindow.bigcartel.product = #{product.to_json};" if product
+
+      "<script>#{script}</script>"
     end
 
     def bigcartel_credit

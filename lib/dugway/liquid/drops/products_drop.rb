@@ -33,7 +33,7 @@ module Dugway
           when 'newest', 'date'
             'date'
           # We don't pass these in the API, so fake it
-          when 'sales', 'sells', 'views'
+          when 'sales', 'sells', 'top-selling', 'views'
             'shuffle'
           else
             'position'

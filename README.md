@@ -195,7 +195,12 @@ the server by hitting CTRL+C.
 
 If you want to run with logging, enable it via your theme's `settings.json` 
 file with `"log": true`. When Dugway is running, it will then create a log
-in `log/dugway.log` in your theme's directory.
+in `log/dugway.log` in your theme's directory.  You can then log output 
+with `debug`, `info` and `warn`, such as:
+
+```
+Dugway.logger.debug("Debug statement here")
+```
 
 ## Testing your theme
 

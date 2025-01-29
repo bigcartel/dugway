@@ -93,7 +93,7 @@ module Dugway
       end
     end
 
-    def valid?(validate_colors: true, validate_layout_attributes: true)
+    def valid?(validate_colors: true, validate_layout_attributes: true, validate_options: true)
       @errors = []
 
       REQUIRED_FILES.each do |file|
@@ -117,6 +117,7 @@ module Dugway
 
       validate_required_color_settings if validate_colors
       validate_required_layout_attributes if validate_layout_attributes
+      validate_options_settings if validate_options
 
       @errors.empty?
     end
@@ -152,6 +153,12 @@ module Dugway
 
       @errors << "layout.html must have exactly one `data-bc-hook=\"header\"`" if header_hooks != 1
       @errors << "layout.html must have exactly one `data-bc-hook=\"footer\"`" if footer_hooks != 1
+    end
+
+    def validate_options_settings
+      return unless settings['options']
+
+      validate_options_descriptions
     end
 
     private
@@ -223,6 +230,14 @@ module Dugway
         .keys
 
       @errors << "Duplicate style names found: #{duplicates.join(', ')}" if duplicates.any?
+    end
+
+    def validate_options_descriptions
+      missing_descriptions = settings['options'].select { |option|
+        option['description'].nil? || option['description'].strip.empty?
+      }.map { |option| option['variable'] }
+
+      @errors << "Missing descriptions for settings: #{missing_descriptions.join(', ')}" unless missing_descriptions.empty?
     end
 
     def source_dir

@@ -15,6 +15,11 @@ module Dugway
         default: false,
         desc: "Skip layout file data attribute validation"
 
+      class_option 'skip-options-validation',
+        type: :boolean,
+        default: false,
+        desc: "Skip options validation"
+
       def self.source_root
         File.join(Dir.pwd, 'source')
       end
@@ -24,7 +29,13 @@ module Dugway
       end
 
       def validate
-        unless theme.valid?(validate_colors: !options['skip-color-validation'], validate_layout_attributes: !options['skip-layout-attribute-validation'])
+        validation_options = {
+          validate_colors: !options['skip-color-validation'],
+          validate_layout_attributes: !options['skip-layout-attribute-validation'],
+          validate_options: !options['skip-options-validation']
+        }
+
+        unless theme.valid?(**validation_options)
           theme.errors.each { |error| say(error, :red) }
           say("\nTheme is invalid", :red)
           exit(1)

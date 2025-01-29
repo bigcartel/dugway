@@ -293,6 +293,26 @@ describe Dugway::Theme do
         theme.errors.should include('Style in group \'Classic\' - Missing style_name')
       end
     end
+
+    describe "when missing option descriptions" do
+      before(:each) do
+        theme.stub(:settings) { {
+          'name' => 'Test Theme',
+          'version' => '1.2.3',
+          'options' => [{ 'variable' => 'show_search', 'label' => 'Show search' }]
+        } }
+      end
+
+      it "should not be valid" do
+        theme.valid?.should be(false)
+        theme.errors.size.should == 1
+        theme.errors.first.should == 'Missing descriptions for options: show_search'
+      end
+
+      it "should be valid when skipping options validation" do
+        theme.valid?(validate_options: false).should be(true)
+      end
+    end
   end
 
   def read_file(file_name)

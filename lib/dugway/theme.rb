@@ -159,6 +159,7 @@ module Dugway
       return unless settings['options']
 
       validate_options_descriptions
+      validate_options_requires
     end
 
     private
@@ -239,6 +240,50 @@ module Dugway
 
       @errors << "Missing descriptions for settings: #{missing_descriptions.join(', ')}" unless missing_descriptions.empty?
     end
+
+    # Validate that any dependent settings are present in the theme settings
+    def validate_options_requires
+      return unless settings['options']
+      all_variables = settings['options'].map { |o| o['variable'] }
+
+      settings['options'].each do |option|
+        next unless option['requires']
+
+        # Handle case where requires is a string
+        if option['requires'].is_a?(String)
+          next if option['requires'] == 'inventory'
+          unless all_variables.include?(option['requires'])
+            @errors << "Option '#{option['variable']}' requires unknown setting '#{option['requires']}'"
+          end
+          next
+        end
+
+        # Validate requires is either a string or array
+        unless option['requires'].is_a?(Array)
+          @errors << "Option '#{option['variable']}' requires must be string 'inventory' or array of rules"
+          next
+        end
+
+        # Process each rule in the array
+        option['requires'].each do |rule|
+          next if rule == 'inventory'
+
+          # Extract setting name from rule
+          # Handle both simple cases ("show_search") and complex cases ("show_search eq true")
+          setting_name = if rule.include?(' ')
+            rule.split(/\s+/).first
+          else
+            rule
+          end
+
+          # Verify the referenced setting exists
+          unless all_variables.include?(setting_name)
+            @errors << "Option '#{option['variable']}' requires unknown setting '#{setting_name}'"
+          end
+        end
+      end
+    end
+
 
     def source_dir
       Dugway.source_dir

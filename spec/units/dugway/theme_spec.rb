@@ -313,6 +313,152 @@ describe Dugway::Theme do
         theme.valid?(validate_options: false).should be(true)
       end
     end
+
+    describe "when validating option requirements" do
+      before(:each) do
+        # Ensure basic theme validation passes
+        allow(theme).to receive(:name) { "Test Theme" }
+        allow(theme).to receive(:version) { "1.2.3" }
+      end
+
+      def setup_theme_with_options(options)
+        allow(theme).to receive(:settings) { {
+          'name' => 'Test Theme',
+          'version' => '1.2.3',
+          'options' => options
+        } }
+      end
+
+      it "allows options with no requires" do
+        setup_theme_with_options([
+          {
+            'variable' => 'show_search',
+            'label' => 'Show search',
+            'description' => 'Show search in header'
+          }
+        ])
+
+        theme.valid?.should be(true)
+        theme.errors.should be_empty
+      end
+
+      it "allows options that only require inventory" do
+        setup_theme_with_options([
+          {
+            'variable' => 'show_inventory',
+            'label' => 'Show inventory',
+            'description' => 'Shows inventory count',
+            'requires' => 'inventory'
+          }
+        ])
+
+        theme.valid?.should be(true)
+        theme.errors.should be_empty
+      end
+
+      it "allows options with valid setting dependencies" do
+        setup_theme_with_options([
+          {
+            'variable' => 'show_search',
+            'label' => 'Show search',
+            'description' => 'Show search in header'
+          },
+          {
+            'variable' => 'search_placeholder',
+            'label' => 'Search placeholder',
+            'description' => 'Placeholder text for search',
+            'requires' => ['show_search eq true']
+          }
+        ])
+
+        theme.valid?.should be(true)
+        theme.errors.should be_empty
+      end
+
+      it "catches invalid setting references" do
+        setup_theme_with_options([
+          {
+            'variable' => 'search_placeholder',
+            'label' => 'Search placeholder',
+            'description' => 'Placeholder text for search',
+            'requires' => ['nonexistent_setting eq true']
+          }
+        ])
+
+        theme.valid?.should be(false)
+        theme.errors.should include("Option 'search_placeholder' requires unknown setting 'nonexistent_setting'")
+      end
+
+      it "validates multiple requirements" do
+        setup_theme_with_options([
+          {
+            'variable' => 'show_inventory',
+            'label' => 'Show inventory',
+            'description' => 'Shows inventory count'
+          },
+          {
+            'variable' => 'low_stock_message',
+            'label' => 'Low stock message',
+            'description' => 'Message for low stock',
+            'requires' => [
+              'inventory',
+              'show_inventory eq true',
+              'nonexistent_setting eq true'
+            ]
+          }
+        ])
+
+        theme.valid?.should be(false)
+        theme.errors.should include("Option 'low_stock_message' requires unknown setting 'nonexistent_setting'")
+      end
+
+      it "allows simple setting requirements without operators" do
+        setup_theme_with_options([
+          {
+            'variable' => 'show_search',
+            'label' => 'Show search',
+            'description' => 'Shows search field'
+          },
+          {
+            'variable' => 'search_position',
+            'label' => 'Search position',
+            'description' => 'Position of search field',
+            'requires' => ['show_search']
+          }
+        ])
+
+        theme.valid?.should be(true)
+        theme.errors.should be_empty
+      end
+
+      it "requires 'requires' to be either a string or array" do
+        setup_theme_with_options([
+          {
+            'variable' => 'invalid_option',
+            'label' => 'Invalid option',
+            'description' => 'Has invalid requires',
+            'requires' => { 'something' => 'wrong' }
+          }
+        ])
+
+        theme.valid?.should be(false)
+        theme.errors.should include("Option 'invalid_option' requires must be string 'inventory' or array of rules")
+      end
+
+      it "only allows 'inventory' as a string requires" do
+        setup_theme_with_options([
+          {
+            'variable' => 'invalid_option',
+            'label' => 'Invalid option',
+            'description' => 'Has invalid requires',
+            'requires' => 'not_inventory'
+          }
+        ])
+
+        theme.valid?.should be(false)
+        theme.errors.should include("Option 'invalid_option' requires unknown setting 'not_inventory'")
+      end
+    end
   end
 
   def read_file(file_name)

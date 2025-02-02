@@ -93,7 +93,7 @@ module Dugway
       end
     end
 
-    def valid?(validate_colors: true, validate_layout_attributes: true)
+    def valid?(validate_colors: true, validate_layout_attributes: true, validate_options: true)
       @errors = []
 
       REQUIRED_FILES.each do |file|
@@ -117,12 +117,22 @@ module Dugway
 
       validate_required_color_settings if validate_colors
       validate_required_layout_attributes if validate_layout_attributes
+      validate_options_settings if validate_options
 
       @errors.empty?
     end
 
     def validate_required_color_settings
+      if !settings['colors']
+        @errors << "Missing colors section in theme settings"
+        return
+      end
+
       required_colors_attribute_names = THEME_COLOR_ATTRIBUTE_MAPPINGS['required_color_attributes']
+      if !required_colors_attribute_names
+        @errors << "Missing required color attributes configuration"
+        return
+      end
 
       theme_colors = settings['colors'].map { |c| c['variable'] }
       mappings = THEME_COLOR_ATTRIBUTE_MAPPINGS[name] || {}
@@ -152,6 +162,13 @@ module Dugway
 
       @errors << "layout.html must have exactly one `data-bc-hook=\"header\"`" if header_hooks != 1
       @errors << "layout.html must have exactly one `data-bc-hook=\"footer\"`" if footer_hooks != 1
+    end
+
+    def validate_options_settings
+      return unless settings['options']
+
+      validate_options_descriptions
+      validate_options_requires
     end
 
     private
@@ -224,6 +241,58 @@ module Dugway
 
       @errors << "Duplicate style names found: #{duplicates.join(', ')}" if duplicates.any?
     end
+
+    def validate_options_descriptions
+      missing_descriptions = settings['options'].select { |option|
+        option['description'].nil? || option['description'].strip.empty?
+      }.map { |option| option['variable'] }
+
+      @errors << "Missing descriptions for settings: #{missing_descriptions.join(', ')}" unless missing_descriptions.empty?
+    end
+
+    # Validate that any dependent settings are present in the theme settings
+    def validate_options_requires
+      return unless settings['options']
+      all_variables = settings['options'].map { |o| o['variable'] }
+
+      settings['options'].each do |option|
+        next unless option['requires']
+
+        # Handle case where requires is a string
+        if option['requires'].is_a?(String)
+          next if option['requires'] == 'inventory'
+          unless all_variables.include?(option['requires'])
+            @errors << "Option '#{option['variable']}' requires unknown setting '#{option['requires']}'"
+          end
+          next
+        end
+
+        # Validate requires is either a string or array
+        unless option['requires'].is_a?(Array)
+          @errors << "Option '#{option['variable']}' requires must be string 'inventory' or array of rules"
+          next
+        end
+
+        # Process each rule in the array
+        option['requires'].each do |rule|
+          next if rule == 'inventory'
+
+          # Extract setting name from rule
+          # Handle both simple cases ("show_search") and complex cases ("show_search eq true")
+          setting_name = if rule.include?(' ')
+            rule.split(/\s+/).first
+          else
+            rule
+          end
+
+          # Verify the referenced setting exists
+          unless all_variables.include?(setting_name)
+            @errors << "Option '#{option['variable']}' requires unknown setting '#{setting_name}'"
+          end
+        end
+      end
+    end
+
 
     def source_dir
       Dugway.source_dir

@@ -105,7 +105,7 @@ module Dugway
     end
 
     def self.set_page_name_and_render_page(object, type)
-      page['name'] = object['name']
+      page['name'] = object['name'] if type == :artists
       render_page(type => object)
     end
 

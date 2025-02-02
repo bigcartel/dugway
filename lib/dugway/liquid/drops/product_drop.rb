@@ -104,6 +104,14 @@ module Dugway
         end
       end
 
+      def related_products
+        @related_products ||= begin
+          drop = RelatedProductsDrop.new(source)
+          drop.context = @context if @context
+          drop.products
+        end
+      end
+
       private
 
       def price_min_max

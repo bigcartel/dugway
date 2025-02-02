@@ -3,6 +3,19 @@ require 'spec_helper'
 describe Dugway::Drops::ProductDrop do
   let(:product) { Dugway::Drops::ProductDrop.new(Dugway.store.products.first) }
 
+  let(:related_products_mock) do
+    [
+      { 'id' => 2, 'name' => 'Related Product 1' },
+      { 'id' => 3, 'name' => 'Related Product 2' }
+    ]
+  end
+
+  before do
+    allow(Dugway::Drops::RelatedProductsDrop).to receive(:new)
+      .with(product.source, limit: 5, sort_order: nil)
+      .and_return(double(products: related_products_mock))
+  end
+
   describe "#id" do
     it "should return the product's id" do
       product.id.should == 9422939
@@ -264,6 +277,29 @@ describe Dugway::Drops::ProductDrop do
       it "should return nil" do
         product.next_product.should be_nil
       end
+    end
+  end
+
+  describe "#related_products" do
+    let(:theme) { double('Dugway::Theme') }
+    let(:theme_customization) do
+      {
+        'related_items' => 5,
+        'related_products_order' => 'position'
+      }
+    end
+
+    before do
+      allow(Dugway).to receive(:theme).and_return(theme)
+      allow(theme).to receive(:customization).and_return(theme_customization)
+      allow(Dugway::Drops::RelatedProductsDrop).to receive(:new)
+        .with(product.source)
+        .and_return(double(products: related_products_mock))
+    end
+
+    it "returns the related products from RelatedProductsDrop" do
+      related_products = product.related_products
+      expect(related_products).to eq(related_products_mock)
     end
   end
 end

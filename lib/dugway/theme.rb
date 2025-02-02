@@ -123,7 +123,16 @@ module Dugway
     end
 
     def validate_required_color_settings
+      if !settings['colors']
+        @errors << "Missing colors section in theme settings"
+        return
+      end
+
       required_colors_attribute_names = THEME_COLOR_ATTRIBUTE_MAPPINGS['required_color_attributes']
+      if !required_colors_attribute_names
+        @errors << "Missing required color attributes configuration"
+        return
+      end
 
       theme_colors = settings['colors'].map { |c| c['variable'] }
       mappings = THEME_COLOR_ATTRIBUTE_MAPPINGS[name] || {}
